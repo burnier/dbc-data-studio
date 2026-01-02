@@ -3,19 +3,17 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
-import csv
-import os
 from pathlib import Path
+from storage import (
+    storage_manager,
+    WAITLIST_FILE_LOCAL,
+    ANALYTICS_FILE_LOCAL,
+    WAITLIST_FILE_GCS,
+    ANALYTICS_FILE_GCS,
+)
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
-
-# Ensure data directory exists
-DATA_DIR = Path(__file__).parent / "data"
-DATA_DIR.mkdir(exist_ok=True)
-
-WAITLIST_FILE = DATA_DIR / "waitlist.csv"
-ANALYTICS_FILE = DATA_DIR / "analytics.csv"
 
 
 class WaitlistRequest(BaseModel):
@@ -24,17 +22,14 @@ class WaitlistRequest(BaseModel):
 
 def init_csv_files():
     """Initialize CSV files with headers if they don't exist"""
-    # Initialize waitlist.csv
-    if not WAITLIST_FILE.exists():
-        with open(WAITLIST_FILE, "w", newline="") as f:
-            writer = csv.writer(f)
-            writer.writerow(["email", "timestamp"])
-
-    # Initialize analytics.csv
-    if not ANALYTICS_FILE.exists():
-        with open(ANALYTICS_FILE, "w", newline="") as f:
-            writer = csv.writer(f)
-            writer.writerow(["event_name", "timestamp", "ip_address"])
+    storage_manager.init_csv_file(
+        WAITLIST_FILE_GCS, WAITLIST_FILE_LOCAL, ["email", "timestamp"]
+    )
+    storage_manager.init_csv_file(
+        ANALYTICS_FILE_GCS,
+        ANALYTICS_FILE_LOCAL,
+        ["event_name", "timestamp", "ip_address"],
+    )
 
 
 @app.on_event("startup")
@@ -56,9 +51,12 @@ async def join_waitlist(waitlist_request: WaitlistRequest, request: Request):
     timestamp = datetime.now().isoformat()
 
     # Append to waitlist.csv
-    with open(WAITLIST_FILE, "a", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow([email, timestamp])
+    storage_manager.append_csv_row(
+        WAITLIST_FILE_GCS,
+        WAITLIST_FILE_LOCAL,
+        [email, timestamp],
+        ["email", "timestamp"],
+    )
 
     # Track waitlist signup
     await track_event(
@@ -83,27 +81,22 @@ async def track_event_endpoint(event_name: str, request: Request):
 async def track_event(event_name: str, ip_address: str):
     """Log analytics event to CSV file"""
     timestamp = datetime.now().isoformat()
-    with open(ANALYTICS_FILE, "a", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow([event_name, timestamp, ip_address])
+    storage_manager.append_csv_row(
+        ANALYTICS_FILE_GCS,
+        ANALYTICS_FILE_LOCAL,
+        [event_name, timestamp, ip_address],
+        ["event_name", "timestamp", "ip_address"],
+    )
 
 
 @app.get("/admin", response_class=HTMLResponse)
 async def admin_dashboard(request: Request):
     """Admin dashboard to view waitlist and analytics"""
     # Read waitlist data
-    waitlist_data = []
-    if WAITLIST_FILE.exists():
-        with open(WAITLIST_FILE, "r", newline="") as f:
-            reader = csv.DictReader(f)
-            waitlist_data = list(reader)
+    waitlist_data = storage_manager.read_csv(WAITLIST_FILE_GCS, WAITLIST_FILE_LOCAL)
 
     # Read analytics data
-    analytics_data = []
-    if ANALYTICS_FILE.exists():
-        with open(ANALYTICS_FILE, "r", newline="") as f:
-            reader = csv.DictReader(f)
-            analytics_data = list(reader)
+    analytics_data = storage_manager.read_csv(ANALYTICS_FILE_GCS, ANALYTICS_FILE_LOCAL)
 
     # Calculate metrics
     page_views = sum(
