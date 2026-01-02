@@ -13,7 +13,7 @@ A Venture Lab for creating multiple streams of passive income with minimal custo
 
 ### CatalogHero Smoke Test
 
-**Status:** ✅ Ready for GCP Deployment  
+**Status:** ✅ Deployed and Live  
 **Repository:** https://github.com/burnier/dbc-data-studio  
 **GCP Project:** `dbc-data-studio`
 
@@ -66,6 +66,29 @@ python main.py
 
 - Landing page: `http://localhost:8000`
 - Admin dashboard: `http://localhost:8000/admin`
+
+#### Testing the Live Landing Page
+
+The smoke test is deployed and live at: **https://cataloghero-smoke-test-7ul23r45va-uc.a.run.app/**
+
+**How to test:**
+1. **Visit the landing page** - See the hero message and "Upload JSON" button
+2. **Click "Upload JSON"** - Opens the waitlist modal
+3. **Enter an email** - Submit to join the waitlist
+4. **Check admin dashboard** - Visit `/admin` to see:
+   - Page view count
+   - Click-to-upload count
+   - Waitlist signups
+   - Conversion rates
+   - Event logs
+
+**Admin Dashboard:** https://cataloghero-smoke-test-7ul23r45va-uc.a.run.app/admin
+
+**What gets tracked:**
+- Every page visit (page_view)
+- Every "Upload JSON" button click (click_to_upload)
+- Every waitlist signup (waitlist_signup)
+- All data stored in Cloud Storage for analysis
 
 #### GCP Deployment
 

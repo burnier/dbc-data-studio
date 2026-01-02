@@ -13,7 +13,7 @@ variable "region" {
 variable "container_image" {
   description = "Container image URL for Cloud Run (e.g., gcr.io/PROJECT_ID/cataloghero:latest)"
   type        = string
-  default     = ""
+  default     = "gcr.io/cloudrun/hello" # Placeholder image - will be updated after building actual image
 }
 
 variable "enable_cloud_build" {
