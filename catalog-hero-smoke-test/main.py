@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
 from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
 from pathlib import Path
@@ -14,6 +15,11 @@ from storage import (
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
+
+# Mount static files directory
+static_path = Path(__file__).parent / "static"
+if static_path.exists():
+    app.mount("/static", StaticFiles(directory=str(static_path)), name="static")
 
 
 class WaitlistRequest(BaseModel):

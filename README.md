@@ -94,12 +94,23 @@ The smoke test is deployed and live at: **https://cataloghero-smoke-test-7ul23r4
 
 **Complete instructions:** See [DEPLOYMENT.md](./DEPLOYMENT.md)
 
-**Quick deployment steps:**
+**Initial setup (one-time):**
 1. Enable GCP APIs (Cloud Run, Cloud Storage, Cloud Build)
 2. Initialize Terraform: `cd terraform && terraform init`
 3. Apply infrastructure: `terraform apply`
-4. Build Docker image: `gcloud builds submit --tag gcr.io/dbc-data-studio/cataloghero:latest ./catalog-hero-smoke-test`
-5. Update Terraform with image URL and apply again
+4. Build and deploy: `./deploy.sh`
+
+**Redeploy after code changes:**
+Simply run:
+```bash
+./deploy.sh
+```
+
+This script will:
+- Build the Docker image
+- Push it to Google Container Registry
+- Update the Cloud Run service with the new image
+- Display your live URL
 
 **Infrastructure Components:**
 - Cloud Run service (auto-scaling, serverless)

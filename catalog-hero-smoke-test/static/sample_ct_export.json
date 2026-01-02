@@ -1,0 +1,42 @@
+{
+    "id": "708c81e8-b876-4ab5-8772-403649844abe",
+    "key": "trail-runner-max",
+    "productType": {
+        "typeId": "product-type",
+        "key": "apparel-footwear"
+    },
+    "masterData": {
+        "current": {
+            "name": {
+                "en-US": "Trail Runner Max",
+                "de-DE": "Trail-Läufer Max"
+            },
+            "masterVariant": {
+                "id": 1,
+                "sku": "TR-MAX-01-BL",
+                "prices": [
+                    {
+                        "value": {
+                            "currencyCode": "USD",
+                            "centAmount": 12900
+                        },
+                        "country": "US"
+                    }
+                ],
+                "attributes": [
+                    {
+                        "name": "color",
+                        "value": {
+                            "en": "Blue",
+                            "de": "Blau"
+                        }
+                    },
+                    {
+                        "name": "weight",
+                        "value": "300g"
+                    }
+                ]
+            }
+        }
+    }
+}

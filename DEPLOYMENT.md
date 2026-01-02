@@ -32,54 +32,54 @@ This creates:
 - Service account with proper permissions
 - IAM bindings
 
-## Step 3: Build and Push Docker Image
+## Step 3: Build and Deploy
 
+**Option 1: Use the deployment script (Recommended)**
 ```bash
 # From project root
+./deploy.sh
+```
+
+This script automatically:
+- Builds and pushes the Docker image
+- Updates the Cloud Run service
+- Displays your live URL
+
+**Option 2: Manual deployment**
+
+Build and push Docker image:
+```bash
 gcloud builds submit --tag gcr.io/dbc-data-studio/cataloghero:latest \
   ./catalog-hero-smoke-test
 ```
 
-Or build locally and push:
-
+Update Cloud Run service:
 ```bash
-cd catalog-hero-smoke-test
-docker build -t gcr.io/dbc-data-studio/cataloghero:latest .
-docker push gcr.io/dbc-data-studio/cataloghero:latest
+gcloud run services update cataloghero-smoke-test \
+  --image gcr.io/dbc-data-studio/cataloghero:latest \
+  --region us-central1
 ```
 
-## Step 4: Update Terraform with Image URL
-
-Edit `terraform/terraform.tfvars` (create if doesn't exist):
-
-```hcl
-project_id      = "dbc-data-studio"
-region          = "us-central1"
-container_image = "gcr.io/dbc-data-studio/cataloghero:latest"
-```
-
-Then apply:
-
-```bash
-cd terraform
-terraform apply
-```
-
-## Step 5: Get Your URL
+## Step 4: Get Your Live URL
 
 After deployment, get your Cloud Run URL:
-
-```bash
-terraform output cloud_run_url
-```
-
-Or:
 
 ```bash
 gcloud run services describe cataloghero-smoke-test \
   --region us-central1 \
   --format 'value(status.url)'
 ```
+
+Or use the deployment script which displays it automatically.
+
+## Redeploying After Code Changes
+
+Simply run the deployment script:
+```bash
+./deploy.sh
+```
+
+This rebuilds the image and updates the service with your latest code changes.
 
 ## Local Development
 
