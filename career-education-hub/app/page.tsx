@@ -55,7 +55,7 @@ export default async function Home() {
                         Launch Your Data Engineering & AI Career in 2025
                     </h2>
                     <p className="text-xl text-gray-700 mb-8">
-                        Compare top learning paths from Coursera, DataQuest, and Pluralsight. 
+                        Compare top learning paths from Coursera, DataQuest, and Pluralsight.
                         Find the perfect certification program to advance your career.
                     </p>
                 </div>

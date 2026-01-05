@@ -11,40 +11,41 @@ A Venture Lab for creating multiple streams of passive income with minimal custo
 
 ## Projects
 
-### AutoStack Bridge - AI Business Automation
+### DBC Data Studio - AI Career & Education Hub
 
 **Status:** 🚧 Development Phase  
-**Strategy:** Zero-Touch Affiliate Bridge Page
+**Strategy:** Zero-Touch Affiliate Hub for Career & Education
 
-A high-performance, SEO-optimized bridge page targeting Gumloop, Make.com, and AdCreative.ai. Designed for automated traffic arbitrage with zero human interaction.
+A high-performance, SEO-optimized hub for comparing learning paths from Coursera, DataQuest, and Pluralsight. Designed for Impact.com affiliate network with verified domain and professional email.
 
 **Key Features:**
 - Next.js 14+ (fast, SEO-optimized)
-- Affiliate redirect engine (`/go/[tool]`)
-- Click tracking (timestamp, tool, source)
-- Lead capture component
-- Data ingestion for tool features/pricing
+- Affiliate redirect engine (`/go/[path]`)
+- Click tracking (timestamp, learning path, source)
+- Lead capture component (career resources)
+- Data ingestion for learning path features/pricing
+- Impact.com verification ready
 - Zero external dependencies (ad-ready)
 
 **Tech Stack:**
 - Framework: Next.js (App Router)
 - Styling: Tailwind CSS
 - Tracking: Local JSON files (clicks.json, leads.json)
-- Data: Tool features and pricing ingestion
+- Data: Learning path features and pricing ingestion
 
-**Target Tools:**
-- Gumloop (AI email automation)
-- Make.com (Visual automation)
-- AdCreative.ai (AI ad generation)
+**Target Learning Paths:**
+- Coursera (Data Engineering Professional Certificates)
+- DataQuest (Python for Data Engineering)
+- Pluralsight (AI Infrastructure & MLOps)
 
 **Development:**
 ```bash
-cd autostack-bridge
+cd career-education-hub
 ./setup.sh
 npm run dev
 ```
 
-**Status:** Local development - awaiting domain acquisition
+**Status:** Ready for domain purchase (DBCDataStudio.com) and Cloud Run deployment
 
 ---
 

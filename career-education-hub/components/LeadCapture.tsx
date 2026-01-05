@@ -24,10 +24,10 @@ export default function LeadCapture() {
                 }),
             });
 
-      if (response.ok) {
-        setStatus('success');
-        setMessage('Thank you! We\'ll keep you updated on the best learning paths and career resources.');
-        setEmail('');
+            if (response.ok) {
+                setStatus('success');
+                setMessage('Thank you! We\'ll keep you updated on the best learning paths and career resources.');
+                setEmail('');
             } else {
                 throw new Error('Failed to submit');
             }
@@ -39,12 +39,12 @@ export default function LeadCapture() {
 
     return (
         <div className="bg-white rounded-lg shadow-lg p-8">
-      <h3 className="text-2xl font-bold text-gray-900 mb-4">
-        Get Career Resources & Learning Path Updates
-      </h3>
-      <p className="text-gray-600 mb-6">
-        Stay informed about new courses, certification programs, and career opportunities in data engineering and AI.
-      </p>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                Get Career Resources & Learning Path Updates
+            </h3>
+            <p className="text-gray-600 mb-6">
+                Stay informed about new courses, certification programs, and career opportunities in data engineering and AI.
+            </p>
 
             <form onSubmit={handleSubmit} className="flex gap-4">
                 <input
