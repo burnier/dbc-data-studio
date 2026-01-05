@@ -12,6 +12,8 @@ eggs/
 .eggs/
 lib/
 lib64/
+# Exception: autostack-bridge lib folder should be tracked
+!autostack-bridge/lib/
 parts/
 sdist/
 var/
