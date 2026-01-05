@@ -11,6 +11,29 @@ A Venture Lab for creating multiple streams of passive income with minimal custo
 
 ## Projects
 
+### Automated Affiliate Engine (Phase 1)
+
+**Status:** 🔄 Research & Planning Phase  
+**Strategy:** Zero-Touch Traffic-Arbitrage Machine
+
+A strategic pivot to automated affiliate marketing focused on high-commission recurring SaaS products. Designed for passive profit with zero human interaction and zero professional conflict.
+
+**Key Features:**
+- AI-powered content generation (Byron → Automation)
+- API-driven landing pages (Webflow)
+- Automated social media (Buffer AI)
+- Paid traffic acquisition (Google/Bing Ads)
+- High-commission recurring affiliate programs
+
+**Research Documents:**
+- `affiliate-engine-phase1/RESEARCH.md` - Market analysis & tech stack
+- `affiliate-engine-phase1/KEYWORD_STRATEGY.md` - Paid traffic blueprint
+- `affiliate-engine-phase1/IMPLEMENTATION.md` - Technical implementation plan
+
+**Budget:** $10-20/day for "Fail Fast" testing
+
+---
+
 ### CatalogHero Smoke Test
 
 **Status:** ✅ Deployed and Live  
