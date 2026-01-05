@@ -11,26 +11,40 @@ A Venture Lab for creating multiple streams of passive income with minimal custo
 
 ## Projects
 
-### Automated Affiliate Engine (Phase 1)
+### AutoStack Bridge - AI Business Automation
 
-**Status:** 🔄 Research & Planning Phase  
-**Strategy:** Zero-Touch Traffic-Arbitrage Machine
+**Status:** 🚧 Development Phase  
+**Strategy:** Zero-Touch Affiliate Bridge Page
 
-A strategic pivot to automated affiliate marketing focused on high-commission recurring SaaS products. Designed for passive profit with zero human interaction and zero professional conflict.
+A high-performance, SEO-optimized bridge page targeting Gumloop, Make.com, and AdCreative.ai. Designed for automated traffic arbitrage with zero human interaction.
 
 **Key Features:**
-- AI-powered content generation (Byron → Automation)
-- API-driven landing pages (Webflow)
-- Automated social media (Buffer AI)
-- Paid traffic acquisition (Google/Bing Ads)
-- High-commission recurring affiliate programs
+- Next.js 14+ (fast, SEO-optimized)
+- Affiliate redirect engine (`/go/[tool]`)
+- Click tracking (timestamp, tool, source)
+- Lead capture component
+- Data ingestion for tool features/pricing
+- Zero external dependencies (ad-ready)
 
-**Research Documents:**
-- `affiliate-engine-phase1/RESEARCH.md` - Market analysis & tech stack
-- `affiliate-engine-phase1/KEYWORD_STRATEGY.md` - Paid traffic blueprint
-- `affiliate-engine-phase1/IMPLEMENTATION.md` - Technical implementation plan
+**Tech Stack:**
+- Framework: Next.js (App Router)
+- Styling: Tailwind CSS
+- Tracking: Local JSON files (clicks.json, leads.json)
+- Data: Tool features and pricing ingestion
 
-**Budget:** $10-20/day for "Fail Fast" testing
+**Target Tools:**
+- Gumloop (AI email automation)
+- Make.com (Visual automation)
+- AdCreative.ai (AI ad generation)
+
+**Development:**
+```bash
+cd autostack-bridge
+./setup.sh
+npm run dev
+```
+
+**Status:** Local development - awaiting domain acquisition
 
 ---
 
