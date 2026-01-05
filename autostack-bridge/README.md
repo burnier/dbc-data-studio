@@ -1,17 +1,19 @@
-# AutoStack - AI Business Automation Bridge Page
+# DBC Data Studio - AI Career & Education Hub
 
 **Status:** 🚧 Development Phase  
-**Target Tools:** Gumloop, Make.com, AdCreative.ai  
-**Framework:** Next.js (for speed and SEO)
+**Target Learning Paths:** Coursera, DataQuest, Pluralsight  
+**Framework:** Next.js (for speed and SEO)  
+**Affiliate Network:** Impact.com
 
 ## Architecture
 
 - **Framework:** Next.js 14+ (App Router)
 - **Styling:** Tailwind CSS
 - **Tracking:** Local JSON file (clicks.json) or Supabase
-- **Affiliate Redirects:** Server-side `/go/[tool]` routes
-- **Data Source:** Scraped/API data for tool features and pricing
+- **Affiliate Redirects:** Server-side `/go/[path]` routes (coursera, dataquest, pluralsight)
+- **Data Source:** Learning path data (features, pricing, focus areas)
 - **Lead Capture:** API-connected mailing list
+- **Impact.com Verification:** Ready for site verification file
 
 ## Project Structure
 
@@ -24,19 +26,20 @@ autostack-bridge/
 ├── lib/                    # Utilities
 │   ├── tracking.ts         # Click tracking logic
 │   └── data-ingestion.ts   # Tool data fetching
-├── data/                   # Tool data storage
-│   └── tools.json          # Features and pricing data
+├── data/                   # Learning path data storage
+│   └── learning-paths.json # Features, pricing, and focus areas
 ├── public/                 # Static assets
 └── package.json
 ```
 
 ## Features
 
-- ✅ SEO-optimized bridge page
-- ✅ Affiliate redirect engine (`/go/[tool]`)
-- ✅ Click tracking (timestamp, tool, source)
-- ✅ Data ingestion for tool features/pricing
-- ✅ Lead capture component
+- ✅ SEO-optimized career & education hub
+- ✅ Affiliate redirect engine (`/go/[path]`)
+- ✅ Click tracking (timestamp, learning path, source)
+- ✅ Data ingestion for learning path features/pricing
+- ✅ Lead capture component (career resources)
+- ✅ Impact.com verification file ready
 - ✅ Zero external dependencies (fast loading)
 - ✅ Ad-ready infrastructure
 
@@ -71,7 +74,7 @@ Updates tool data from sources (currently uses placeholder data structure).
 ## Environment Variables
 
 Copy `env.example` to `.env` and update with:
-- Actual affiliate links for Gumloop, Make.com, AdCreative.ai
+- Impact.com affiliate links for Coursera, DataQuest, Pluralsight
 - Optional: Mailing list API keys (when integrating)
 
 ## Features Implemented
@@ -87,9 +90,18 @@ Copy `env.example` to `.env` and update with:
 
 ## Next Steps
 
-1. Update data ingestion with real tool data (scraping/APIs)
-2. Add actual affiliate links to `.env`
-3. Integrate mailing list API (Mailchimp/ConvertKit)
-4. Deploy to staging for testing
-5. Wait for domain acquisition before production
+1. ✅ Domain purchase: DBCDataStudio.com (verified available)
+2. ✅ Update data ingestion with learning path data (Coursera, DataQuest, Pluralsight)
+3. ⏳ Add Impact.com affiliate links to `.env` (after approval)
+4. ⏳ Add Impact.com verification file to `public/` folder
+5. ⏳ Set up professional email (daniel@dbcdatastudio.com)
+6. ⏳ Deploy to Cloud Run with custom domain
+7. ⏳ Re-apply to Impact.com with verified domain + professional email
+
+## Impact.com Requirements
+
+- ✅ Verified .com domain (DBCDataStudio.com available)
+- ⏳ Professional email forwarding (daniel@dbcdatastudio.com)
+- ⏳ Site verification file in public/ folder
+- ✅ Live site with learning path content
 

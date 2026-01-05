@@ -1,16 +1,16 @@
 /**
  * Affiliate redirect engine
- * Routes: /go/gumloop, /go/make, /go/adcreative
+ * Routes: /go/coursera, /go/dataquest, /go/pluralsight
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { trackClick } from '@/lib/tracking';
 
-// Affiliate link mappings
+// Affiliate link mappings (Impact.com)
 const AFFILIATE_LINKS: Record<string, string> = {
-    gumloop: process.env.GUMLOOP_AFFILIATE_LINK || 'https://gumloop.com',
-    make: process.env.MAKE_AFFILIATE_LINK || 'https://make.com',
-    adcreative: process.env.ADCREATIVE_AFFILIATE_LINK || 'https://adcreative.ai',
+    coursera: process.env.COURSERA_AFFILIATE_LINK || 'https://coursera.org',
+    dataquest: process.env.DATAQUEST_AFFILIATE_LINK || 'https://dataquest.io',
+    pluralsight: process.env.PLURALSIGHT_AFFILIATE_LINK || 'https://pluralsight.com',
 };
 
 export async function GET(
@@ -45,7 +45,7 @@ export async function GET(
 
     if (!affiliateLink) {
         return NextResponse.json(
-            { error: 'Tool not found' },
+            { error: 'Learning path not found' },
             { status: 404 }
         );
     }

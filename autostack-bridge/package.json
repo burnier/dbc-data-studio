@@ -7,7 +7,7 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "ingest": "tsx lib/data-ingestion.ts"
+        "ingest": "tsx -e \"import('./lib/data-ingestion.js').then(m => m.ingestLearningPathData())\""
     },
     "dependencies": {
         "next": "^14.0.0",

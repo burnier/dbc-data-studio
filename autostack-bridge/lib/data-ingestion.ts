@@ -1,15 +1,17 @@
 /**
- * Data ingestion script for tool features and pricing
- * Fetches/scrapes data for Gumloop, Make.com, and AdCreative.ai
+ * Data ingestion script for learning path features and pricing
+ * AI Career & Education Hub - Learning Path comparisons
+ * Fetches/scrapes data for Coursera, DataQuest, and Pluralsight
  */
 
 import { writeFile, mkdir } from 'fs/promises';
 import { join } from 'path';
 
-export interface ToolData {
+export interface LearningPathData {
     name: string;
     slug: string;
     description: string;
+    focus: string;
     features: string[];
     pricing: {
         plan: string;
@@ -21,7 +23,7 @@ export interface ToolData {
 }
 
 const DATA_DIR = join(process.cwd(), 'data');
-const TOOLS_FILE = join(DATA_DIR, 'tools.json');
+const LEARNING_PATHS_FILE = join(DATA_DIR, 'learning-paths.json');
 
 /**
  * Initialize data directory
@@ -35,96 +37,94 @@ async function ensureDataDir() {
 }
 
 /**
- * Fetch tool data (placeholder - to be filled with actual data)
+ * Fetch learning path data (placeholder - to be filled with actual data)
  * In production, this would scrape or use APIs
  */
-async function fetchToolData(): Promise<ToolData[]> {
+async function fetchLearningPathData(): Promise<LearningPathData[]> {
     // TODO: Replace with actual scraping/API calls
     // For now, using placeholder data structure
 
     return [
         {
-            name: 'Gumloop',
-            slug: 'gumloop',
-            description: 'AI-powered email automation and lead generation platform',
+            name: 'Coursera',
+            slug: 'coursera',
+            description: 'Professional certificate programs from top universities and companies',
+            focus: 'Data Engineering Professional Certificates',
             features: [
-                'AI email generation',
-                'Lead scoring',
-                'Automated sequences',
-                'CRM integration',
-                'Analytics dashboard',
+                'Industry-recognized certificates',
+                'University partnerships',
+                'Hands-on projects',
+                'Flexible learning schedule',
+                'Career support services',
             ],
             pricing: [
                 {
-                    plan: 'Starter',
-                    price: '$29/month',
-                    features: ['Up to 1,000 contacts', 'Basic automation'],
+                    plan: 'Monthly',
+                    price: '$49/month',
+                    features: ['Access to all courses', 'Certificates included', '7-day free trial'],
                 },
                 {
-                    plan: 'Pro',
-                    price: '$99/month',
-                    features: ['Up to 10,000 contacts', 'Advanced automation', 'AI features'],
+                    plan: 'Annual',
+                    price: '$399/year',
+                    features: ['Save $189/year', 'All monthly features', 'Priority support'],
                 },
             ],
-            affiliateLink: process.env.GUMLOOP_AFFILIATE_LINK || '#',
-            website: 'https://gumloop.com',
+            affiliateLink: process.env.COURSERA_AFFILIATE_LINK || '#',
+            website: 'https://coursera.org',
         },
         {
-            name: 'Make.com',
-            slug: 'make',
-            description: 'Visual automation platform for connecting apps and workflows',
+            name: 'DataQuest',
+            slug: 'dataquest',
+            description: 'Interactive data science and engineering courses with hands-on practice',
+            focus: 'Python for Data Engineering',
             features: [
-                'Visual workflow builder',
-                '1,000+ app integrations',
-                'Automated workflows',
-                'Data transformation',
-                'Webhooks and APIs',
+                'Interactive coding environment',
+                'Real-world projects',
+                'Python-focused curriculum',
+                'Data engineering specialization',
+                'Progress tracking',
             ],
             pricing: [
                 {
-                    plan: 'Free',
-                    price: '$0/month',
-                    features: ['1,000 operations/month', 'Basic scenarios'],
+                    plan: 'Monthly',
+                    price: '$49/month',
+                    features: ['All courses', 'Projects included', 'Community access'],
                 },
                 {
-                    plan: 'Core',
-                    price: '$9/month',
-                    features: ['10,000 operations/month', 'Unlimited scenarios'],
-                },
-                {
-                    plan: 'Pro',
-                    price: '$29/month',
-                    features: ['40,000 operations/month', 'Advanced features'],
+                    plan: 'Annual',
+                    price: '$390/year',
+                    features: ['Save $198/year', 'All monthly features', 'Career guidance'],
                 },
             ],
-            affiliateLink: process.env.MAKE_AFFILIATE_LINK || '#',
-            website: 'https://make.com',
+            affiliateLink: process.env.DATAQUEST_AFFILIATE_LINK || '#',
+            website: 'https://dataquest.io',
         },
         {
-            name: 'AdCreative.ai',
-            slug: 'adcreative',
-            description: 'AI-powered ad creative generation and optimization',
+            name: 'Pluralsight',
+            slug: 'pluralsight',
+            description: 'Technology skills platform with expert-led courses and assessments',
+            focus: 'AI Infrastructure & MLOps',
             features: [
-                'AI ad generation',
-                'Multiple formats',
-                'Brand consistency',
-                'A/B testing',
-                'Performance analytics',
+                'Expert-led courses',
+                'Skill assessments',
+                'Learning paths',
+                'Hands-on labs',
+                'Certification prep',
             ],
             pricing: [
                 {
-                    plan: 'Starter',
+                    plan: 'Standard',
                     price: '$29/month',
-                    features: ['50 credits/month', 'Basic templates'],
+                    features: ['2,500+ courses', 'Skill assessments', 'Mobile app'],
                 },
                 {
-                    plan: 'Professional',
-                    price: '$99/month',
-                    features: ['500 credits/month', 'Advanced features', 'Priority support'],
+                    plan: 'Premium',
+                    price: '$45/month',
+                    features: ['All Standard features', 'Certification practice exams', 'Interactive courses'],
                 },
             ],
-            affiliateLink: process.env.ADCREATIVE_AFFILIATE_LINK || '#',
-            website: 'https://adcreative.ai',
+            affiliateLink: process.env.PLURALSIGHT_AFFILIATE_LINK || '#',
+            website: 'https://pluralsight.com',
         },
     ];
 }
@@ -132,20 +132,20 @@ async function fetchToolData(): Promise<ToolData[]> {
 /**
  * Run data ingestion
  */
-export async function ingestToolData(): Promise<void> {
-    console.log('Starting data ingestion...');
+export async function ingestLearningPathData(): Promise<void> {
+    console.log('Starting learning path data ingestion...');
 
     await ensureDataDir();
-    const tools = await fetchToolData();
+    const learningPaths = await fetchLearningPathData();
 
-    await writeFile(TOOLS_FILE, JSON.stringify(tools, null, 2), 'utf-8');
+    await writeFile(LEARNING_PATHS_FILE, JSON.stringify(learningPaths, null, 2), 'utf-8');
 
-    console.log(`✅ Ingested data for ${tools.length} tools`);
-    console.log(`📁 Saved to: ${TOOLS_FILE}`);
+    console.log(`✅ Ingested data for ${learningPaths.length} learning paths`);
+    console.log(`📁 Saved to: ${LEARNING_PATHS_FILE}`);
 }
 
 // Run if called directly
 if (require.main === module) {
-    ingestToolData().catch(console.error);
+    ingestLearningPathData().catch(console.error);
 }
 

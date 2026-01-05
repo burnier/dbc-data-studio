@@ -1,0 +1,10 @@
+# Impact.com Site Verification File
+# 
+# Instructions:
+# 1. Impact.com will provide a specific verification code
+# 2. Replace this file content with the code they provide
+# 3. Ensure this file is accessible at: https://yourdomain.com/impact-site-verification.txt
+# 4. Submit for verification in Impact.com dashboard
+#
+# Placeholder - Replace with actual verification code from Impact.com
+

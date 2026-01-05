@@ -2,14 +2,14 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-    title: 'AutoStack - AI Business Automation Tools Compared',
-    description: 'Compare the best AI business automation tools: Gumloop, Make.com, and AdCreative.ai. Find the perfect solution for your workflow.',
-    keywords: 'AI automation, business automation, workflow automation, Gumloop, Make.com, AdCreative.ai',
-    openGraph: {
-        title: 'AutoStack - AI Business Automation Tools',
-        description: 'Compare top AI business automation tools',
-        type: 'website',
-    },
+  title: 'DBC Data Studio - AI Career & Education Hub',
+  description: 'Compare top learning paths for data engineering and AI careers. Coursera, DataQuest, and Pluralsight certifications compared.',
+  keywords: 'data engineering, AI career, data science certification, Coursera, DataQuest, Pluralsight, MLOps, data engineering courses',
+  openGraph: {
+    title: 'DBC Data Studio - AI Career & Education Hub',
+    description: 'Launch your data engineering & AI career with top certification programs',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({

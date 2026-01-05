@@ -1,5 +1,6 @@
 /**
- * Main bridge page - AI Business Automation Tools Comparison
+ * Main bridge page - AI Career & Education Hub
+ * Learning Path Comparison for Data Engineering & AI Careers
  * SEO-optimized, fast-loading, ad-ready
  */
 
@@ -8,10 +9,11 @@ import { join } from 'path';
 import Link from 'next/link';
 import LeadCapture from '@/components/LeadCapture';
 
-interface ToolData {
+interface LearningPathData {
     name: string;
     slug: string;
     description: string;
+    focus: string;
     features: string[];
     pricing: {
         plan: string;
@@ -22,9 +24,9 @@ interface ToolData {
     website: string;
 }
 
-async function getToolsData(): Promise<ToolData[]> {
+async function getLearningPathData(): Promise<LearningPathData[]> {
     try {
-        const filePath = join(process.cwd(), 'data', 'tools.json');
+        const filePath = join(process.cwd(), 'data', 'learning-paths.json');
         const data = await readFile(filePath, 'utf-8');
         return JSON.parse(data);
     } catch (error) {
@@ -34,15 +36,15 @@ async function getToolsData(): Promise<ToolData[]> {
 }
 
 export default async function Home() {
-    const tools = await getToolsData();
+    const learningPaths = await getLearningPathData();
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
             {/* Header */}
             <header className="bg-white shadow-sm">
                 <div className="container mx-auto px-4 py-6">
-                    <h1 className="text-3xl font-bold text-gray-900">AutoStack</h1>
-                    <p className="text-gray-600 mt-1">AI Business Automation Tools Compared</p>
+                    <h1 className="text-3xl font-bold text-gray-900">DBC Data Studio</h1>
+                    <p className="text-gray-600 mt-1">AI Career & Education Hub</p>
                 </div>
             </header>
 
@@ -50,31 +52,32 @@ export default async function Home() {
             <section className="container mx-auto px-4 py-16">
                 <div className="max-w-4xl mx-auto text-center">
                     <h2 className="text-5xl font-bold text-gray-900 mb-6">
-                        The Best AI Business Automation Tools in 2025
+                        Launch Your Data Engineering & AI Career in 2025
                     </h2>
                     <p className="text-xl text-gray-700 mb-8">
-                        Compare Gumloop, Make.com, and AdCreative.ai. Find the perfect automation
-                        solution for your workflow.
+                        Compare top learning paths from Coursera, DataQuest, and Pluralsight. 
+                        Find the perfect certification program to advance your career.
                     </p>
                 </div>
             </section>
 
-            {/* Tools Comparison */}
+            {/* Learning Paths Comparison */}
             <section className="container mx-auto px-4 py-12">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {tools.map((tool) => (
+                    {learningPaths.map((path) => (
                         <div
-                            key={tool.slug}
+                            key={path.slug}
                             className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow"
                         >
-                            <h3 className="text-2xl font-bold text-gray-900 mb-4">{tool.name}</h3>
-                            <p className="text-gray-600 mb-6">{tool.description}</p>
+                            <h3 className="text-2xl font-bold text-gray-900 mb-2">{path.name}</h3>
+                            <p className="text-sm font-semibold text-indigo-600 mb-4">{path.focus}</p>
+                            <p className="text-gray-600 mb-6">{path.description}</p>
 
                             {/* Features */}
                             <div className="mb-6">
                                 <h4 className="font-semibold text-gray-900 mb-3">Key Features:</h4>
                                 <ul className="space-y-2">
-                                    {tool.features.map((feature, idx) => (
+                                    {path.features.map((feature, idx) => (
                                         <li key={idx} className="flex items-start">
                                             <svg
                                                 className="w-5 h-5 text-green-500 mr-2 mt-0.5"
@@ -99,7 +102,7 @@ export default async function Home() {
                             <div className="mb-6">
                                 <h4 className="font-semibold text-gray-900 mb-3">Pricing:</h4>
                                 <div className="space-y-2">
-                                    {tool.pricing.map((plan, idx) => (
+                                    {path.pricing.map((plan, idx) => (
                                         <div key={idx} className="text-sm">
                                             <span className="font-medium">{plan.plan}:</span>{' '}
                                             <span className="text-gray-600">{plan.price}</span>
@@ -110,10 +113,10 @@ export default async function Home() {
 
                             {/* CTA Button */}
                             <Link
-                                href={`/go/${tool.slug}`}
+                                href={`/go/${path.slug}`}
                                 className="block w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg text-center transition-colors"
                             >
-                                Try {tool.name} →
+                                Explore {path.name} →
                             </Link>
                         </div>
                     ))}
@@ -133,38 +136,38 @@ export default async function Home() {
                                     <th className="text-left py-4 px-4 font-semibold text-gray-900">
                                         Feature
                                     </th>
-                                    {tools.map((tool) => (
+                                    {learningPaths.map((path) => (
                                         <th
-                                            key={tool.slug}
+                                            key={path.slug}
                                             className="text-center py-4 px-4 font-semibold text-gray-900"
                                         >
-                                            {tool.name}
+                                            {path.name}
                                         </th>
                                     ))}
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr className="border-b border-gray-100">
-                                    <td className="py-4 px-4 font-medium text-gray-700">Best For</td>
-                                    {tools.map((tool) => (
-                                        <td key={tool.slug} className="py-4 px-4 text-center text-gray-600">
-                                            {tool.description.split('.')[0]}
+                                    <td className="py-4 px-4 font-medium text-gray-700">Focus Area</td>
+                                    {learningPaths.map((path) => (
+                                        <td key={path.slug} className="py-4 px-4 text-center text-gray-600">
+                                            {path.focus}
                                         </td>
                                     ))}
                                 </tr>
                                 <tr className="border-b border-gray-100">
                                     <td className="py-4 px-4 font-medium text-gray-700">Starting Price</td>
-                                    {tools.map((tool) => (
-                                        <td key={tool.slug} className="py-4 px-4 text-center text-gray-600">
-                                            {tool.pricing[0]?.price || 'N/A'}
+                                    {learningPaths.map((path) => (
+                                        <td key={path.slug} className="py-4 px-4 text-center text-gray-600">
+                                            {path.pricing[0]?.price || 'N/A'}
                                         </td>
                                     ))}
                                 </tr>
                                 <tr className="border-b border-gray-100">
                                     <td className="py-4 px-4 font-medium text-gray-700">Key Features</td>
-                                    {tools.map((tool) => (
-                                        <td key={tool.slug} className="py-4 px-4 text-center text-gray-600">
-                                            {tool.features.length} features
+                                    {learningPaths.map((path) => (
+                                        <td key={path.slug} className="py-4 px-4 text-center text-gray-600">
+                                            {path.features.length} features
                                         </td>
                                     ))}
                                 </tr>
@@ -185,7 +188,7 @@ export default async function Home() {
             <footer className="bg-gray-900 text-white py-8">
                 <div className="container mx-auto px-4 text-center">
                     <p className="text-gray-400">
-                        AutoStack - Compare the best AI business automation tools
+                        DBC Data Studio - Your path to a data engineering & AI career
                     </p>
                 </div>
             </footer>
