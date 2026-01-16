@@ -1,0 +1,11 @@
+name,description,sku,price,color,brand,size,material,category,is_active,internal_id,legacy_code
+Classic T-Shirt,Comfortable cotton t-shirt for everyday wear,TSH-001,29.99,Blue,Nike,Medium,Cotton,Apparel,true,INT-001,LEG-001
+Classic T-Shirt,Comfortable cotton t-shirt for everyday wear,TSH-002,29.99,Red,Nike,Large,Cotton,Apparel,true,INT-002,LEG-002
+Classic T-Shirt,Comfortable cotton t-shirt for everyday wear,TSH-003,29.99,Green,Nike,Small,Cotton,Apparel,true,INT-003,LEG-003
+Gaming Laptop,High-performance laptop for gaming,LP-001,1299.99,Black,Dell,15-inch,Aluminum,Electronics,true,INT-004,LEG-004
+Gaming Laptop,High-performance laptop for gaming,LP-002,1299.99,Black,Dell,17-inch,Aluminum,Electronics,true,INT-005,LEG-005
+Wireless Mouse,Ergonomic wireless mouse for productivity,MS-001,49.99,Black,Logitech,Standard,Plastic,Electronics,true,INT-006,LEG-006
+Wireless Mouse,Ergonomic wireless mouse for productivity,MS-002,49.99,White,Logitech,Standard,Plastic,Electronics,true,INT-007,LEG-007
+Running Shoes,Lightweight running shoes for athletes,SH-001,89.99,Blue,Adidas,Size 10,Synthetic,Shoes,true,INT-008,LEG-008
+Running Shoes,Lightweight running shoes for athletes,SH-002,89.99,Red,Adidas,Size 11,Synthetic,Shoes,true,INT-009,LEG-009
+
