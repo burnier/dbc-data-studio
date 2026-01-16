@@ -27,6 +27,7 @@ yarn-error.log*
 # local env files
 .env*.local
 .env
+.env.local
 
 # vercel
 .vercel
@@ -34,4 +35,24 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# test files and temporary scripts (keep test-data.csv for examples)
+test-*.ts
+test-*.js
+check-*.sh
+check-*.md
+
+# old/unused files
+lib/gemini-schema-generator.ts
+
+# deployment scripts in parent directory
+../deploy-*.sh
+../package-lock.json
+
+# sensitive data patterns
+*.key
+*.pem
+*secret*
+*credential*
+*password*
 
