@@ -53,6 +53,15 @@ export default function Home() {
                 throw new Error(result.error || 'Failed to analyze file');
             }
 
+            // Track attributes mapped
+            if (typeof window !== 'undefined' && (window as any).gtag) {
+                (window as any).gtag('event', 'attributes_mapped', {
+                    total_attributes: result.proposal.attributes.length,
+                    product_info_count: result.proposal.attributes.filter((a: any) => a.bucket === 'product-info').length,
+                    technical_metadata_count: result.proposal.attributes.filter((a: any) => a.bucket === 'technical-metadata').length,
+                });
+            }
+
             setProposal(result.proposal);
             setSelectedAttributes(result.proposal.attributes);
             setStep('select');
@@ -72,9 +81,7 @@ export default function Home() {
 
     const handleSelectionChange = (attributes: AttributeMapping[]) => {
         setSelectedAttributes(attributes);
-        if (step === 'select') {
-            setStep('preview');
-        }
+        // Don't auto-advance - user must click "Continue to Preview" button
     };
 
     const handleReset = () => {
@@ -94,6 +101,9 @@ export default function Home() {
                         <h1 className="text-5xl font-bold text-gray-900 mb-4">
                             Smart Data Modeler
                         </h1>
+                        <p className="text-2xl font-semibold text-gray-800 max-w-3xl mx-auto mb-4">
+                            From Legacy Data to commercetools in 60 Seconds
+                        </p>
                         <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
                             Transform your raw product data into commercetools-ready schemas with
                             AI-powered mapping. Free utility for Solution Architects and Developers.
@@ -183,6 +193,7 @@ export default function Home() {
                                 productTypeDescription={proposal.productTypeDescription}
                                 selectedAttributes={selectedAttributes}
                                 sampleData={parsedData?.sampleRows}
+                                allAttributes={proposal.attributes}
                             />
                         </div>
                         <div className="text-center">
@@ -200,10 +211,12 @@ export default function Home() {
             {/* Footer */}
             <footer className="bg-white border-t border-gray-200 mt-16">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                    <div className="text-center text-sm text-gray-500">
-                        <p>Smart Data Modeler by DBC Data Studio</p>
-                        <p className="mt-2">
-                            Transform your product data into commercetools schemas in seconds.
+                    <div className="text-center">
+                        <p className="text-sm text-gray-600 font-medium">
+                            Built by <span className="text-primary-600">DBC Data Studio</span> – Accelerating Composable Commerce
+                        </p>
+                        <p className="mt-2 text-xs text-gray-500">
+                            Smart Data Modeler – Transform your product data into commercetools schemas in seconds.
                         </p>
                     </div>
                 </div>

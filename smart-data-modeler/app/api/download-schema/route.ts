@@ -30,8 +30,9 @@ export async function POST(request: NextRequest) {
         const schema = generateCommercetoolsSchema(
             productTypeName,
             productTypeKey,
+            selectedAttributes as AttributeMapping[],
             productTypeDescription,
-            selectedAttributes as AttributeMapping[]
+            sampleData
         );
 
         // Generate import JSON if sample data is provided

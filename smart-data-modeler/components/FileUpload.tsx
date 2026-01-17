@@ -16,7 +16,7 @@ export default function FileUpload({ onFileParsed, onError }: FileUploadProps) {
   const handleFile = async (file: File) => {
     const validTypes = ['csv', 'json', 'xlsx', 'xls'];
     const fileType = file.name.split('.').pop()?.toLowerCase();
-    
+
     if (!fileType || !validTypes.includes(fileType)) {
       onError('Please upload a CSV, JSON, or XLSX file.');
       return;
@@ -30,6 +30,17 @@ export default function FileUpload({ onFileParsed, onError }: FileUploadProps) {
     setIsProcessing(true);
     try {
       const parsedData = await parseFile(file);
+
+      // Track file upload success with correct extension
+      const fileExtension = `.${fileType}`;
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', 'file_upload_success', {
+          file_extension: fileExtension,
+          row_count: parsedData.totalRows,
+          header_count: parsedData.headers.length,
+        });
+      }
+
       onFileParsed(parsedData);
     } catch (error) {
       onError(error instanceof Error ? error.message : 'Failed to parse file');
@@ -67,11 +78,10 @@ export default function FileUpload({ onFileParsed, onError }: FileUploadProps) {
 
   return (
     <div
-      className={`border-2 border-dashed rounded-xl p-12 text-center transition-colors ${
-        isDragging
+      className={`border-2 border-dashed rounded-xl p-12 text-center transition-colors ${isDragging
           ? 'border-primary-500 bg-primary-50'
           : 'border-gray-300 hover:border-primary-400 bg-gray-50'
-      } ${isProcessing ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+        } ${isProcessing ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
       onDrop={handleDrop}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}

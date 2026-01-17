@@ -27,8 +27,8 @@ gcloud run deploy ${SERVICE_NAME} \
   --memory 1Gi \
   --cpu 1 \
   --timeout 300 \
-  --set-env-vars "ENABLE_TELEMETRY=true" \
-  --set-secrets "GEMINI_API_KEY=GEMINI_API_KEY:latest"
+  --set-env-vars "ENABLE_TELEMETRY=true,GOOGLE_CLOUD_PROJECT=${PROJECT_ID},GOOGLE_CLOUD_LOCATION=${REGION},GOOGLE_GENAI_USE_VERTEXAI=true" \
+  --set-secrets "GEMINI_API_KEY=GEMINI_API_KEY:latest,NEXT_PUBLIC_GA4_ID=NEXT_PUBLIC_GA4_ID:latest"
 
 echo "✅ Deployment complete!"
 echo "🔗 Service URL:"
