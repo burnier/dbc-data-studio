@@ -104,7 +104,7 @@ export default function SchemaPreview({
 
     const handleAccuracyFeedback = (feedback: 'up' | 'down') => {
         if (feedbackSubmitted) return;
-        
+
         setAccuracyFeedback(feedback);
         setFeedbackSubmitted(true);
 
