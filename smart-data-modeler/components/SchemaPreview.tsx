@@ -23,6 +23,8 @@ export default function SchemaPreview({
     allAttributes = [],
 }: SchemaPreviewProps) {
     const [isDownloading, setIsDownloading] = useState(false);
+    const [accuracyFeedback, setAccuracyFeedback] = useState<'up' | 'down' | null>(null);
+    const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
 
     // Calculate dry run summary
     const productAttributes = selectedAttributes.filter((attr) => attr.bucket !== 'standard');
@@ -100,17 +102,67 @@ export default function SchemaPreview({
         }
     };
 
+    const handleAccuracyFeedback = (feedback: 'up' | 'down') => {
+        if (feedbackSubmitted) return;
+        
+        setAccuracyFeedback(feedback);
+        setFeedbackSubmitted(true);
+
+        // Track feedback event
+        if (typeof window !== 'undefined' && (window as any).gtag) {
+            (window as any).gtag('event', 'schema_accuracy_feedback', {
+                feedback: feedback,
+                product_type_key: productTypeKey,
+                attribute_count: productAttributes.length,
+            });
+        }
+    };
+
     return (
         <div className="space-y-4">
             <div className="flex items-center justify-between">
                 <h3 className="text-lg font-semibold text-gray-900">Schema Preview</h3>
-                <button
-                    onClick={handleDownload}
-                    disabled={isDownloading || productAttributes.length === 0}
-                    className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                >
-                    {isDownloading ? 'Generating...' : 'Download ProductTypeDraft JSON'}
-                </button>
+                <div className="flex items-center gap-3">
+                    {/* Accuracy Check */}
+                    {!feedbackSubmitted ? (
+                        <div className="flex items-center gap-2 text-sm text-gray-600">
+                            <span className="text-xs">Accuracy Check:</span>
+                            <button
+                                onClick={() => handleAccuracyFeedback('up')}
+                                className="p-1.5 hover:bg-green-50 rounded transition-colors"
+                                title="Schema looks accurate"
+                            >
+                                <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.834a1 1 0 001.707.707l3.546-3.547a1 1 0 00.293-.707V8.932a1 1 0 00-.293-.707L7.707 4.678A1 1 0 006 5.385v4.948zM16 10.5a1.5 1.5 0 10-3 0v6a1.5 1.5 0 003 0v-6z" />
+                                </svg>
+                            </button>
+                            <button
+                                onClick={() => handleAccuracyFeedback('down')}
+                                className="p-1.5 hover:bg-red-50 rounded transition-colors"
+                                title="Schema needs improvement"
+                            >
+                                <svg className="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M2 9.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 9.333v5.834a1 1 0 001.707.707l3.546-3.547a1 1 0 00.293-.707V8.932a1 1 0 00-.293-.707L7.707 4.678A1 1 0 006 5.385v4.948zM16 9.5a1.5 1.5 0 10-3 0v6a1.5 1.5 0 003 0v-6z" />
+                                </svg>
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="text-sm text-gray-500">
+                            {accuracyFeedback === 'up' ? (
+                                <span className="text-green-600">✓ Thank you for your feedback!</span>
+                            ) : (
+                                <span className="text-red-600">✓ Thank you for your feedback!</span>
+                            )}
+                        </div>
+                    )}
+                    <button
+                        onClick={handleDownload}
+                        disabled={isDownloading || productAttributes.length === 0}
+                        className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                        {isDownloading ? 'Generating...' : 'Download ProductTypeDraft JSON'}
+                    </button>
+                </div>
             </div>
 
             {/* Schema Dry Run Summary */}
@@ -127,6 +179,11 @@ export default function SchemaPreview({
                                 <> We ignored <strong>{technicalMetadataIgnored} metadata field{technicalMetadataIgnored !== 1 ? 's' : ''}</strong> for you to keep the schema lean.</>
                             )}
                         </p>
+                        <div className="mt-2 pt-2 border-t border-blue-200">
+                            <p className="text-xs text-blue-700 italic">
+                                Schema generated following commercetools Foundry modeling standards.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
