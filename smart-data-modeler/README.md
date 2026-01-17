@@ -66,8 +66,6 @@ Transform your raw product data into commercetools-ready schemas with AI-powered
 
 5. **Open** [http://localhost:3000](http://localhost:3000)
 
-For detailed setup instructions, see [LOCAL_RUN.md](./LOCAL_RUN.md)
-
 ## Deployment
 
 ### Prerequisites
@@ -145,11 +143,35 @@ See [env.example](./env.example) for a complete configuration template.
 - `POST /api/analyze`: Analyzes uploaded data and generates schema proposal
 - `POST /api/download-schema`: Generates final commercetools schema JSON
 
-## Documentation
+## Production
 
-- [LOCAL_RUN.md](./LOCAL_RUN.md) - Detailed local development setup
-- [DEPLOYMENT_CHECKLIST.md](./DEPLOYMENT_CHECKLIST.md) - Production deployment guide
-- [env.example](./env.example) - Environment variables template
+**Live URL**: https://modeler.dbcdatastudio.com  
+**Cloud Run URL**: https://smart-data-modeler-7ul23r45va-uc.a.run.app
+
+### Deployment
+
+Deploy using the deployment script:
+```bash
+./deploy-modeler.sh
+```
+
+Or manually:
+```bash
+gcloud builds submit --tag gcr.io/dbc-data-studio/smart-data-modeler --project=dbc-data-studio
+gcloud run deploy smart-data-modeler \
+  --image gcr.io/dbc-data-studio/smart-data-modeler:latest \
+  --platform managed \
+  --region us-central1 \
+  --project dbc-data-studio \
+  --allow-unauthenticated \
+  --set-env-vars "ENABLE_TELEMETRY=true,GOOGLE_CLOUD_PROJECT=dbc-data-studio,GOOGLE_CLOUD_LOCATION=us-central1,GOOGLE_GENAI_USE_VERTEXAI=true"
+```
+
+### Analytics
+
+GA4 is configured and tracking:
+- Measurement ID: `G-NMF51G1TX7`
+- Custom events: `file_upload_success`, `attributes_mapped`, `schema_downloaded`
 
 ## Troubleshooting
 
@@ -157,7 +179,7 @@ See [env.example](./env.example) for a complete configuration template.
 - Verify authentication: `gcloud auth application-default login`
 - Check IAM roles: `gcloud projects get-iam-policy dbc-data-studio`
 - Verify Vertex AI API is enabled: `gcloud services enable aiplatform.googleapis.com`
-- Test connection: `npx tsx test-vertex-ai.ts` (test script)
+- Ensure service account has `roles/aiplatform.user` role
 
 ### Model Not Found Errors
 - Vertex AI uses REST API (SDK has issues with Vertex AI mode)
