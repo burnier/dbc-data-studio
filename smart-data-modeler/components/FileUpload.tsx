@@ -18,12 +18,12 @@ export default function FileUpload({ onFileParsed, onError }: FileUploadProps) {
     const fileType = file.name.split('.').pop()?.toLowerCase();
 
     if (!fileType || !validTypes.includes(fileType)) {
-      onError('Please upload a CSV, JSON, or XLSX file.');
+      onError('Unsupported file type. Please upload a CSV, JSON, or XLSX file. These formats are optimized for product data migration.');
       return;
     }
 
     if (file.size > 4 * 1024 * 1024) {
-      onError('File size must be less than 4MB. For larger catalogs, please split into product families for better AI accuracy.');
+      onError('File size exceeds 4MB limit. For larger catalogs, we recommend splitting your data into product families (e.g., by category or product type) for better AI accuracy and faster processing.');
       return;
     }
 
@@ -43,7 +43,12 @@ export default function FileUpload({ onFileParsed, onError }: FileUploadProps) {
 
       onFileParsed(parsedData);
     } catch (error) {
-      onError(error instanceof Error ? error.message : 'Failed to parse file');
+      const errorMessage = error instanceof Error ? error.message : 'Failed to parse file';
+      onError(
+        errorMessage.includes('parse') || errorMessage.includes('format')
+          ? `Unable to read your file. Please ensure it's a valid ${fileType.toUpperCase()} file with product data. If the issue persists, try exporting your data again from the source system.`
+          : errorMessage
+      );
     } finally {
       setIsProcessing(false);
     }

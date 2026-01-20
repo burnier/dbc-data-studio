@@ -67,7 +67,20 @@ export default function Home() {
             setStep('select');
         } catch (err) {
             const errorMessage = err instanceof Error ? err.message : 'Failed to analyze file';
-            setError(errorMessage);
+            
+            // Provide friendly error messages
+            let friendlyMessage = errorMessage;
+            if (errorMessage.includes('rate limit') || errorMessage.includes('quota')) {
+                friendlyMessage = 'The AI service is temporarily busy. Please try again in a few moments.';
+            } else if (errorMessage.includes('timeout') || errorMessage.includes('network')) {
+                friendlyMessage = 'Connection issue detected. Please check your internet connection and try again.';
+            } else if (errorMessage.includes('Vertex AI') || errorMessage.includes('authentication')) {
+                friendlyMessage = 'Service configuration issue. Please try again later or contact support if the problem persists.';
+            } else if (errorMessage.includes('analyze') || errorMessage.includes('AI')) {
+                friendlyMessage = 'Unable to analyze your data. Please ensure your file contains valid product data with headers and at least a few rows.';
+            }
+            
+            setError(friendlyMessage);
             setStep('upload');
 
             // If it's a rate limit error, show helpful message
@@ -213,7 +226,7 @@ export default function Home() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                     <div className="text-center">
                         <p className="text-sm text-gray-600 font-medium">
-                            Built by <span className="text-primary-600">DBC Data Studio</span> – Accelerating Composable Commerce
+                            A DBC Data Studio community project dedicated to accelerating composable commerce.
                         </p>
                         <p className="mt-2 text-xs text-gray-500">
                             Smart Data Modeler – Transform your product data into commercetools schemas in seconds.

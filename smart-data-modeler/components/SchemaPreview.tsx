@@ -183,6 +183,9 @@ export default function SchemaPreview({
                             <p className="text-xs text-blue-700 italic">
                                 Schema generated following commercetools Foundry modeling standards.
                             </p>
+                            <p className="text-xs text-blue-600 mt-1">
+                                <span className="font-semibold">80% Similarity Rule:</span> Products within a Product Type share ~80% of attributes, preventing attribute bloat. Based on commercetools Foundry guidelines.
+                            </p>
                         </div>
                     </div>
                 </div>
