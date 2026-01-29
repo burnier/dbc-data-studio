@@ -1,0 +1,69 @@
+{
+  "hero": {
+    "title": "Abigail",
+    "subtitle": "Arts & Oracles",
+    "tagline": "Von Legacy-Daten zu spiritueller Führung in 60 Sekunden"
+  },
+  "cardDraw": {
+    "title": "Ziehen Sie Ihre Karten",
+    "subtitle": "Klicken Sie auf drei Karten, um Ihre Lesung zu enthüllen",
+    "shuffling": "Mischen..."
+  },
+  "form": {
+    "name": "Name",
+    "email": "E-Mail",
+    "question": "Ihre Frage",
+    "questionPlaceholder": "Stellen Sie hier Ihre Frage...",
+    "language": "Sprache",
+    "submit": "Kostenlose Lesung erhalten",
+    "submitting": "Karten mischen..."
+  },
+  "reading": {
+    "title": "Ihre Lesung",
+    "summary": "Basierend auf den gezogenen Karten ist hier Ihre Lesung:",
+    "cards": "Gezogene Karten"
+  },
+  "premium": {
+    "title": "Abigail hat eine tiefere Botschaft erkannt",
+    "description": "Für eine professionelle, handgeschriebene Analyse und ein Foto Ihrer physischen Legung bestellen Sie den Deep-Dive.",
+    "cta": "Deep-Dive anfordern"
+  },
+  "cards": {
+    "constancy": "Beständigkeit",
+    "visit": "Besuch",
+    "message": "Nachricht",
+    "letter": "Brief",
+    "thief": "Dieb",
+    "jealousy": "Eifersucht",
+    "someMoney": "Etwas Geld",
+    "falseness": "Falschheit",
+    "enemy": "Feind",
+    "joy": "Freude",
+    "thought": "Gedanke",
+    "priest": "Priester",
+    "money": "Geld",
+    "beloved": "Geliebte",
+    "gift": "Geschenk",
+    "fortune": "Glück",
+    "house": "Haus",
+    "marriage": "Heirat",
+    "hope": "Hoffnung",
+    "child": "Kind",
+    "illness": "Krankheit",
+    "love": "Liebe",
+    "officer": "Offizier",
+    "journey": "Reise",
+    "judge": "Richter",
+    "desire": "Wunsch",
+    "death": "Tod",
+    "sadness": "Traurigkeit",
+    "fidelity": "Treue",
+    "misfortune": "Unglück",
+    "unexpectedJoy": "Unerwartete Freude",
+    "disgust": "Ekel",
+    "loss": "Verlust",
+    "widow": "Witwe",
+    "widower": "Witwer"
+  }
+}
+

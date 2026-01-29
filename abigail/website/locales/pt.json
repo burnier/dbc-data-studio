@@ -1,0 +1,69 @@
+{
+  "hero": {
+    "title": "Abigail",
+    "subtitle": "Arts & Oracles",
+    "tagline": "De Dados Legados para Orientação Espiritual em 60 Segundos"
+  },
+  "cardDraw": {
+    "title": "Tire Suas Cartas",
+    "subtitle": "Clique em três cartas para revelar sua leitura",
+    "shuffling": "Embaralhando..."
+  },
+  "form": {
+    "name": "Nome",
+    "email": "E-mail",
+    "question": "Sua Pergunta",
+    "questionPlaceholder": "Faça sua pergunta aqui...",
+    "language": "Idioma",
+    "submit": "Obter Leitura Gratuita",
+    "submitting": "Embaralhando as cartas..."
+  },
+  "reading": {
+    "title": "Sua Leitura",
+    "summary": "Com base nas cartas tiradas, aqui está sua leitura:",
+    "cards": "Cartas Tiradas"
+  },
+  "premium": {
+    "title": "Abigail detectou uma mensagem mais profunda",
+    "description": "Para uma análise profissional escrita à mão e uma foto de sua tiragem física, solicite o Deep-Dive.",
+    "cta": "Solicitar Deep-Dive"
+  },
+  "cards": {
+    "constancy": "Constância",
+    "visit": "Visita",
+    "message": "Mensagem",
+    "letter": "Carta",
+    "thief": "Ladrão",
+    "jealousy": "Ciúmes",
+    "someMoney": "Algum Dinheiro",
+    "falseness": "Falsidade",
+    "enemy": "Inimigo",
+    "joy": "Alegria",
+    "thought": "Pensamento",
+    "priest": "Sacerdote",
+    "money": "Dinheiro",
+    "beloved": "Pessoa Amada",
+    "gift": "Presente",
+    "fortune": "Fortuna",
+    "house": "Casa",
+    "marriage": "Casamento",
+    "hope": "Esperança",
+    "child": "Criança",
+    "illness": "Doença",
+    "love": "Amor",
+    "officer": "Oficial",
+    "journey": "Viagem",
+    "judge": "Juiz",
+    "desire": "Desejo",
+    "death": "Morte",
+    "sadness": "Tristeza",
+    "fidelity": "Fidelidade",
+    "misfortune": "Infortúnio",
+    "unexpectedJoy": "Alegria Inesperada",
+    "disgust": "Desgosto",
+    "loss": "Perda",
+    "widow": "Viúva",
+    "widower": "Viúvo"
+  }
+}
+

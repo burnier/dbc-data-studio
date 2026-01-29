@@ -1,0 +1,69 @@
+{
+  "hero": {
+    "title": "Abigail",
+    "subtitle": "Arts & Oracles",
+    "tagline": "From Legacy Data to Spiritual Guidance in 60 Seconds"
+  },
+  "cardDraw": {
+    "title": "Draw Your Cards",
+    "subtitle": "Click on three cards to reveal your reading",
+    "shuffling": "Shuffling..."
+  },
+  "form": {
+    "name": "Name",
+    "email": "Email",
+    "question": "Your Question",
+    "questionPlaceholder": "Ask your question here...",
+    "language": "Language",
+    "submit": "Get Your Free Reading",
+    "submitting": "Shuffling the cards..."
+  },
+  "reading": {
+    "title": "Your Reading",
+    "summary": "Based on the cards drawn, here is your reading:",
+    "cards": "Cards Drawn"
+  },
+  "premium": {
+    "title": "Abigail has detected a deeper message",
+    "description": "For a professional, hand-written analysis and a photo of your physical spread, order the Deep-Dive.",
+    "cta": "Request Deep-Dive"
+  },
+  "cards": {
+    "constancy": "Constancy",
+    "visit": "Visit",
+    "message": "Message",
+    "letter": "Letter",
+    "thief": "Thief",
+    "jealousy": "Jealousy",
+    "someMoney": "Some Money",
+    "falseness": "Falseness",
+    "enemy": "Enemy",
+    "joy": "Joy",
+    "thought": "Thought",
+    "priest": "Priest",
+    "money": "Money",
+    "beloved": "Beloved",
+    "gift": "Gift",
+    "fortune": "Fortune",
+    "house": "House",
+    "marriage": "Marriage",
+    "hope": "Hope",
+    "child": "Child",
+    "illness": "Illness",
+    "love": "Love",
+    "officer": "Officer",
+    "journey": "Journey",
+    "judge": "Judge",
+    "desire": "Desire",
+    "death": "Death",
+    "sadness": "Sadness",
+    "fidelity": "Fidelity",
+    "misfortune": "Misfortune",
+    "unexpectedJoy": "Unexpected Joy",
+    "disgust": "Disgust",
+    "loss": "Loss",
+    "widow": "Widow",
+    "widower": "Widower"
+  }
+}
+

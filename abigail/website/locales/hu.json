@@ -1,0 +1,69 @@
+{
+  "hero": {
+    "title": "Abigail",
+    "subtitle": "Arts & Oracles",
+    "tagline": "Örökségadatoktól a spirituális útmutatásig 60 másodperc alatt"
+  },
+  "cardDraw": {
+    "title": "Húzza ki a kártyáit",
+    "subtitle": "Kattintson három kártyára, hogy felfedje az olvasást",
+    "shuffling": "Keverés..."
+  },
+  "form": {
+    "name": "Név",
+    "email": "E-mail",
+    "question": "Kérdése",
+    "questionPlaceholder": "Tegye fel a kérdését itt...",
+    "language": "Nyelv",
+    "submit": "Ingyenes olvasás kérése",
+    "submitting": "Kártyák keverése..."
+  },
+  "reading": {
+    "title": "Az Ön olvasása",
+    "summary": "A kihúzott kártyák alapján itt az olvasása:",
+    "cards": "Kihúzott kártyák"
+  },
+  "premium": {
+    "title": "Abigail mélyebb üzenetet észlelt",
+    "description": "Professzionális, kézzel írt elemzésért és a fizikai kirakás fotójáért rendelje meg a Deep-Dive-t.",
+    "cta": "Deep-Dive kérése"
+  },
+  "cards": {
+    "constancy": "Állandóság",
+    "visit": "Látogatás",
+    "message": "Üzenet",
+    "letter": "Levél",
+    "thief": "Tolvaj",
+    "jealousy": "Féltékenység",
+    "someMoney": "Egy kis pénz",
+    "falseness": "Hamisság",
+    "enemy": "Ellenség",
+    "joy": "Öröm",
+    "thought": "Gondolat",
+    "priest": "Pap",
+    "money": "Pénz",
+    "beloved": "Szerető",
+    "gift": "Ajándék",
+    "fortune": "Szerencse",
+    "house": "Ház",
+    "marriage": "Házasság",
+    "hope": "Remény",
+    "child": "Gyermek",
+    "illness": "Betegség",
+    "love": "Szerelem",
+    "officer": "Tiszt",
+    "journey": "Utazás",
+    "judge": "Bíró",
+    "desire": "Vágy",
+    "death": "Halál",
+    "sadness": "Szomorúság",
+    "fidelity": "Hűség",
+    "misfortune": "Balszerencse",
+    "unexpectedJoy": "Váratlan öröm",
+    "disgust": "Undor",
+    "loss": "Veszteség",
+    "widow": "Özvegy",
+    "widower": "Özvegyember"
+  }
+}
+
