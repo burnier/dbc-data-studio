@@ -1,0 +1,57 @@
+/* RESET USER AGENT STYLESHEETS */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+
+/* BODY */
+body {
+	background: #9D50BB; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #9D50BB , #6E48AA); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #9D50BB , #6E48AA); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.well {
+    background: #b38cd9;
+	margin-bottom: 20px;
+	margin-top: 30px;
+}
+
+.form_color {
+	background: #E2CAEB;
+}
+
+/* TEXT */
+h1 {
+	color: #FFFFFF;
+	font-size: 50px;
+	font-family: "Mystery Quest",fantasy,"google"; 
+}
+
+h2 {
+	color: #FFFFFF;
+	font-size: 24px;
+	font-family: Verdana, Geneva, sans-serif; 
+}
+
+a {
+    color: #674BA9;
+	cursor: pointer;
+}
+
+
+
+/* FIGURE */
+.img-responsive {
+    margin: 0 auto;
+}
+
+/* FORM */
+label {
+	color: #fff;
+	font-size: 18px;
+	font-family: Verdana, Geneva, sans-serif; 
+}
+
+

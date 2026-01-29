@@ -1,0 +1,27 @@
+eHost
+Daniel Burnier de Castro
+LOGIN: burnier@gmail.com
+PASSWORD: bolinha10
+
+
+FTP Account (cPanel)
+FTP Username: burnier@abigailcards.com
+FTP server: ftp.abigailcards.com
+FTP & explicit FTPS port:  21
+Password: Codorna10
+
+
+
+MAIL
+Username: contact@abigailcards.com
+Password: bolinha10
+IMAP: mail.abigailcards.com:993:1
+SMTP: mail.abigailcards.com:465:1
+
+OUTLOOK
+Username: contact@abigailcards.com
+Password: bolinha10
+IMAP: mail.abigailcards.com
+PORT: 993
+SMTP: mail.abigailcards.com
+PORT: 465

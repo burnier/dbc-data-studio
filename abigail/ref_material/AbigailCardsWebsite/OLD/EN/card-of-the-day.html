@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	
+	<!-- Mobile first -->	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<!-- GOOGLE Font -->
+	<link href="https://fonts.googleapis.com/css?family=Mystery+Quest" rel="stylesheet">
+	
+	<!-- My CSS File -->
+	<link rel="stylesheet" type="text/css" href="style.css" />	
+    <link rel="stylesheet" type="text/css" href="footer.css" />	
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png"href="Other Images\BlackCatFavicon (32 x 32).ico">
+        
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">	
+			
+	<title>Gypsy Cards</title>
+  
+ 	<!---------------------------------------------------------------------------------- Script (Random Card) ------------------------------------------------------------------------------------> 
+  	<script>
+		 function randomCard() {
+			var myCard = new Array();
+				myCard[0] = "Card Images/beständigkeit.jpg";
+				myCard[1] = "Card Images/besuch.jpg";
+				myCard[2] = "Card Images/botschaft.jpg";
+				myCard[3] = "Card Images/brief.jpg";
+				myCard[4] = "Card Images/dieb.jpg";
+				myCard[5] = "Card Images/eifersucht.jpg";
+				myCard[6] = "Card Images/etwas geld.jpg";
+				myCard[7] = "Card Images/falschheit.jpg";
+				myCard[8] = "Card Images/feind.jpg";
+				myCard[9] = "Card Images/fröhlichkeit.jpg";
+				myCard[10] = "Card Images/Gedanke.jpg";
+				myCard[11] = "Card Images/geistlicher.jpg";
+				myCard[12] = "Card Images/geld.jpg";
+				myCard[13] = "Card Images/geliebte.jpg";
+				myCard[14] = "Card Images/geliebter.jpg";
+				myCard[15] = "Card Images/geschenk.jpg";
+				myCard[16] = "Card Images/glück.jpg";
+				myCard[17] = "Card Images/haus.jpg";
+				myCard[18] = "Card Images/heirat.jpg";
+				myCard[19] = "Card Images/hoffnung.jpg";
+				myCard[20] = "Card Images/kind.jpg";
+				myCard[21] = "Card Images/krankheit.jpg";
+				myCard[22] = "Card Images/liebe.jpg";
+				myCard[23] = "Card Images/offizier.jpg";
+				myCard[24] = "Card Images/reise.jpg";
+				myCard[25] = "Card Images/richter.jpg";
+				myCard[26] = "Card Images/sehnsucht.jpg";
+				myCard[27] = "Card Images/tod.jpg";
+				myCard[28] = "Card Images/traurigkeit.jpg";
+				myCard[29] = "Card Images/treue.jpg";
+				myCard[30] = "Card Images/unglück.jpg";
+				myCard[31] = "Card Images/unverhoffte freude.jpg";
+				myCard[32] = "Card Images/verdruss.jpg";
+				myCard[33] = "Card Images/verlust.jpg";
+				myCard[34] = "Card Images/witwe.jpg";
+				myCard[35] = "Card Images/witwer.jpg";
+				
+			var myCardName = new Array();
+				myCardName[0] = "Constância";
+				myCardName[1] = "Visita";
+				myCardName[2] = "Mensagem";
+				myCardName[3] = "Carta";
+				myCardName[4] = "Ladrão";
+				myCardName[5] = "Ciúmes";
+				myCardName[6] = "Algum Dinheiro";
+				myCardName[7] = "Falsidade";
+				myCardName[8] = "Inimigo";
+				myCardName[9] = "Alegria";
+				myCardName[10] = "Pensamento";
+				myCardName[11] = "Sacerdote";
+				myCardName[12] = "Dinheiro";
+				myCardName[13] = "Pessoa Amada";
+				myCardName[14] = "Pessoa Amada";
+				myCardName[15] = "Presente";
+				myCardName[16] = "Fortuna";
+				myCardName[17] = "Casa";
+				myCardName[18] = "Casamento";
+				myCardName[19] = "Esperança";
+				myCardName[20] = "Criança";
+				myCardName[21] = "Doença";
+				myCardName[22] = "Amor";
+				myCardName[23] = "Oficial";
+				myCardName[24] = "Viagem";
+				myCardName[25] = "Juiz";
+				myCardName[26] = "Desejo";
+				myCardName[27] = "Morte";
+				myCardName[28] = "Tristeza";
+				myCardName[29] = "Fidelidade";
+				myCardName[30] = "Infortúnio";
+				myCardName[31] = "Alegria Inesperada";
+				myCardName[32] = "Desgosto";
+				myCardName[33] = "Perda";
+				myCardName[34] = "Viúva";
+				myCardName[35] = "Viúvo";
+
+			var myCardInfo = new Array();	
+				myCardInfo[0] = 'Hoje você estará paciente e motivado(a) a realizar todas suas obrigações. Não perca sua calma e você terá um dia equilibrado. Além disso a carta indica que o dia de hoje correrá de acordo com seus planos e expectaticas.';
+				myCardInfo[1] = 'Hoje você receberá visitas ou passará o dia com outras pessoas. Ccoisas novas virão ao seu encontro. Você terá muitos contatos pessoas e deve tirar proveito desse tempo.';
+				myCardInfo[2] = 'Hoje você estará comunicativo(a). Você terá a necessidade de trocar idéias e emitir suas opiniões. Além disso você estará interessado em adquirir novos conhecimentos e informações.';
+				myCardInfo[3] = 'Se esta for sua carta do dia você receberá uma mensagem ou comunicação importante.';
+				myCardInfo[4] = 'Se você tira essa carta, é provável que vá se sentir mal hoje, seja fisica- ou psicologicamente. Se esse estado persistir, você deve começar a avaliar seu meio social para descobrir a causa desses sentimentos.  A carta também indica que você estará mais cético em relação ao sucesso de seus planos.';
+				myCardInfo[5] = 'Você terá hoje a companhia da inveja ou "olho gordo". Você terá propenção à pensamentos negativos e terá dificuldades em ver o futuro de maneira positiva. Por este motivo seria importante você realizar, no dia de hoje, tarefas relaxadas e descontraídas, possibilitando que você tenha pensamentos mais agradáveis. ';
+				myCardInfo[6] = 'Você receberá hoje uma pequena quantia em dinheiro, o que vai causar-lhe alegria. Essa carta do dia carta também diz que você não estará tão exigente hoje, alegrando-se com as pequenas coisas da vida. ';
+				myCardInfo[7] = 'Se esta for sua carta do dia, você deve agir de maneira mais desconfiada e deve verificar seus pensamentos, planos e trabalho de maneira meticulosa. Também é importante que você não acredite em tudo o que lhe for dito e tomar cuidado com pessoas não muito verdadeiras.';
+				myCardInfo[8] = 'Se essa é sua carta do dia, você deverá ter cuidado com pessoas a seu redor que possam causar-lhe danos. Além disso há uma alta probabilidade que você tenha pensamentos negativos, influenciados por egoísmo, malícia e vingança.';
+				myCardInfo[9] = 'Você terá ótimo estado de ânimo, alegrando seu dia. Caso ocorram eventos negativos não deixe-se abater e tente ver as coisas de maneira relaxada. Além disso, há a possibilidade que você seja hoje convidado para uma comemoração.';
+				myCardInfo[10] = 'Hoje você terá um dia criativo, no qual você mergulhará em pensamentos e irá refletir como planejar seu futuro de uma forma melhor. Além disso é provável que você encontre hoje um homem pensativo e tenha com ele uma conversa interessante.';
+				myCardInfo[11] = 'Se esta for sua carta do dia você terá pensamentos sobre temas como visão de mundo, religião e fé. Também há a possibilidade que você encontre um sacerdote, esotérico ou astrólogo e tenha conversas interessantes com essa pessoa. ';
+				myCardInfo[12] = 'Hoje você será acompanhado(a) por pensamentos relacionados com o tema dinheiro. Seu faro estará apurado para questões relacionadas às finanças. Além disso essa carta indica que você pode contar com surpresas no campo financeiro.';
+				myCardInfo[13] = 'Se esta for sua carta do dia, você terá hoje bastante autoconfiança. Se a carta representar o sexo oposto ao seu (por exemplo se uma mulher tirar a carta "o amante") significa que sua pessoa amada estará próxima.';
+				myCardInfo[14] = 'Se esta for sua carta do dia, você terá hoje bastante autoconfiança. Se a carta representar o sexo oposto ao seu (por exemplo se uma mulher tirar a carta "o amante") significa que sua pessoa amada estará próxima.';
+				myCardInfo[15] = 'Hoje é possível que você receba um presente ou um gesto amável. Entretanto, na maioria das vezes, a carta indica que você terá um dia harmonioso, no qual você saberá dar valor às pequenas coisas. Neste dia você deve tentar colocar suas capacidades à prova em seu cotidiano.';
+				myCardInfo[16] = 'Hoje você terá um dia de sorte, não apenas perceptível no seu humor mas também na forma de surpresas agradáveis. Além disso você terá confiança no sucesso das atividades que vier a realizar.';
+				myCardInfo[17] = 'De acordo com essa carta, você irá sentir-se hoje estável e equilibrado. Você também preferirá manter-se em ambiente caseiro. Hoje você também será bastante direto(a) e fiel a seus princípios.';
+				myCardInfo[18] = 'O dia de hoje irá decorrer de maneira harmônica e despreocupada. Essa harmonia também será perceptível no seu relacionamento e meio social e as pessoas desse meio sentirão confiança em você. Hoje você deve também realizar suas obrigações de maneira criteriosa e assídua, assim você servirá de exemplo a seus próximos.';
+				myCardInfo[19] = 'Se essa for sua carta do dia, você irá respirar aliviado(a) hoje, pois muitas situações que lhe causam dor de cabeça irão dissolver-se e você perceberá que mudanças positivas acontecerão com o tempo. A carta também mostra uma mulher jovem e otimista, com a qual você entrará em contato hoje.';
+				myCardInfo[20] = 'Você terá hoje a desejo de um novo começo, de realizar-se e levar novamente dinamismo ao seu cotidiano. Também é possível que você passe um tempo agradável com uma criança pequena do seu ambiente pessoal.';
+				myCardInfo[21] = 'Você se sentirá hoje indisposto física- ou psicologicamente. Em caso de sobrecargas você poderá sentir dores físicas. Por esses motivos seria aconselhável poupar-se neste dia.';
+				myCardInfo[22] = 'Se esta for sua carta do dia, você terá um dia harmonioso e estará em consonância com seu meio social. Você irá realizar todas suas atividades com esmero e amor. Também é possível que você tenha hoje um encontro afetuoso.';
+				myCardInfo[23] = 'Se você tirar esta carta, você irá hoje terminar suas tarefas com capricho e perfeição. Também significa que você entrará em contato com um homem dominante ou um oficial ou então que você receberá uma mensagem oficial.';
+				myCardInfo[24] = 'Você terá a necessidade de finalmente ver algo novo. Você terá um desejo de viajar e escapar de sua rotina. Também hoje há a possibilidade de que você faça uma pequena viagem, para visitar um conhecido ou parente.';
+				myCardInfo[25] = 'De acordo com essa carta você terá hoje grande capacidade de decisão. A carta também mostra que que você dará muito valor à equidade e justiça e irá se preocupar de que seus próximos também pensem e ajam desta forma. Entretanto você deverá levar em consideração que nem todas as pessoas compatilharão de sua visões e opiniões.';
+				myCardInfo[26] = 'Você irá pensar em seus sonhos e desejos, idealizando seu cotidiano. Infelizmente a maioria desses desejos são difíceis de realizar. A carta também indica que algo ou alguém o(a) fará esperar.';
+				myCardInfo[27] = 'Essa carta do dia indica que você estará hoje pessimista. Você pensará de forma negativa e terá o sentimento que algo morreu ou acabou no seu interior mais profundo.';
+				myCardInfo[28] = 'Hoje você não se sentirá especialmente bem espiritualmente e estará levemente deprimido(a). Também existe a possibilidade de que você não se sinta dessa forma,  porém  tenha contato com uma mulher melancólica e triste, que tenha uma influência negativa em seu humor.';
+				myCardInfo[29] = 'O dia de hoje correrá da maneira esperada e você realizará suas obrigações de maneira consciente. Você estará hoje seguro de que tem o apoio dos amigos e familiares e, por isso, não terá surpresas negativas em seu cotidiano. ';
+				myCardInfo[30] = 'Se esta for sua carta do dia, você deverá ser cuidadoso em todas as áreas da sua vida, pois há a possibilidade de acidentes e fatalidades. Por este motivo seria aconselhável adiar certos compormissos para outro dia. ';
+				myCardInfo[31] = 'Se você tirar esta carta, você terá hoje um ótimo dia, cheio de surpresas agradáveis. Caso algum assunto esteja preocupando sua mente, você encontrará para ele uma solução ou final positivo.';
+				myCardInfo[32] = 'Hoje você e seus próximos estarão irritadiços. Por isso há uma grande possibilidade que você se envolva em uma discussão intensa, que vai causar-lhe desgosto.';
+				myCardInfo[33] = 'Você terá hoje o sentimento de perda. Há uma grande possibilidade que você perca objetos e não os encontre mais. A carta também alerta para descuido e arrogância.';
+				myCardInfo[34] = 'Você terá um dia tranquilo. Há a possibilidade de que você se sinta solitário(a), porém você deve usar esse tempo para se lembrar de suas experiências de maneira intensiva. A carta também indica que hoje você terá contato com uma mulher mais velha e tirará proveito de sua experiência de vida.';
+				myCardInfo[35] = 'Você terá um dia tranquilo. Há a possibilidade de que você se sinta solitário(a), porém você deve usar esse tempo para se lembrar de suas experiências de maneira intensiva. A carta também indica que hoje você terá contato com um homem mais velho e tirará proveito de sua experiência de vida.';
+
+		
+			var random = Math.floor(Math.random() * myCard.length);
+			document.getElementById("myImage").src = myCard[random];
+			
+			// Figcaption	
+			var x = document.createElement("FIGCAPTION");
+			var y = document.createTextNode(myCardName[random]);
+			x.appendChild(y);
+			var z = document.getElementById("myFigure");
+			z.appendChild(x);
+			
+			//gets myCardInfo
+			document.getElementById("myText").innerHTML = myCardInfo[random];		
+			
+  }
+    </script>
+ 
+  
+  
+  </head>
+  
+  <body>
+	
+
+	<!--------------------------------------------------------------------------------------- Navigation Bar ----------------------------------------------------------------------------------------->
+	<div class="navbar navbar-custom" role="navigation"> 
+		<div class="container"> 
+			<div class="navbar-header"> 
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> 
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+                <a class="navbar-brand" rel="contact" href="contact.html" title="AbigailCards">Abigail Cards</a>
+			</div>	
+			<div class="navbar-collapse collapse"> 
+				<ul class="nav navbar-nav">
+						<li><a href='index.html'>Main Page</a></li>
+						<li><a href='history.html'>History of the Gipsy Cards</a></li>
+						<li><a href='meaning-of-cards.html'>Meaning of the Cards</a></li>
+						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href='exemplos-de-jogos.html'>Examples of Spreads<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="example-1-card.html">Spread with 1 Card</a></li>
+								<li><a href="example-3-cards.html">Spread with 3 Cards</a></li>
+								<li><a href="example-more-cards.html">Spread with more Cards</a></li>
+								<li><a href="card-of-the-day.html">Your Card of the Day (Interactive!)</a></li>
+							</ul>
+						</li>
+						<li><a href='contact.html'>Contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	<!--------------------------------------------------------------------------------------- Body ----------------------------------------------------------------------------------------->
+	<div class="container">
+		<h1>Your card of the day!</h1><br/>
+        
+        <div class="body-text">
+  			<p class="lead"> Click on the deck shown below to reveal your card of the day! <br/><strong>Don't cheat, only the first try is to be considered!</strong></p>
+  			<br/>
+  		</div>
+
+        <div class="row pointer_cursor">
+    		<div class="col-lg-8 col-lg-offset-2">
+            	<figure style="border:none">
+                	<img src="Other Images/back5.png" width="700px" height="500px" onclick="randomCard(); this.onclick=null;" alt=""/> 
+                </figure>
+        	</div>
+        </div>
+        <div class="row">
+        	<div class="col-sm-3 col-md-3 col-lg-offset-3 col-lg-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-1 col-xs-4">
+	          <figure id="myFigure" style="border:none"> 
+    	            <img id="myImage" src="" alt="" />
+              </figure>
+            </div>
+            
+            <div class="col-lg-4 col-md-5 col-sm-5 col-xs-6">
+                <div id="myText" class="lead dayCard">
+                </div>
+	        </div>   
+        </div>
+	</div>     
+        
+ <!------------------------------------------------------------------------------ Footer --------------------------------------------------------------------------------->
+         <footer class="footer-distributed">
+			<div class="footer-left">
+				<img src="Other Images\BlackCat_footer.png" align="middle" class="img-responsive">
+				<p class="footer-company-name">Abigail Cards &copy; 2016</p>
+			</div>
+
+			<div class="footer-right">
+				<div>
+					<i class="fa fa-envelope"></i>
+					<p><a href="mailto:contact@abigailcards.com">contact@abigailcards.com</a></p>
+				</div>
+            
+            	<div class="footer-icons">
+					<a href="#"><i class="fa fa-facebook"></i></a>
+					<a href="https://www.instagram.com/abigailcards/?hl=en"><i class="fa fa-instagram"></i></a>
+				</div>
+            </div>
+		</footer>
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------------------> 
+	
+	
+  </body>
+</html>
