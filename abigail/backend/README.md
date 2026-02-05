@@ -109,3 +109,4 @@ backend/
 - [ ] Add database for storing readings (optional)
 - [ ] Add authentication/rate limiting (optional)
 
+
