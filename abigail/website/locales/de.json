@@ -28,6 +28,14 @@
     "description": "Für eine professionelle, handgeschriebene Analyse und ein Foto Ihrer physischen Legung bestellen Sie den Deep-Dive.",
     "cta": "Deep-Dive anfordern"
   },
+  "nav": {
+    "home": "Orakel",
+    "reader": "Abigail",
+    "shop": "Shop",
+    "contact": "Kontakt",
+    "cards": "Karten",
+    "getPersonalReading": "Persönliche Lesung erhalten"
+  },
   "cards": {
     "constancy": "Beständigkeit",
     "visit": "Besuch",

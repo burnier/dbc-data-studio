@@ -1,75 +1,33 @@
 @import "tailwindcss";
 
 :root {
-  --background: #121212;
-  --foreground: #f5f5f0;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --charcoal: #121212;
+  --bone-white: #f5f5dc;
+  --purple-dark: #b38cd9;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  background-color: var(--charcoal);
+  color: var(--bone-white);
+  font-family: var(--font-inter), sans-serif;
 }
 
 .font-serif {
   font-family: var(--font-playfair), serif;
 }
 
-.font-sans {
-  font-family: var(--font-inter), sans-serif;
-}
-
-/* Dark Whimsical Theme */
 .bg-charcoal {
-  background-color: #121212;
+  background-color: var(--charcoal);
 }
 
 .text-bone-white {
-  color: #f5f5f0;
+  color: var(--bone-white);
 }
 
-/* Card flip animation */
-.card-flip {
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
+.border-bone-white {
+  border-color: var(--bone-white);
 }
 
-.card-flip.flipped {
-  transform: rotateY(180deg);
-}
-
-.card-face {
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-.card-back {
-  transform: rotateY(180deg);
-}
-
-/* Shuffling animation */
-@keyframes shuffle {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  25% {
-    transform: translateY(-10px) rotate(5deg);
-  }
-  50% {
-    transform: translateY(0) rotate(0deg);
-  }
-  75% {
-    transform: translateY(-10px) rotate(-5deg);
-  }
-}
-
-.shuffling {
-  animation: shuffle 0.5s ease-in-out infinite;
+.bg-purple-dark {
+  background-color: var(--purple-dark);
 }

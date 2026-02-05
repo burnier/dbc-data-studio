@@ -28,6 +28,14 @@
     "description": "For a professional, hand-written analysis and a photo of your physical spread, order the Deep-Dive.",
     "cta": "Request Deep-Dive"
   },
+  "nav": {
+    "home": "Oracle",
+    "reader": "Abigail",
+    "shop": "Shop",
+    "contact": "Contact",
+    "cards": "Cards",
+    "getPersonalReading": "Get Personal Reading"
+  },
   "cards": {
     "constancy": "Constancy",
     "visit": "Visit",

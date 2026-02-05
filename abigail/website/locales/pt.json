@@ -28,6 +28,14 @@
     "description": "Para uma análise profissional escrita à mão e uma foto de sua tiragem física, solicite o Deep-Dive.",
     "cta": "Solicitar Deep-Dive"
   },
+  "nav": {
+    "home": "Oráculo",
+    "reader": "Abigail",
+    "shop": "Loja",
+    "contact": "Contato",
+    "cards": "Cartas",
+    "getPersonalReading": "Obter Leitura Pessoal"
+  },
   "cards": {
     "constancy": "Constância",
     "visit": "Visita",

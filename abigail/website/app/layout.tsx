@@ -1,8 +1,5 @@
-'use client';
-
 import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
-import I18nProvider from '../components/I18nProvider';
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -24,11 +21,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${playfair.variable} ${inter.variable} antialiased bg-charcoal text-bone-white`}
+        className={`${playfair.variable} ${inter.variable} antialiased bg-charcoal text-bone-white flex flex-col min-h-screen`}
       >
-        <I18nProvider>
-          {children}
-        </I18nProvider>
+        {children}
       </body>
     </html>
   );

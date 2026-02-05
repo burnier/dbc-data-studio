@@ -28,6 +28,14 @@
     "description": "Professzionális, kézzel írt elemzésért és a fizikai kirakás fotójáért rendelje meg a Deep-Dive-t.",
     "cta": "Deep-Dive kérése"
   },
+  "nav": {
+    "home": "Jóslás",
+    "reader": "Abigail",
+    "shop": "Bolt",
+    "contact": "Kapcsolat",
+    "cards": "Kártyák",
+    "getPersonalReading": "Személyes olvasás kérése"
+  },
   "cards": {
     "constancy": "Állandóság",
     "visit": "Látogatás",
@@ -66,4 +74,3 @@
     "widower": "Özvegyember"
   }
 }
-
