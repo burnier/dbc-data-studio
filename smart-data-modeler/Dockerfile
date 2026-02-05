@@ -17,9 +17,6 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Build Next.js
-# Accept NEXT_PUBLIC_GA4_ID as build argument (required at build time for client-side code)
-ARG NEXT_PUBLIC_GA4_ID
-ENV NEXT_PUBLIC_GA4_ID=${NEXT_PUBLIC_GA4_ID}
 ENV NEXT_TELEMETRY_DISABLED 1
 RUN npm run build
 
