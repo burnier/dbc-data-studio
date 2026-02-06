@@ -1,10 +1,24 @@
 @import "tailwindcss";
 
+@theme {
+  --color-charcoal: #1a1a2e;
+  --color-bone-white: #f5f5dc;
+  --color-purple-main: #b38cd9;
+  --color-purple-dark: #674BA9;
+  --color-purple-light: #e6d9f2;
+  
+  --font-family-serif: var(--font-playfair), serif;
+  --font-family-sans: var(--font-inter), sans-serif;
+}
+
 :root {
-  --charcoal: #121212;
+  --charcoal: #1a1a2e;
   --bone-white: #f5f5dc;
-  --purple-dark: #b38cd9;
-  --purple-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --purple-main: #b38cd9;
+  --purple-dark: #674BA9;
+  --purple-light: #e6d9f2;
+  --purple-gradient: linear-gradient(135deg, #b38cd9 0%, #674BA9 100%);
+  --purple-gradient-reverse: linear-gradient(135deg, #674BA9 0%, #b38cd9 100%);
 }
 
 body {
@@ -30,12 +44,32 @@ body {
   border-color: var(--bone-white);
 }
 
+.text-purple-dark {
+  color: var(--purple-dark);
+}
+
+.border-purple-dark {
+  border-color: var(--purple-dark);
+}
+
+.bg-purple-main {
+  background-color: var(--purple-main);
+}
+
 .bg-purple-dark {
   background-color: var(--purple-dark);
 }
 
+.bg-purple-light {
+  background-color: var(--purple-light);
+}
+
 .bg-purple-gradient {
   background: var(--purple-gradient);
+}
+
+.bg-purple-gradient-reverse {
+  background: var(--purple-gradient-reverse);
 }
 
 /* Shuffling animation */
@@ -79,4 +113,5 @@ body {
 .ticker {
   animation: ticker 30s linear infinite;
 }
+
 

@@ -1,0 +1,696 @@
+'use client';
+
+/**
+ * Abigail Arts & Oracles - Conversion-Optimized Landing Page
+ * Language-specific page with simplified card reveal flow
+ */
+
+import { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
+import { submitRitual, getScarcity } from '@/lib/actions';
+import { getCard, getCardImageName } from '@/lib/cards';
+
+interface FormData {
+    name: string;
+    email: string;
+    question: string;
+}
+
+type Step = 'form' | 'shuffling' | 'reveal' | 'upsell';
+
+interface LandingPageProps {
+    language: 'en' | 'de' | 'pt' | 'hu';
+}
+
+const translations = {
+    en: {
+        heroTitle: "Unlock Your Destiny",
+        heroSubtitle: "Ancient Gypsy Card Reading by Abigail",
+        heroCta: "Get Your Free Reading",
+        trustBadge: "⭐ Over 10,000 readings • 4.9/5 rating",
+        scarcityTitle: "🔥 Only",
+        scarcitySlots: "readings left today",
+        scarcityUrgency: "Abigail personally reviews each reading",
+        formTitle: "What Does Your Heart Seek?",
+        formSubtitle: "Receive your personalized 3-card reading via email in minutes",
+        namePlaceholder: "Your Name",
+        emailPlaceholder: "Your Email Address",
+        questionPlaceholder: "What question weighs on your heart? (love, career, life path...)",
+        privacyNote: "🔒 Your information is 100% confidential",
+        submitButton: "Reveal My Cards →",
+        submitting: "Consulting the Cards...",
+        shufflingTitle: "Abigail is Shuffling the Ancient Deck...",
+        shufflingText: "The cards are aligning with your energy...",
+        revealTitle: "Your 3 Cards Have Been Drawn!",
+        revealSubtitle: "Check your email for the complete reading",
+        revealText: "Abigail has drawn your 3 sacred cards and is preparing your personalized reading.",
+        emailSent: "✉️ Reading sent to",
+        emailNote: "Check your inbox (and spam folder) in the next few minutes",
+        cardsMeaning: "Your Cards Speak Of:",
+        continueButton: "Continue →",
+        aboutTitle: "Meet Abigail",
+        aboutText1: "Abigail is a certified oracle card reader with over 15 years of experience in the ancient European tradition of Gypsy card reading.",
+        aboutText2: "Having guided over 10,000 seekers, Abigail combines traditional wisdom with intuitive interpretation to provide clarity on love, career, and life's biggest questions.",
+        aboutBadge: "✓ Certified by the International Oracle Readers Association",
+        upsellTitle: "Want Deeper Insights?",
+        upsellSubtitle: "Upgrade to Abigail's Premium Hand-Drawn Reading",
+        upsellFeature1: "🎴 Physical card spread photo from Abigail's studio",
+        upsellFeature2: "📝 In-depth analysis (3x longer than free reading)",
+        upsellFeature3: "💬 Personal guidance & actionable advice",
+        upsellFeature4: "⚡ Priority delivery within 24 hours",
+        upsellPrice: "Only €19.90",
+        upsellCta: "Unlock Full Reading →",
+        upsellGuarantee: "100% Money-Back Guarantee",
+        testimonialsTitle: "What Others Are Saying",
+        testimonial1: '"Abigail\'s reading gave me the clarity I desperately needed. Worth every penny!"',
+        testimonial1Author: "— Maria, Vienna",
+        testimonial2: '"Eerily accurate. The cards knew things I hadn\'t told anyone."',
+        testimonial2Author: "— Thomas, Berlin",
+        testimonial3: '"Changed my perspective on a difficult decision. Highly recommend!"',
+        testimonial3Author: "— Sofia, Budapest",
+    },
+    de: {
+        heroTitle: "Entdecken Sie Ihr Schicksal",
+        heroSubtitle: "Alte Zigeunerkarten-Lesung von Abigail",
+        heroCta: "Kostenlose Lesung Erhalten",
+        trustBadge: "⭐ Über 10.000 Lesungen • 4,9/5 Bewertung",
+        scarcityTitle: "🔥 Nur noch",
+        scarcitySlots: "Lesungen heute verfügbar",
+        scarcityUrgency: "Abigail prüft jede Lesung persönlich",
+        formTitle: "Was Sucht Ihr Herz?",
+        formSubtitle: "Erhalten Sie Ihre personalisierte 3-Karten-Lesung per E-Mail in Minuten",
+        namePlaceholder: "Ihr Name",
+        emailPlaceholder: "Ihre E-Mail-Adresse",
+        questionPlaceholder: "Welche Frage bewegt Ihr Herz? (Liebe, Karriere, Lebensweg...)",
+        privacyNote: "🔒 Ihre Daten sind 100% vertraulich",
+        submitButton: "Meine Karten Enthüllen →",
+        submitting: "Karten werden konsultiert...",
+        shufflingTitle: "Abigail Mischt das Uralte Deck...",
+        shufflingText: "Die Karten richten sich nach Ihrer Energie aus...",
+        revealTitle: "Ihre 3 Karten Wurden Gezogen!",
+        revealSubtitle: "Überprüfen Sie Ihre E-Mail für die vollständige Lesung",
+        revealText: "Abigail hat Ihre 3 heiligen Karten gezogen und bereitet Ihre personalisierte Lesung vor.",
+        emailSent: "✉️ Lesung gesendet an",
+        emailNote: "Überprüfen Sie Ihren Posteingang (und Spam-Ordner) in den nächsten Minuten",
+        cardsMeaning: "Ihre Karten Sprechen Von:",
+        continueButton: "Weiter →",
+        aboutTitle: "Lernen Sie Abigail Kennen",
+        aboutText1: "Abigail ist eine zertifizierte Orakelkartenleserin mit über 15 Jahren Erfahrung in der alten europäischen Tradition des Zigeunerkartenlesens.",
+        aboutText2: "Nachdem sie über 10.000 Suchende begleitet hat, kombiniert Abigail traditionelle Weisheit mit intuitiver Interpretation für Klarheit in Liebe, Karriere und Lebensfragen.",
+        aboutBadge: "✓ Zertifiziert von der Internationalen Orakelleser-Vereinigung",
+        upsellTitle: "Tiefere Einblicke Gewünscht?",
+        upsellSubtitle: "Upgrade auf Abigails Premium-Handgezeichnete Lesung",
+        upsellFeature1: "🎴 Foto der physischen Kartenlegung aus Abigails Studio",
+        upsellFeature2: "📝 Tiefgehende Analyse (3x länger als kostenlose Lesung)",
+        upsellFeature3: "💬 Persönliche Beratung & umsetzbare Ratschläge",
+        upsellFeature4: "⚡ Prioritätslieferung innerhalb von 24 Stunden",
+        upsellPrice: "Nur €19,90",
+        upsellCta: "Vollständige Lesung Freischalten →",
+        upsellGuarantee: "100% Geld-zurück-Garantie",
+        testimonialsTitle: "Was Andere Sagen",
+        testimonial1: '"Abigails Lesung gab mir die Klarheit, die ich verzweifelt brauchte. Jeden Cent wert!"',
+        testimonial1Author: "— Maria, Wien",
+        testimonial2: '"Unheimlich genau. Die Karten wussten Dinge, die ich niemandem erzählt hatte."',
+        testimonial2Author: "— Thomas, Berlin",
+        testimonial3: '"Hat meine Perspektive auf eine schwierige Entscheidung verändert. Sehr empfehlenswert!"',
+        testimonial3Author: "— Sofia, Budapest",
+    },
+    pt: {
+        heroTitle: "Desvende Seu Destino",
+        heroSubtitle: "Leitura Antiga de Cartas Ciganas por Abigail",
+        heroCta: "Obter Minha Leitura Grátis",
+        trustBadge: "⭐ Mais de 10.000 leituras • 4,9/5 avaliação",
+        scarcityTitle: "🔥 Apenas",
+        scarcitySlots: "leituras restantes hoje",
+        scarcityUrgency: "Abigail revisa pessoalmente cada leitura",
+        formTitle: "O Que Seu Coração Busca?",
+        formSubtitle: "Receba sua leitura personalizada de 3 cartas por e-mail em minutos",
+        namePlaceholder: "Seu Nome",
+        emailPlaceholder: "Seu Endereço de E-mail",
+        questionPlaceholder: "Qual pergunta pesa em seu coração? (amor, carreira, caminho de vida...)",
+        privacyNote: "🔒 Suas informações são 100% confidenciais",
+        submitButton: "Revelar Minhas Cartas →",
+        submitting: "Consultando as Cartas...",
+        shufflingTitle: "Abigail Está Embaralhando o Baralho Antigo...",
+        shufflingText: "As cartas estão se alinhando com sua energia...",
+        revealTitle: "Suas 3 Cartas Foram Puxadas!",
+        revealSubtitle: "Verifique seu e-mail para a leitura completa",
+        revealText: "Abigail puxou suas 3 cartas sagradas e está preparando sua leitura personalizada.",
+        emailSent: "✉️ Leitura enviada para",
+        emailNote: "Verifique sua caixa de entrada (e pasta de spam) nos próximos minutos",
+        cardsMeaning: "Suas Cartas Falam De:",
+        continueButton: "Continuar →",
+        aboutTitle: "Conheça Abigail",
+        aboutText1: "Abigail é uma leitora de cartas oráculo certificada com mais de 15 anos de experiência na tradição europeia antiga de leitura de cartas ciganas.",
+        aboutText2: "Tendo guiado mais de 10.000 buscadores, Abigail combina sabedoria tradicional com interpretação intuitiva para fornecer clareza sobre amor, carreira e as maiores questões da vida.",
+        aboutBadge: "✓ Certificada pela Associação Internacional de Leitores de Oráculo",
+        upsellTitle: "Quer Insights Mais Profundos?",
+        upsellSubtitle: "Atualize para a Leitura Premium Desenhada à Mão de Abigail",
+        upsellFeature1: "🎴 Foto do espalhamento físico de cartas do estúdio de Abigail",
+        upsellFeature2: "📝 Análise aprofundada (3x mais longa que a leitura gratuita)",
+        upsellFeature3: "💬 Orientação pessoal e conselhos acionáveis",
+        upsellFeature4: "⚡ Entrega prioritária em até 24 horas",
+        upsellPrice: "Apenas R$ 59,90",
+        upsellCta: "Desbloquear Leitura Completa →",
+        upsellGuarantee: "Garantia de Devolução de 100% do Dinheiro",
+        testimonialsTitle: "O Que Os Outros Estão Dizendo",
+        testimonial1: '"A leitura de Abigail me deu a clareza que eu precisava desesperadamente. Vale cada centavo!"',
+        testimonial1Author: "— Maria, Viena",
+        testimonial2: '"Assustadoramente precisa. As cartas sabiam coisas que eu não havia contado a ninguém."',
+        testimonial2Author: "— Thomas, Berlim",
+        testimonial3: '"Mudou minha perspectiva sobre uma decisão difícil. Altamente recomendado!"',
+        testimonial3Author: "— Sofia, Budapeste",
+    },
+    hu: {
+        heroTitle: "Fedezze Fel Sorsát",
+        heroSubtitle: "Ősi Cigánykártya Olvasás Abigailtől",
+        heroCta: "Ingyenes Olvasat Kérése",
+        trustBadge: "⭐ Több mint 10.000 olvasat • 4,9/5 értékelés",
+        scarcityTitle: "🔥 Csak",
+        scarcitySlots: "olvasat maradt ma",
+        scarcityUrgency: "Abigail személyesen áttekint minden olvasatot",
+        formTitle: "Mit Keres A Szíve?",
+        formSubtitle: "Kapja meg személyre szabott 3 kártyás olvasatát e-mailben perceken belül",
+        namePlaceholder: "Az Ön Neve",
+        emailPlaceholder: "Az Ön E-mail Címe",
+        questionPlaceholder: "Milyen kérdés nyomja a szívét? (szerelem, karrier, életút...)",
+        privacyNote: "🔒 Az Ön adatai 100%-ban bizalmasak",
+        submitButton: "Kártyáim Felfedése →",
+        submitting: "Kártyák Konzultálása...",
+        shufflingTitle: "Abigail Keveri az Ősi Paklit...",
+        shufflingText: "A kártyák az Ön energiájához igazodnak...",
+        revealTitle: "3 Kártyája Kihúzásra Került!",
+        revealSubtitle: "Ellenőrizze e-mailjét a teljes olvasatért",
+        revealText: "Abigail kihúzta 3 szent kártyáját és készíti személyre szabott olvasatát.",
+        emailSent: "✉️ Olvasat elküldve ide:",
+        emailNote: "Ellenőrizze postafiókját (és spam mappáját) a következő percekben",
+        cardsMeaning: "Kártyái Erről Beszélnek:",
+        continueButton: "Folytatás →",
+        aboutTitle: "Ismerje Meg Abigail",
+        aboutText1: "Abigail hitelesített jóskártya-olvasó, több mint 15 éves tapasztalattal az ősi európai cigánykártya-olvasás hagyományában.",
+        aboutText2: "Több mint 10.000 keresőt vezetett, Abigail ötvözi a hagyományos bölcsességet az intuitív értelmezéssel, hogy világosságot nyújtson a szerelemben, karrierben és az élet legnagyobb kérdéseiben.",
+        aboutBadge: "✓ A Nemzetközi Jósolók Szövetségének Hitelesítésével",
+        upsellTitle: "Mélyebb Betekintést Szeretne?",
+        upsellSubtitle: "Váltson Abigail Prémium Kézzel Rajzolt Olvasatára",
+        upsellFeature1: "🎴 Fizikai kártyavetés fotó Abigail stúdiójából",
+        upsellFeature2: "📝 Mélyreható elemzés (3x hosszabb, mint az ingyenes olvasat)",
+        upsellFeature3: "💬 Személyes útmutatás és gyakorlati tanácsok",
+        upsellFeature4: "⚡ Prioritásos kiszállítás 24 órán belül",
+        upsellPrice: "Csak 6990 Ft",
+        upsellCta: "Teljes Olvasat Feloldása →",
+        upsellGuarantee: "100%-os Pénzvisszafizetési Garancia",
+        testimonialsTitle: "Mit Mondanak Mások",
+        testimonial1: '"Abigail olvasata megadta nekem a világosságot, amire kétségbeesetten szükségem volt. Megérte minden fillért!"',
+        testimonial1Author: "— Maria, Bécs",
+        testimonial2: '"Hátborzongatóan pontos. A kártyák olyan dolgokat tudtak, amiket senkinek sem mondtam el."',
+        testimonial2Author: "— Thomas, Berlin",
+        testimonial3: '"Megváltoztatta a perspektívámat egy nehéz döntésről. Nagyon ajánlom!"',
+        testimonial3Author: "— Sofia, Budapest",
+    },
+};
+
+export default function LanguagePage({ language }: LandingPageProps) {
+    const [step, setStep] = useState<Step>('form');
+    const [submissionId, setSubmissionId] = useState<number | null>(null);
+    const [drawnCardIds, setDrawnCardIds] = useState<number[]>([]);
+    const [userEmail, setUserEmail] = useState<string>('');
+    const [userName, setUserName] = useState<string>('');
+    const [scarcity, setScarcity] = useState<{ availableToday: number; totalLimit: number } | null>(null);
+    const [shufflingProgress, setShufflingProgress] = useState(0);
+    const [error, setError] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormData>();
+    const t = translations[language];
+
+    // Fetch scarcity (for social proof)
+    useEffect(() => {
+        const fetchScarcity = async () => {
+            try {
+                const result = await getScarcity();
+                setScarcity(result);
+            } catch (error) {
+                console.error('Failed to fetch scarcity:', error);
+            }
+        };
+
+        fetchScarcity();
+        const interval = setInterval(fetchScarcity, 60000);
+        return () => clearInterval(interval);
+    }, []);
+
+    // Shuffling animation
+    useEffect(() => {
+        if (step === 'shuffling') {
+            const duration = 4000;
+            const interval = 50;
+            const steps = duration / interval;
+            let current = 0;
+
+            const timer = setInterval(() => {
+                current++;
+                setShufflingProgress((current / steps) * 100);
+                if (current >= steps) {
+                    clearInterval(timer);
+                    setStep('reveal');
+                }
+            }, interval);
+
+            return () => clearInterval(timer);
+        }
+    }, [step]);
+
+    // Auto-dismiss error
+    useEffect(() => {
+        if (error) {
+            const timer = setTimeout(() => setError(null), 5000);
+            return () => clearTimeout(timer);
+        }
+    }, [error]);
+
+    const onSubmit = async (data: FormData) => {
+        setError(null);
+        setIsLoading(true);
+
+        try {
+            setUserName(data.name);
+            setUserEmail(data.email);
+            const result = await submitRitual(data.name, data.email, data.question, language);
+
+            setSubmissionId(result.submissionId);
+            setDrawnCardIds(result.cardIds);
+            setStep('shuffling');
+        } catch (error) {
+            setError(error instanceof Error ? error.message : 'Failed to submit. Please try again.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    return (
+        <div className="min-h-screen bg-gradient-to-b from-charcoal via-purple-dark/10 to-charcoal relative overflow-hidden">
+            {/* Background decorative elements */}
+            <div className="fixed inset-0 pointer-events-none opacity-5">
+                <div className="absolute top-0 left-0 w-96 h-96 bg-purple-main rounded-full filter blur-3xl"></div>
+                <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-dark rounded-full filter blur-3xl"></div>
+            </div>
+
+            {/* Error Toast */}
+            <AnimatePresence>
+                {error && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -50 }}
+                        className="fixed top-4 left-1/2 -translate-x-1/2 z-50 max-w-md w-full mx-4"
+                    >
+                        <div className="bg-red-500/90 backdrop-blur-sm text-white px-6 py-4 rounded-lg shadow-lg border border-red-400">
+                            <div className="flex items-center justify-between">
+                                <p className="font-medium">{error}</p>
+                                <button onClick={() => setError(null)} className="ml-4 text-white hover:text-red-100">✕</button>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Loading Overlay */}
+            <AnimatePresence>
+                {isLoading && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 flex items-center justify-center"
+                    >
+                        <div className="bg-purple-gradient p-8 rounded-full">
+                            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-white"></div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Scarcity Banner (CONVERSION: Social Proof + Urgency) */}
+            {scarcity && scarcity.availableToday > 0 && scarcity.availableToday <= 3 && step === 'form' && (
+                <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-center py-4"
+                >
+                    <p className="text-sm md:text-base text-purple-light">
+                        {t.scarcityTitle} <span className="text-orange-400 font-bold text-lg">{scarcity.availableToday}</span> {t.scarcitySlots}
+                    </p>
+                </motion.div>
+            )}
+
+            <div className="container mx-auto px-4 py-8 md:py-16 relative z-10">
+                <AnimatePresence mode="wait">
+                    {/* STEP 1: Hero + Form (CONVERSION OPTIMIZED) */}
+                    {step === 'form' && (
+                        <motion.div
+                            key="form"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="max-w-5xl mx-auto"
+                        >
+                            {/* Hero Section */}
+                            <div className="text-center mb-16 md:mb-20">
+                                <motion.div
+                                    initial={{ scale: 0.8, opacity: 0 }}
+                                    animate={{ scale: 1, opacity: 1 }}
+                                    transition={{ delay: 0.2 }}
+                                    className="inline-block mb-6"
+                                >
+                                    <div className="relative w-32 h-32 md:w-40 md:h-40 mx-auto">
+                                        <div className="absolute inset-0 bg-purple-gradient rounded-full animate-pulse"></div>
+                                        <div className="relative w-full h-full bg-bone-white rounded-full overflow-hidden flex items-center justify-center">
+                                            <Image
+                                                src="/logo.png"
+                                                alt="Abigail Arts & Oracles"
+                                                width={160}
+                                                height={160}
+                                                className="object-cover scale-110 translate-y-2"
+                                                style={{ objectPosition: 'center 40%' }}
+                                                priority
+                                            />
+                                        </div>
+                                    </div>
+                                </motion.div>
+
+                                <motion.h1
+                                    className="text-4xl md:text-6xl lg:text-7xl font-serif mb-4 text-purple-light"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.4 }}
+                                >
+                                    {t.heroTitle}
+                                </motion.h1>
+                                <motion.p
+                                    className="text-xl md:text-2xl mb-6 text-purple-light"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: 0.6 }}
+                                >
+                                    {t.heroSubtitle}
+                                </motion.p>
+                                <motion.p
+                                    className="text-bone-white/80 text-lg"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: 0.8 }}
+                                >
+                                    {t.trustBadge}
+                                </motion.p>
+                            </div>
+
+                            {/* Form Card - ONLY element with heavy styling for focus */}
+                            <div className="bg-gradient-to-br from-purple-dark/30 to-purple-main/20 backdrop-blur-md border-2 border-purple-main/40 rounded-2xl p-6 md:p-10 shadow-2xl mb-16 max-w-2xl mx-auto">
+                                <h2 className="text-2xl md:text-4xl font-serif text-center mb-3 text-white">
+                                    {t.formTitle}
+                                </h2>
+                                <p className="text-center mb-8 text-purple-light text-base md:text-lg">
+                                    {t.formSubtitle}
+                                </p>
+
+                                <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+                                    <div>
+                                        <input
+                                            {...register('name', {
+                                                required: 'Name is required',
+                                                minLength: { value: 2, message: 'Name must be at least 2 characters' }
+                                            })}
+                                            type="text"
+                                            placeholder={t.namePlaceholder}
+                                            className="w-full px-5 py-4 bg-charcoal/50 border-2 border-purple-light/20 rounded-xl text-bone-white placeholder-purple-light/40 focus:outline-none focus:border-purple-main transition-all text-base"
+                                        />
+                                        {errors.name && <p className="text-red-400 text-sm mt-2">{errors.name.message}</p>}
+                                    </div>
+
+                                    <div>
+                                        <input
+                                            {...register('email', {
+                                                required: 'Email is required',
+                                                pattern: {
+                                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                                    message: 'Invalid email address'
+                                                }
+                                            })}
+                                            type="email"
+                                            placeholder={t.emailPlaceholder}
+                                            className="w-full px-5 py-4 bg-charcoal/50 border-2 border-purple-light/20 rounded-xl text-bone-white placeholder-purple-light/40 focus:outline-none focus:border-purple-main transition-all text-base"
+                                        />
+                                        {errors.email && <p className="text-red-400 text-sm mt-2">{errors.email.message}</p>}
+                                    </div>
+
+                                    <div>
+                                        <textarea
+                                            {...register('question', {
+                                                required: 'Question is required',
+                                                minLength: { value: 10, message: 'Please be more specific (min 10 characters)' }
+                                            })}
+                                            placeholder={t.questionPlaceholder}
+                                            rows={4}
+                                            className="w-full px-5 py-4 bg-charcoal/50 border-2 border-purple-light/20 rounded-xl text-bone-white placeholder-purple-light/40 focus:outline-none focus:border-purple-main resize-none transition-all text-base"
+                                        />
+                                        {errors.question && <p className="text-red-400 text-sm mt-2">{errors.question.message}</p>}
+                                    </div>
+
+                                    <p className="text-sm text-purple-light/70 text-center">{t.privacyNote}</p>
+
+                                    <motion.button
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                        whileHover={{ scale: 1.02 }}
+                                        whileTap={{ scale: 0.98 }}
+                                        className="w-full px-8 py-5 bg-purple-gradient text-white rounded-xl font-bold text-lg hover:shadow-2xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                        {isSubmitting ? t.submitting : t.submitButton}
+                                    </motion.button>
+                                </form>
+                            </div>
+
+                            {/* About Abigail - Clean, no heavy container */}
+                            <div className="max-w-4xl mx-auto">
+                                <div className="grid md:grid-cols-[200px_1fr] gap-6 md:gap-8 items-center">
+                                    <div className="mx-auto">
+                                        <div className="relative w-40 h-40">
+                                            <div className="absolute inset-0 bg-purple-gradient rounded-full"></div>
+                                            <div className="relative w-full h-full bg-bone-white rounded-full overflow-hidden flex items-center justify-center">
+                                                <Image
+                                                    src="/logo.png"
+                                                    alt="Abigail"
+                                                    width={180}
+                                                    height={180}
+                                                    className="object-cover scale-110 translate-y-2"
+                                                    style={{ objectPosition: 'center 40%' }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="space-y-3 text-bone-white text-center md:text-left">
+                                        <h3 className="text-2xl md:text-3xl font-serif text-purple-light">
+                                            {t.aboutTitle}
+                                        </h3>
+                                        <p className="text-sm md:text-base leading-relaxed opacity-90">{t.aboutText1}</p>
+                                        <p className="text-sm md:text-base leading-relaxed opacity-90">{t.aboutText2}</p>
+                                        <div className="inline-block bg-purple-gradient px-4 py-2 rounded-lg">
+                                            <p className="text-white font-semibold text-sm">{t.aboutBadge}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </motion.div>
+                    )}
+
+                    {/* STEP 2: Shuffling */}
+                    {step === 'shuffling' && (
+                        <motion.div
+                            key="shuffling"
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="max-w-2xl mx-auto text-center min-h-screen flex flex-col justify-center"
+                        >
+                            <h2 className="text-3xl md:text-5xl font-serif mb-8 text-purple-light">
+                                {t.shufflingTitle}
+                            </h2>
+                            <div className="relative mb-8">
+                                <motion.div
+                                    animate={{ rotate: [0, 10, -10, 0] }}
+                                    transition={{ repeat: Infinity, duration: 2 }}
+                                    className="w-48 h-48 md:w-64 md:h-64 mx-auto bg-purple-gradient rounded-3xl flex items-center justify-center shadow-2xl"
+                                >
+                                    <div className="text-8xl md:text-9xl">🎴</div>
+                                </motion.div>
+                                <div className="mt-6 px-8 max-w-md mx-auto">
+                                    <div className="h-3 bg-purple-dark/30 rounded-full overflow-hidden">
+                                        <motion.div
+                                            className="h-full bg-purple-gradient"
+                                            initial={{ width: 0 }}
+                                            animate={{ width: `${shufflingProgress}%` }}
+                                            transition={{ duration: 0.1 }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <p className="text-lg md:text-xl text-purple-light">{t.shufflingText}</p>
+                        </motion.div>
+                    )}
+
+                    {/* STEP 3: Card Reveal (CONVERSION: Build Anticipation) */}
+                    {step === 'reveal' && drawnCardIds.length === 3 && (
+                        <motion.div
+                            key="reveal"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="max-w-5xl mx-auto"
+                        >
+                            <div className="text-center mb-8">
+                                <h2 className="text-3xl md:text-5xl font-serif mb-4 text-purple-light">
+                                    {t.revealTitle}
+                                </h2>
+                                <p className="text-purple-light text-lg md:text-xl mb-2">{t.revealSubtitle}</p>
+                                <p className="text-bone-white/80 text-base max-w-2xl mx-auto">{t.revealText}</p>
+                            </div>
+
+                            {/* Email Confirmation */}
+                            <div className="bg-green-500/10 border-2 border-green-500/30 rounded-xl p-4 mb-10 text-center max-w-2xl mx-auto">
+                                <p className="text-green-400 font-semibold text-lg">
+                                    {t.emailSent} <span className="text-purple-light">{userEmail}</span>
+                                </p>
+                                <p className="text-bone-white/70 text-sm mt-2">{t.emailNote}</p>
+                            </div>
+
+                            {/* Cards Display - Clean without heavy container */}
+                            <div className="mb-10">
+                                <h3 className="text-2xl md:text-3xl font-serif text-center mb-8 text-purple-light">{t.cardsMeaning}</h3>
+                                <div className="grid sm:grid-cols-3 gap-4 md:gap-6">
+                                    {drawnCardIds.map((cardId, index) => {
+                                        const card = getCard(cardId);
+                                        if (!card) return null;
+
+                                        return (
+                                            <motion.div
+                                                key={cardId}
+                                                initial={{ opacity: 0, y: 50 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                transition={{ delay: index * 0.2 }}
+                                                className="border border-purple-light/20 rounded-xl p-4 hover:border-purple-main/60 hover:scale-105 transition-all"
+                                            >
+                                                <div className="relative aspect-[2/3] mb-4 rounded-lg overflow-hidden shadow-lg">
+                                                    <Image
+                                                        src={`/cards/${getCardImageName(cardId)}.jpg`}
+                                                        alt={card.name[language]}
+                                                        fill
+                                                        className="object-cover"
+                                                    />
+                                                </div>
+                                                <h4 className="font-semibold text-center capitalize text-purple-light text-lg mb-2">
+                                                    {card.name[language]}
+                                                </h4>
+                                                <p className="text-sm text-bone-white/80 text-center leading-relaxed">
+                                                    {card.shortMeaning[language]}
+                                                </p>
+                                            </motion.div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+
+                            <div className="text-center">
+                                <motion.button
+                                    onClick={() => setStep('upsell')}
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="px-10 py-5 bg-purple-gradient text-white rounded-xl font-bold text-lg hover:shadow-2xl transition-all"
+                                >
+                                    {t.continueButton}
+                                </motion.button>
+                            </div>
+                        </motion.div>
+                    )}
+
+                    {/* STEP 4: Upsell (CONVERSION: Premium Offer) */}
+                    {step === 'upsell' && (
+                        <motion.div
+                            key="upsell"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="max-w-5xl mx-auto space-y-12"
+                        >
+                            {/* Premium Offer - Keep styled for emphasis */}
+                            <div className="bg-gradient-to-br from-purple-dark/30 to-purple-main/20 backdrop-blur-md border-2 border-purple-main rounded-2xl p-6 md:p-10 shadow-2xl">
+                                <div className="text-center mb-8">
+                                    <div className="inline-block bg-yellow-500 text-charcoal px-4 py-1 rounded-full text-sm font-bold mb-4">
+                                        ⭐ PREMIUM UPGRADE
+                                    </div>
+                                    <h2 className="text-3xl md:text-5xl font-serif mb-3 text-white">
+                                        {t.upsellTitle}
+                                    </h2>
+                                    <p className="text-xl text-purple-light">{t.upsellSubtitle}</p>
+                                </div>
+
+                                <div className="grid md:grid-cols-2 gap-6 mb-8">
+                                    {[t.upsellFeature1, t.upsellFeature2, t.upsellFeature3, t.upsellFeature4].map((feature, i) => (
+                                        <motion.div
+                                            key={i}
+                                            initial={{ opacity: 0, x: -20 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            transition={{ delay: i * 0.1 }}
+                                            className="flex items-start gap-3 bg-white/5 p-4 rounded-lg"
+                                        >
+                                            <span className="text-2xl flex-shrink-0">✓</span>
+                                            <p className="text-bone-white">{feature}</p>
+                                        </motion.div>
+                                    ))}
+                                </div>
+
+                                <div className="text-center space-y-4">
+                                    <p className="text-4xl font-bold text-white">{t.upsellPrice}</p>
+                                    <motion.button
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
+                                        className="px-12 py-5 bg-gradient-to-r from-yellow-500 to-orange-500 text-charcoal rounded-xl text-xl font-bold hover:shadow-2xl transition-all"
+                                    >
+                                        {t.upsellCta}
+                                    </motion.button>
+                                    <p className="text-sm text-purple-light">{t.upsellGuarantee}</p>
+                                </div>
+                            </div>
+
+                            {/* Testimonials - Clean, no container */}
+                            <div className="max-w-4xl mx-auto">
+                                <h3 className="text-2xl md:text-4xl font-serif text-center mb-10 text-purple-light">
+                                    {t.testimonialsTitle}
+                                </h3>
+                                <div className="grid md:grid-cols-3 gap-6">
+                                    {[
+                                        { quote: t.testimonial1, author: t.testimonial1Author },
+                                        { quote: t.testimonial2, author: t.testimonial2Author },
+                                        { quote: t.testimonial3, author: t.testimonial3Author },
+                                    ].map((testimonial, i) => (
+                                        <motion.div
+                                            key={i}
+                                            initial={{ opacity: 0, y: 20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ delay: i * 0.15 }}
+                                            className="border border-purple-light/10 p-6 rounded-xl"
+                                        >
+                                            <p className="text-bone-white italic mb-4 text-sm md:text-base">{testimonial.quote}</p>
+                                            <p className="text-purple-light text-sm font-semibold">{testimonial.author}</p>
+                                            <div className="text-yellow-500 mt-2">⭐⭐⭐⭐⭐</div>
+                                        </motion.div>
+                                    ))}
+                                </div>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
+        </div>
+    );
+}
+

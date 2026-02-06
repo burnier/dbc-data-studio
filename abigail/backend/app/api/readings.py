@@ -67,3 +67,4 @@ async def generate_card_reading(request: GenerateReadingRequest):
         raise HTTPException(status_code=500, detail=f"Internal server error: {e}")
 
 
+

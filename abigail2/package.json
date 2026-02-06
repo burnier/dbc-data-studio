@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate",
+    "db:generate": "drizzle-kit generate:sqlite",
+    "db:push": "drizzle-kit push:sqlite",
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
@@ -21,9 +21,6 @@
     "resend": "^3.0.0",
     "react-hook-form": "^7.49.0",
     "framer-motion": "^11.0.0",
-    "i18next": "^23.7.6",
-    "react-i18next": "^14.0.0",
-    "i18next-browser-languagedetector": "^7.2.0",
     "zod": "^3.22.0"
   },
   "devDependencies": {
@@ -34,8 +31,8 @@
     "typescript": "^5",
     "tailwindcss": "^4",
     "@tailwindcss/postcss": "^4",
+    "autoprefixer": "^10.4.16",
     "eslint": "^9",
     "eslint-config-next": "^15.0.0"
   }
 }
-
