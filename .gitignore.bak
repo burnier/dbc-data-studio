@@ -14,8 +14,6 @@ lib/
 lib64/
 # Exception: autostack-bridge lib folder should be tracked
 !autostack-bridge/lib/
-# Exception: abigail2 lib folder should be tracked
-!abigail2/lib/
 parts/
 sdist/
 var/

@@ -4,7 +4,27 @@ A premium, conversion-optimized tarot reading application built with Next.js 15,
 
 ## 🌟 Current Status
 
-**Sprint 2B Complete** ✅ - "Hungarian Oracle" Strategic Rebrand + Heritage Narrative
+**Sprint 2C Complete** ✅ - Multilingual Email Headers + AI Language Consistency
+
+### ✅ Sprint 2C: Multilingual Email Headers & AI Language Fixes (COMPLETE)
+
+**Problem Fixed:**
+- Email headers were hardcoded in English for all languages
+- AI (Gemini) was mixing languages mid-response (e.g., starting in Portuguese, switching to English)
+
+**Solutions Implemented:**
+- **Multilingual Email Headers**: Title, tagline, and footer now fully localized
+  - 🇬🇧 EN: "Abigail | The Hungarian Oracle"
+  - 🇩🇪 DE: "Abigail | Das Ungarische Orakel"
+  - 🇵🇹 PT: "Abigail | A Oráculo Húngara"
+  - 🇭🇺 HU: "Abigail | A Magyar Jósnő"
+- **Strengthened AI Language Instructions**: Added emphatic "CRITICAL/KRITISCH/CRÍTICO/KRITIKUS" prompts
+- **Fixed Email Pricing**: PT now shows R$ 59,90 (was €19.90), HU shows 6990 Ft (was €19.90)
+- **Multiple Language Reminders**: AI system prompt now has 3+ reminders to prevent language mixing
+
+**Files Updated:**
+- `lib/email.ts`: Added `emailTitle`, `emailTagline`, `footerCopyright` for all languages + fixed pricing
+- `lib/ai.ts`: Strengthened `LANGUAGE_INSTRUCTIONS` + added warning section in system prompt
 
 ### ✅ Sprint 2B: "The Hungarian Oracle" Rebrand (COMPLETE)
 
@@ -452,6 +472,24 @@ Access the analytics dashboard at `/admin` (password protected).
 - Rate limiting per email
 - Server-side form processing
 - No sensitive data in client code
+
+## 🛠️ Development Notes
+
+### Git Configuration
+
+**Important**: The parent directory (`dbc-data-studio`) has a Python `.gitignore` that ignores `lib/` directories. An exception has been added for `abigail2/lib/`:
+
+```gitignore
+# In /Users/dburnier/Documents/my_repos/dbc-data-studio/.gitignore
+lib/
+lib64/
+# Exception: autostack-bridge lib folder should be tracked
+!autostack-bridge/lib/
+# Exception: abigail2 lib folder should be tracked
+!abigail2/lib/
+```
+
+Without this exception, all changes to `lib/actions.ts`, `lib/email.ts`, `lib/ai.ts`, etc. would be ignored by git.
 
 ## 📝 License
 
