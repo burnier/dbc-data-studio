@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { submitRitual, getScarcity } from '@/lib/actions';
+import { submitRitual, getScarcity, selectCards } from '@/lib/actions';
 import { getCard, getCardImageName } from '@/lib/cards';
 
 interface FormData {
@@ -241,9 +241,9 @@ export default function LanguagePage({ language }: LandingPageProps) {
         return () => clearInterval(interval);
     }, []);
 
-    // Shuffling animation
+    // Shuffling animation + AI generation
     useEffect(() => {
-        if (step === 'shuffling') {
+        if (step === 'shuffling' && submissionId && drawnCardIds.length === 3) {
             const duration = 4000;
             const interval = 50;
             const steps = duration / interval;
@@ -254,13 +254,31 @@ export default function LanguagePage({ language }: LandingPageProps) {
                 setShufflingProgress((current / steps) * 100);
                 if (current >= steps) {
                     clearInterval(timer);
-                    setStep('reveal');
+                    // Trigger AI reading + email generation
+                    generateReading();
                 }
             }, interval);
 
             return () => clearInterval(timer);
         }
-    }, [step]);
+    }, [step, submissionId, drawnCardIds]);
+
+    const generateReading = async () => {
+        if (!submissionId || drawnCardIds.length !== 3) return;
+
+        setIsLoading(true);
+        try {
+            // This triggers the AI + email in lib/actions.ts
+            await selectCards(submissionId, drawnCardIds);
+            setStep('reveal');
+        } catch (error) {
+            console.error('Failed to generate reading:', error);
+            setError('Failed to generate your reading. Please refresh and try again.');
+            setStep('form');
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     // Auto-dismiss error
     useEffect(() => {
@@ -515,7 +533,7 @@ export default function LanguagePage({ language }: LandingPageProps) {
                             className="max-w-2xl mx-auto text-center min-h-screen flex flex-col justify-center"
                         >
                             <h2 className="text-3xl md:text-5xl font-serif mb-8 text-purple-light">
-                                {t.shufflingTitle}
+                                {isLoading ? "✨ The Apprentice is interpreting your cards..." : t.shufflingTitle}
                             </h2>
                             <div className="relative mb-8">
                                 <motion.div
@@ -536,7 +554,9 @@ export default function LanguagePage({ language }: LandingPageProps) {
                                     </div>
                                 </div>
                             </div>
-                            <p className="text-lg md:text-xl text-purple-light">{t.shufflingText}</p>
+                            <p className="text-lg md:text-xl text-purple-light">
+                                {isLoading ? "Please wait while we consult the cards..." : t.shufflingText}
+                            </p>
                         </motion.div>
                     )}
 

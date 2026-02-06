@@ -1,24 +1,31 @@
-# Abigail Arts & Oracles - Tarot Reading Landing Page
+# Abigail Arts & Oracles - AI Tarot Reading Platform
 
-A modern, conversion-optimized tarot reading application built with Next.js 15, featuring language-specific landing pages and automated email delivery.
+A modern, conversion-optimized tarot reading application built with Next.js 15, featuring AI-powered personalized readings, automated email delivery, and language-specific landing pages.
 
 ## 🌟 Current Status
 
-**Production Ready** - Clean, tested, and optimized for conversion.
+**Sprint 1 Complete** ✅ - Production-ready AI integration with email delivery
 
-### ✅ Implemented Features
+### ✅ Sprint 1: Core Experience (COMPLETE)
 
-- **Multi-language Support**: Separate landing pages for English, German, Portuguese, and Hungarian (`/en`, `/de`, `/pt`, `/hu`) with fully translated UI and card names
-- **Conversion-Optimized Flow**: Streamlined 3-step process (form → shuffling → card reveal)
-- **Automated Email Delivery**: Personalized readings sent via Resend API
-- **Real Card Images**: 36 authentic Gypsy cards with multilingual names and meanings
-- **Abigail Branding**: Custom logo integration throughout
-- **Modern UI**: Clean, responsive design with subtle animations
-- **Localized Pricing**: €19.90 (EN/DE), R$ 59,90 (PT), 6990 Ft (HU)
-- **Social Proof**: Trust badges, testimonials, and scarcity signals
+- **AI-Powered Readings**: Google Gemini 3 Flash integration generating personalized interpretations
+- **Email Delivery**: Resend + Cloudflare with inline card image attachments
+- **Multi-language Support**: Separate landing pages for EN, DE, PT, HU with fully translated UI and card names
+- **Admin Dashboard**: Password-protected analytics with real-time stats
+- **Conversion Flow**: Streamlined 3-step process (form → shuffling → AI reading → email)
+- **Beautiful Emails**: HTML emails with embedded card images, AI interpretation, and upsell CTA
+- **Database**: SQLite with indexed queries for marketing and analytics
 - **Rate Limiting**: 3 submissions per hour per email
-- **Database**: SQLite with Drizzle ORM for customer data
-- **Admin Dashboard**: Password-protected analytics at `/admin`
+- **Localized Pricing**: €19.90 (EN/DE), R$ 59,90 (PT), 6990 Ft (HU)
+
+### 🚧 Sprint 2: Payment & Polish (Next)
+
+Per Byron's brief:
+- **Stripe Checkout**: Payment flow for full readings with metadata tracking
+- **Enhanced UI/UX**: Card flip animations (1.5s stagger + glow effects)
+- **Sound Effects**: Soft "thump" or "shimmer" on card reveal
+- **Admin Queue**: Track paid readings for Abigail to fulfill
+- **Post-Purchase Email**: "Confirmation of Ritual" with 24-hour expectation setting
 
 ## 🚀 Quick Start
 
@@ -39,9 +46,23 @@ npm install
 
 # Create environment variables file
 cat > .env.local << EOF
-RESEND_API_KEY=your_resend_api_key_here
-EMAIL_FROM=Abigail Arts & Oracles <noreply@yourdomain.com>
+# Email Configuration (Resend)
+RESEND_API_KEY=re_your_resend_api_key_here
+EMAIL_FROM=Abigail <abigail@guidance.dbcdatastudio.com>
+
+# Database
 DATABASE_URL=./abigail2.db
+
+# Admin Dashboard
+ADMIN_PASSWORD=your_secure_admin_password
+
+# AI Configuration (Google Gemini - Free tier)
+GOOGLE_AI_API_KEY=your_google_ai_key_here
+AI_PROVIDER=gemini
+
+# Optional: Anthropic Claude (Paid, better quality)
+# ANTHROPIC_API_KEY=your_anthropic_key_here
+# AI_PROVIDER=anthropic
 EOF
 
 # Initialize database
@@ -78,6 +99,7 @@ abigail2/
 │   └── LanguagePage.tsx # Main landing page component
 ├── lib/
 │   ├── actions.ts       # Server Actions (form, cards, scarcity)
+│   ├── ai.ts            # AI service (Gemini/Anthropic)
 │   ├── cards.ts         # Card data & logic (36 cards with translations)
 │   ├── email.ts         # Email service (Resend)
 │   ├── validation.ts    # Zod schemas
@@ -220,6 +242,152 @@ Update CSS variables in `app/globals.css`:
 - `--purple-main`: Primary accent
 - `--purple-dark`: Dark accent
 - `--purple-light`: Light accent
+
+## 📧 Email Configuration (Resend + Cloudflare)
+
+The application sends AI-generated readings via email using **Resend** with **Cloudflare DNS automation**.
+
+### Why Subdomain Strategy?
+
+We use `guidance.dbcdatastudio.com` as the sending domain (instead of the root domain) to:
+- Protect main domain reputation
+- Create a boutique "Abigail's guidance" brand
+- Isolate email sending from other DBC Data Studio services
+- Maximize deliverability with dedicated DMARC policies
+
+### Setup Steps (Requires Cloudflare Access)
+
+**1. Create Resend Account**
+```
+Visit: https://resend.com/signup
+Sign up with your email
+Verify email address
+```
+
+**2. Add Domain with Cloudflare Auto-Config**
+```
+1. In Resend Dashboard → "Domains" → "Add Domain"
+2. Enter: guidance.dbcdatastudio.com
+3. Click "Sign in to Cloudflare" (NOT manual setup)
+4. Authorize Resend to access Cloudflare DNS
+5. Wait 1-2 minutes for automatic configuration
+6. Verify domain shows "Verified" ✅
+```
+
+This automatically configures:
+- ✅ SPF record (sender authentication)
+- ✅ DKIM keys (email signing, 3 records)
+- ✅ DMARC policy (spam prevention)
+- ✅ Return-Path (bounce handling)
+
+**3. Create API Key**
+```
+1. Go to "API Keys" tab in Resend
+2. Click "Create API Key"
+3. Name: "Abigail Production"
+4. Copy the key (starts with re_...)
+5. Save securely!
+```
+
+**4. Update Environment Variables**
+```bash
+# In .env.local
+RESEND_API_KEY=re_your_actual_api_key_here
+EMAIL_FROM=Abigail <abigail@guidance.dbcdatastudio.com>
+```
+
+**5. Enable DMARC Monitoring (Optional but Recommended)**
+```
+1. In Cloudflare Dashboard → Email → DMARC Management
+2. Enable for guidance.dbcdatastudio.com subdomain
+3. Monitor reports to ensure high deliverability
+```
+
+**6. Test Email Delivery**
+```bash
+# Restart dev server
+npm run dev
+
+# Submit a test reading
+# Check terminal for: ✅ Email sent successfully to [email]
+# Verify email arrives (check spam folder first time)
+```
+
+### Email Template Customization
+
+The email includes:
+- Personalized greeting with user's name
+- The 3 drawn cards with images
+- AI-generated interpretation
+- Cliffhanger P.S. (conversion hook)
+- Call-to-action for full reading upgrade
+- Beautiful HTML styling matching brand colors
+
+Edit template in: `lib/email.ts` → `sendReadingEmail()`
+
+### Troubleshooting
+
+**Emails going to spam?**
+- Ensure DMARC is enabled in Cloudflare
+- Check SPF/DKIM are verified in Resend dashboard
+- Warm up the domain by sending gradually (10/day → 50/day → 100/day)
+
+**"Email not sent" in admin?**
+- Check `RESEND_API_KEY` is valid (not "placeholder")
+- Verify domain is verified in Resend
+- Check terminal logs for error messages
+
+**Rate limits?**
+- Free tier: 100 emails/day, 3,000/month
+- Paid tier: Starts at $20/month for 50,000 emails
+
+## 🤖 AI Integration
+
+The application uses AI to generate personalized "Apprentice" readings for each card draw.
+
+**Supported Providers:**
+1. **Google Gemini 3 Flash Preview** (Free tier, currently active)
+2. **Anthropic Claude 3.5 Sonnet** (Paid, better quality for production)
+
+**Setup:**
+
+### Option 1: Google Gemini (Free)
+```bash
+# Get your API key from https://aistudio.google.com/app/apikey
+echo "\nGOOGLE_AI_API_KEY=your_google_ai_key" >> .env.local
+echo "\nAI_PROVIDER=gemini" >> .env.local
+```
+
+**Important:** Gemini free tier has rate limits:
+- 15 requests per minute
+- 1,500 requests per day
+- 1 million tokens per day
+
+If you hit the limit, the app will automatically use fallback templates.
+
+### Option 2: Anthropic Claude (Paid)
+```bash
+# Get your API key from https://console.anthropic.com/
+echo "\nANTHROPIC_API_KEY=your_anthropic_key" >> .env.local
+echo "\nAI_PROVIDER=anthropic" >> .env.local
+```
+
+**Features:**
+- Empathetic, mystical tone matching Abigail's brand
+- Personalized 3-card interpretations
+- Cliffhanger P.S. that highlights a mystery card
+- Multilingual support (EN, DE, PT, HU)
+- Fallback to template readings if AI unavailable
+
+**How it works:**
+1. User completes ritual and draws 3 cards
+2. AI generates personalized reading based on:
+   - User's name and question
+   - The 3 specific cards drawn
+   - Traditional card meanings
+   - Selected language
+3. Reading includes conversion hook (physical 12-card spread upsell)
+4. Email sent with AI interpretation + cliffhanger P.S.
 
 ## 📊 Admin Dashboard
 
