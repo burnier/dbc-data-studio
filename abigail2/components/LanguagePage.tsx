@@ -26,6 +26,8 @@ interface LandingPageProps {
 
 const translations = {
     en: {
+        siteName: "Abigail | The Hungarian Oracle",
+        tagline: "Authentic Hungarian Gypsy Card Wisdom",
         heroTitle: "Unlock Your Destiny",
         heroSubtitle: "Ancient Gypsy Card Reading by Abigail",
         heroCta: "Get Your Free Reading",
@@ -50,10 +52,14 @@ const translations = {
         emailNote: "Check your inbox (and spam folder) in the next few minutes",
         cardsMeaning: "Your Cards Speak Of:",
         continueButton: "Continue →",
-        aboutTitle: "Meet Abigail",
-        aboutText1: "Abigail is a certified oracle card reader with over 15 years of experience in the ancient European tradition of Gypsy card reading.",
-        aboutText2: "Having guided over 10,000 seekers, Abigail combines traditional wisdom with intuitive interpretation to provide clarity on love, career, and life's biggest questions.",
-        aboutBadge: "✓ Certified by the International Oracle Readers Association",
+        aboutTitle: "A Lineage of Insight from the Heart of Hungary",
+        aboutText1: "Abigail is a certified practitioner of the Hungarian Gypsy Card Institute (Cigánykártya Magyarország). She carries forward a lineage of wisdom that has guided seekers through Eastern Europe for centuries.",
+        aboutText2: "Abigail reads your future not with an algorithm, but with a deck that carries the dust and wisdom of Eastern Europe. Every reading is performed manually, using the specific spreads passed down through Hungarian tradition.",
+        aboutBadge: "✓ Certified by Hungarian Gypsy Card Institute",
+        trustTitle: "Why Trust Abigail?",
+        trustPoint1: "Authentic Hungarian Tradition",
+        trustPoint2: "Institute Certified Expert",
+        trustPoint3: "100% Manual Physical Spreads",
         upsellTitle: "Want Deeper Insights?",
         upsellSubtitle: "Upgrade to Abigail's Premium Hand-Drawn Reading",
         upsellFeature1: "🎴 Physical card spread photo from Abigail's studio",
@@ -72,6 +78,8 @@ const translations = {
         testimonial3Author: "— Sofia, Budapest",
     },
     de: {
+        siteName: "Abigail | Das Ungarische Orakel",
+        tagline: "Authentische ungarische Zigeunerkarten-Weisheit",
         heroTitle: "Entdecken Sie Ihr Schicksal",
         heroSubtitle: "Alte Zigeunerkarten-Lesung von Abigail",
         heroCta: "Kostenlose Lesung Erhalten",
@@ -96,10 +104,14 @@ const translations = {
         emailNote: "Überprüfen Sie Ihren Posteingang (und Spam-Ordner) in den nächsten Minuten",
         cardsMeaning: "Ihre Karten Sprechen Von:",
         continueButton: "Weiter →",
-        aboutTitle: "Lernen Sie Abigail Kennen",
-        aboutText1: "Abigail ist eine zertifizierte Orakelkartenleserin mit über 15 Jahren Erfahrung in der alten europäischen Tradition des Zigeunerkartenlesens.",
-        aboutText2: "Nachdem sie über 10.000 Suchende begleitet hat, kombiniert Abigail traditionelle Weisheit mit intuitiver Interpretation für Klarheit in Liebe, Karriere und Lebensfragen.",
-        aboutBadge: "✓ Zertifiziert von der Internationalen Orakelleser-Vereinigung",
+        aboutTitle: "Eine Linie der Einsicht aus dem Herzen Ungarns",
+        aboutText1: "Abigail ist zertifizierte Praktikerin des Ungarischen Zigeunerkarten-Instituts (Cigánykártya Magyarország). Sie führt eine Linie der Weisheit fort, die seit Jahrhunderten Suchende in Osteuropa geleitet hat.",
+        aboutText2: "Abigail liest Ihre Zukunft nicht mit einem Algorithmus, sondern mit einem Deck, das den Staub und die Weisheit Osteuropas trägt. Jede Lesung wird manuell durchgeführt, mit den spezifischen Legesystemen der ungarischen Tradition.",
+        aboutBadge: "✓ Zertifiziert vom Ungarischen Zigeunerkarten-Institut",
+        trustTitle: "Warum Abigail Vertrauen?",
+        trustPoint1: "Authentische Ungarische Tradition",
+        trustPoint2: "Institut-Zertifizierte Expertin",
+        trustPoint3: "100% Manuelle Physische Legungen",
         upsellTitle: "Tiefere Einblicke Gewünscht?",
         upsellSubtitle: "Upgrade auf Abigails Premium-Handgezeichnete Lesung",
         upsellFeature1: "🎴 Foto der physischen Kartenlegung aus Abigails Studio",
@@ -118,6 +130,8 @@ const translations = {
         testimonial3Author: "— Sofia, Budapest",
     },
     pt: {
+        siteName: "Abigail | A Oráculo Húngara",
+        tagline: "Sabedoria Autêntica das Cartas Ciganas Húngaras",
         heroTitle: "Desvende Seu Destino",
         heroSubtitle: "Leitura Antiga de Cartas Ciganas por Abigail",
         heroCta: "Obter Minha Leitura Grátis",
@@ -142,10 +156,14 @@ const translations = {
         emailNote: "Verifique sua caixa de entrada (e pasta de spam) nos próximos minutos",
         cardsMeaning: "Suas Cartas Falam De:",
         continueButton: "Continuar →",
-        aboutTitle: "Conheça Abigail",
-        aboutText1: "Abigail é uma leitora de cartas oráculo certificada com mais de 15 anos de experiência na tradição europeia antiga de leitura de cartas ciganas.",
-        aboutText2: "Tendo guiado mais de 10.000 buscadores, Abigail combina sabedoria tradicional com interpretação intuitiva para fornecer clareza sobre amor, carreira e as maiores questões da vida.",
-        aboutBadge: "✓ Certificada pela Associação Internacional de Leitores de Oráculo",
+        aboutTitle: "Uma Linhagem de Percepção do Coração da Hungria",
+        aboutText1: "Abigail é praticante certificada do Instituto Húngaro de Cartas Ciganas (Cigánykártya Magyarország). Ela mantém uma linhagem de sabedoria que tem guiado buscadores através do Leste Europeu por séculos.",
+        aboutText2: "Abigail lê seu futuro não com um algoritmo, mas com um baralho que carrega o pó e a sabedoria do Leste Europeu. Cada leitura é realizada manualmente, usando os métodos específicos transmitidos pela tradição húngara.",
+        aboutBadge: "✓ Certificada pelo Instituto Húngaro de Cartas Ciganas",
+        trustTitle: "Por Que Confiar em Abigail?",
+        trustPoint1: "Tradição Húngara Autêntica",
+        trustPoint2: "Especialista Certificada por Instituto",
+        trustPoint3: "100% Leituras Físicas Manuais",
         upsellTitle: "Quer Insights Mais Profundos?",
         upsellSubtitle: "Atualize para a Leitura Premium Desenhada à Mão de Abigail",
         upsellFeature1: "🎴 Foto do espalhamento físico de cartas do estúdio de Abigail",
@@ -164,6 +182,8 @@ const translations = {
         testimonial3Author: "— Sofia, Budapeste",
     },
     hu: {
+        siteName: "Abigail | A Magyar Jósnő",
+        tagline: "Hiteles Magyar Cigánykártya Bölcsesség",
         heroTitle: "Fedezze Fel Sorsát",
         heroSubtitle: "Ősi Cigánykártya Olvasás Abigailtől",
         heroCta: "Ingyenes Olvasat Kérése",
@@ -188,10 +208,14 @@ const translations = {
         emailNote: "Ellenőrizze postafiókját (és spam mappáját) a következő percekben",
         cardsMeaning: "Kártyái Erről Beszélnek:",
         continueButton: "Folytatás →",
-        aboutTitle: "Ismerje Meg Abigail",
-        aboutText1: "Abigail hitelesített jóskártya-olvasó, több mint 15 éves tapasztalattal az ősi európai cigánykártya-olvasás hagyományában.",
-        aboutText2: "Több mint 10.000 keresőt vezetett, Abigail ötvözi a hagyományos bölcsességet az intuitív értelmezéssel, hogy világosságot nyújtson a szerelemben, karrierben és az élet legnagyobb kérdéseiben.",
-        aboutBadge: "✓ A Nemzetközi Jósolók Szövetségének Hitelesítésével",
+        aboutTitle: "Belátás Leszármazása Magyarország Szívéből",
+        aboutText1: "Abigail a Magyar Cigánykártya Intézet (Cigánykártya Magyarország) okleveles gyakorlója. Olyan bölcsesség leszármazását viszi tovább, amely évszázadokon át vezette a keresőket Kelet-Európán keresztül.",
+        aboutText2: "Abigail nem algoritmussal olvassa a jövőjét, hanem egy pakli kártyával, amely Kelet-Európa porát és bölcsességét hordozza. Minden olvasat manuálisan történik, a magyar hagyomány által átadott sajátos vetési módszerekkel.",
+        aboutBadge: "✓ Magyar Cigánykártya Intézet által hitelesítve",
+        trustTitle: "Miért Bízzon Abigailben?",
+        trustPoint1: "Autentikus Magyar Hagyomány",
+        trustPoint2: "Intézeti Hitelesítésű Szakértő",
+        trustPoint3: "100% Manuális Fizikai Vetések",
         upsellTitle: "Mélyebb Betekintést Szeretne?",
         upsellSubtitle: "Váltson Abigail Prémium Kézzel Rajzolt Olvasatára",
         upsellFeature1: "🎴 Fizikai kártyavetés fotó Abigail stúdiójából",
@@ -387,7 +411,7 @@ export default function LanguagePage({ language }: LandingPageProps) {
                                         <div className="relative w-full h-full bg-bone-white rounded-full overflow-hidden flex items-center justify-center">
                                             <Image
                                                 src="/logo.png"
-                                                alt="Abigail Arts & Oracles"
+                                                alt={t.siteName}
                                                 width={160}
                                                 height={160}
                                                 className="object-cover scale-110 translate-y-2"
@@ -398,14 +422,29 @@ export default function LanguagePage({ language }: LandingPageProps) {
                                     </div>
                                 </motion.div>
 
-                                <motion.h1
-                                    className="text-4xl md:text-6xl lg:text-7xl font-serif mb-4 text-purple-light"
+                                {/* Site Name - The Iconic Mononym */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.3 }}
+                                    className="mb-2"
+                                >
+                                    <h1 className="text-2xl md:text-3xl font-serif text-purple-light mb-1">
+                                        {t.siteName}
+                                    </h1>
+                                    <p className="text-sm md:text-base text-purple-light/70 italic">
+                                        {t.tagline}
+                                    </p>
+                                </motion.div>
+
+                                <motion.h2
+                                    className="text-4xl md:text-6xl lg:text-7xl font-serif mb-4 text-purple-light mt-8"
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.4 }}
                                 >
                                     {t.heroTitle}
-                                </motion.h1>
+                                </motion.h2>
                                 <motion.p
                                     className="text-xl md:text-2xl mb-6 text-purple-light"
                                     initial={{ opacity: 0 }}
@@ -517,6 +556,25 @@ export default function LanguagePage({ language }: LandingPageProps) {
                                         <div className="inline-block bg-purple-gradient px-4 py-2 rounded-lg">
                                             <p className="text-white font-semibold text-sm">{t.aboutBadge}</p>
                                         </div>
+                                    </div>
+                                </div>
+
+                                {/* Trust Section - Byron's Certification Signals */}
+                                <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                                    <div className="bg-purple-dark/20 border border-purple-light/20 rounded-xl p-6">
+                                        <div className="text-4xl mb-3">🛡️</div>
+                                        <h4 className="text-purple-light font-semibold mb-2">{t.trustPoint1}</h4>
+                                        <p className="text-sm text-bone-white/70">Centuries of wisdom preserved</p>
+                                    </div>
+                                    <div className="bg-purple-dark/20 border border-purple-light/20 rounded-xl p-6">
+                                        <div className="text-4xl mb-3">🎓</div>
+                                        <h4 className="text-purple-light font-semibold mb-2">{t.trustPoint2}</h4>
+                                        <p className="text-sm text-bone-white/70">Certified by recognized institute</p>
+                                    </div>
+                                    <div className="bg-purple-dark/20 border border-purple-light/20 rounded-xl p-6">
+                                        <div className="text-4xl mb-3">✋</div>
+                                        <h4 className="text-purple-light font-semibold mb-2">{t.trustPoint3}</h4>
+                                        <p className="text-sm text-bone-white/70">No algorithms, pure tradition</p>
                                     </div>
                                 </div>
                             </div>

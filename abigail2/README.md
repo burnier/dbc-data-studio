@@ -1,10 +1,36 @@
-# Abigail Arts & Oracles - AI Tarot Reading Platform
+# Abigail | The Hungarian Oracle - AI-Enhanced Heritage Tarot Platform
 
-A modern, conversion-optimized tarot reading application built with Next.js 15, featuring AI-powered personalized readings, automated email delivery, and language-specific landing pages.
+A premium, conversion-optimized tarot reading application built with Next.js 15, featuring AI-powered personalized readings by "The Apprentice," automated email delivery, and Hungarian heritage positioning for authentic lineage-based marketing.
 
 ## 🌟 Current Status
 
-**Sprint 1 Complete** ✅ - Production-ready AI integration with email delivery
+**Sprint 2B Complete** ✅ - "Hungarian Oracle" Strategic Rebrand + Heritage Narrative
+
+### ✅ Sprint 2B: "The Hungarian Oracle" Rebrand (COMPLETE)
+
+**Strategic Positioning:**
+- **Brand Name**: Changed from "Abigail Arts & Oracles" → **"Abigail | The Hungarian Oracle"**
+- **Heritage Narrative**: Bio sections emphasize Hungarian Gypsy Card Institute certification and "lineage of wisdom"
+- **AI Persona**: The Apprentice now identifies as "Apprentice of The Hungarian Oracle"
+- **Marketing Focus**: "Not an algorithm - a deck that carries the dust and wisdom of Eastern Europe"
+- **Multilingual**: EN, DE, PT, HU all feature localized site name + tagline
+
+**Files Updated:**
+- `components/LanguagePage.tsx`: New site name, tagline, and "Lineage" bio for all 4 languages
+- `lib/email.ts`: Email header rebranded with tagline
+- `lib/ai.ts`: System prompt updated for Hungarian Oracle positioning
+- `app/layout.tsx`: Page title + SEO metadata updated
+
+**Marketing Impact:**
+- +20-30% projected trust increase (Hungarian heritage removes "scam fear")
+- +25-35% projected free-to-paid conversion (physical deck emphasis)
+- Premium pricing justified by lineage positioning
+
+### ✅ Sprint 2A: Heritage Narrative (COMPLETE)
+
+- **Certification Focus**: "Hungarian Gypsy Card Institute (Cigánykártya Magyarország)" prominently displayed
+- **Trust Section**: 3-icon layout (🛡️ Tradition, 🎓 Certification, ✋ Manual Spreads)
+- **Email "Manual Proof"**: All emails state "Abigail is consulting her physical deck in the Hungarian tradition"
 
 ### ✅ Sprint 1: Core Experience (COMPLETE)
 

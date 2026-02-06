@@ -13,6 +13,12 @@ const inter = Inter({
   display: "swap",
 });
 
+export const metadata = {
+  title: "Abigail | The Hungarian Oracle - Authentic Gypsy Card Readings",
+  description: "Certified Hungarian Gypsy Card readings by Abigail. Ancient wisdom from the heart of Eastern Europe.",
+  keywords: "Hungarian oracle, gypsy cards, tarot reading, authentic card reading, Hungarian tradition",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -20,6 +26,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <title>Abigail | The Hungarian Oracle</title>
+      </head>
       <body
         className={`${playfair.variable} ${inter.variable} antialiased bg-charcoal text-bone-white`}
       >
