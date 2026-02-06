@@ -45,6 +45,7 @@ export async function sendReadingEmail({
     en: {
       emailTitle: "Abigail | The Hungarian Oracle",
       emailTagline: "Authentic Hungarian Gypsy Card Wisdom",
+      emailSubject: `Abigail's Apprentice: Your Reading is Ready, ${toName}`,
       greeting: `Dear ${toName},`,
       intro: "Abigail is currently consulting her physical deck in the tradition of the Hungarian masters. Your preliminary 3-card map is below:",
       cardsTitle: "Your Three Sacred Cards:",
@@ -59,6 +60,7 @@ export async function sendReadingEmail({
     de: {
       emailTitle: "Abigail | Das Ungarische Orakel",
       emailTagline: "Authentische ungarische Zigeunerkarten-Weisheit",
+      emailSubject: `Abigails Lehrling: Ihre Lesung ist bereit, ${toName}`,
       greeting: `Liebe/r ${toName},`,
       intro: "Abigail konsultiert derzeit ihr physisches Deck in der Tradition der ungarischen Meister. Ihre vorläufige 3-Karten-Karte ist unten:",
       cardsTitle: "Ihre Drei Heiligen Karten:",
@@ -73,6 +75,7 @@ export async function sendReadingEmail({
     pt: {
       emailTitle: "Abigail | A Oráculo Húngara",
       emailTagline: "Sabedoria Autêntica das Cartas Ciganas Húngaras",
+      emailSubject: `Aprendiz de Abigail: Sua Leitura Está Pronta, ${toName}`,
       greeting: `Quer/a ${toName},`,
       intro: "Abigail está atualmente consultando seu baralho físico na tradição dos mestres húngaros. Seu mapa preliminar de 3 cartas está abaixo:",
       cardsTitle: "Suas Três Cartas Sagradas:",
@@ -87,6 +90,7 @@ export async function sendReadingEmail({
     hu: {
       emailTitle: "Abigail | A Magyar Jósnő",
       emailTagline: "Hiteles Magyar Cigánykártya Bölcsesség",
+      emailSubject: `Abigail Tanítványa: Az Olvasata Kész, ${toName}`,
       greeting: `Kedves ${toName},`,
       intro: "Abigail jelenleg a fizikai pakliját konzultálja a magyar mesterek hagyománya szerint. Az előzetes 3 kártyás térképe lent található:",
       cardsTitle: "Három Szent Kártyája:",
@@ -207,7 +211,7 @@ export async function sendReadingEmail({
     const emailData = {
       from: process.env.EMAIL_FROM || "Abigail Arts & Oracles <abigail@guidance.dbcdatastudio.com>",
       to: toEmail,
-      subject: `Abigail's Apprentice: Your Reading is Ready, ${toName}`,
+      subject: t.emailSubject,
       html: htmlContent,
       attachments: attachments.map(att => ({
         filename: att.filename,

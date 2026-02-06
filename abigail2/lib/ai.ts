@@ -89,7 +89,7 @@ async function generateWithAnthropic(
             throw new Error('Unexpected response type from Claude');
         }
 
-        return parseAIResponse(content.text, cards[0].name[language]);
+        return parseAIResponse(content.text, cards[0].name[language], language);
 
     } catch (error) {
         console.error('Anthropic reading generation failed:', error);
@@ -137,7 +137,7 @@ async function generateWithGemini(
                 const text = response.text();
 
                 console.log(`✅ Gemini reading generated successfully with ${modelName}`);
-                return parseAIResponse(text, cards[0].name[language]);
+                return parseAIResponse(text, cards[0].name[language], language);
 
             } catch (modelError: any) {
                 lastError = modelError;
@@ -197,17 +197,26 @@ P.S. [Your 2-sentence cliffhanger about a specific card]
 Example tone: "I see the light in your cards, ${userName}, but only Abigail has the sight to look into the shadows between them."
 
 FINAL REMINDER: Your entire response must be in the specified language. Check your response before submitting to ensure no English words appear if the language is not English.`;
+}
 
 /**
  * Parse AI response into structured format
  */
-function parseAIResponse(response: string, defaultCard: string): ApprenticeReading {
+function parseAIResponse(response: string, defaultCard: string, language: Language): ApprenticeReading {
     // Split by P.S. marker
     const parts = response.split(/P\.S\./i);
 
     const interpretation = parts[0].trim();
-    const cliffhangerPS = parts[1] ? parts[1].trim() :
-        `I sense there is more hidden beneath the surface. Abigail's full reading would reveal the complete picture.`;
+    
+    // Language-specific fallbacks
+    const fallbackPS = {
+        en: `I sense there is more hidden beneath the surface. Abigail's full reading would reveal the complete picture.`,
+        de: `Ich spüre, dass mehr unter der Oberfläche verborgen liegt. Abigails vollständige Lesung würde das ganze Bild enthüllen.`,
+        pt: `Sinto que há mais escondido sob a superfície. A leitura completa de Abigail revelaria o quadro completo.`,
+        hu: `Érzem, hogy több rejtőzik a felszín alatt. Abigail teljes olvasata feltárná a teljes képet.`,
+    };
+    
+    const cliffhangerPS = parts[1] ? parts[1].trim() : fallbackPS[language];
 
     return {
         interpretation,
