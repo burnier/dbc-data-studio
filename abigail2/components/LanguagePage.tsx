@@ -666,12 +666,9 @@ export default function LanguagePage({ language }: LandingPageProps) {
                                                         className="object-cover"
                                                     />
                                                 </div>
-                                                <h4 className="font-semibold text-center capitalize text-purple-light text-lg mb-2">
+                                                <h4 className="font-semibold text-center capitalize text-purple-light text-xl">
                                                     {card.name[language]}
                                                 </h4>
-                                                <p className="text-sm text-bone-white/80 text-center leading-relaxed">
-                                                    {card.shortMeaning[language]}
-                                                </p>
                                             </motion.div>
                                         );
                                     })}

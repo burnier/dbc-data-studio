@@ -73,13 +73,13 @@ async function generateWithAnthropic(
 
         const message = await anthropic!.messages.create({
             model: 'claude-3-5-sonnet-20241022',
-            max_tokens: 1024,
+            max_tokens: 2048, // Increased to prevent truncation (was 1024)
             temperature: 0.7,
             system: systemPrompt,
             messages: [
                 {
                     role: 'user',
-                    content: `Generate a 3-paragraph interpretation of these cards for ${userName}, followed by a personalized P.S. that creates intrigue about one specific card's deeper meaning that only Abigail can uncover.`
+                    content: `Generate a BRIEF conversion-focused teaser (230-290 words MAX) for ${userName}. Structure: Brief greeting + 1-2 sentences per card showing surface insight + mid-insight stop ("However, the deeper meaning requires Abigail's touch...") + conversion hook emphasizing premium value (physical spread photo + deep analysis) + card-specific P.S. cliffhanger. DO NOT write more than 300 words. Create HUNGER, not satisfaction!`
                 }
             ]
         });
@@ -125,12 +125,12 @@ async function generateWithGemini(
                     model: modelName,
                     generationConfig: {
                         temperature: 0.7,
-                        maxOutputTokens: 1024,
+                        maxOutputTokens: 2048, // Increased to prevent truncation (was 1024)
                     }
                 });
 
                 const systemPrompt = buildSystemPrompt(userName, question, cards, language);
-                const userPrompt = `Generate a 3-paragraph interpretation of these cards for ${userName}, followed by a personalized P.S. that creates intrigue about one specific card's deeper meaning that only Abigail can uncover.`;
+                const userPrompt = `Generate a BRIEF conversion-focused teaser (230-290 words MAX) for ${userName}. Structure: Brief greeting + 1-2 sentences per card showing surface insight + mid-insight stop ("However, the deeper meaning requires Abigail's touch...") + conversion hook emphasizing premium value (physical spread photo + deep analysis) + card-specific P.S. cliffhanger. DO NOT write more than 300 words. Create HUNGER, not satisfaction!`;
 
                 const result = await model.generateContent(`${systemPrompt}\n\n${userPrompt}`);
                 const response = result.response;
@@ -167,36 +167,53 @@ function buildSystemPrompt(
 ): string {
     const languageInstruction = LANGUAGE_INSTRUCTIONS[language];
 
-    return `You are the Apprentice of Abigail, The Hungarian Oracle - a certified practitioner of the Hungarian Gypsy Card Institute (Cigánykártya Magyarország). Your tone is empathetic, mystical, professional, and encouraging. You are writing a 3-card preliminary reading for a seeker named ${userName} who asked: "${question}".
+    return `You are the Apprentice of Abigail, The Hungarian Oracle - a certified practitioner of the Hungarian Gypsy Card Institute. Your tone is empathetic, mystical, professional, and encouraging. You are writing a FREE TEASER 3-card reading for a seeker named ${userName} who asked: "${question}".
+
+⚠️ CRITICAL: THIS IS A BRIEF TEASER - NOT A FULL READING ⚠️
+Your goal is to demonstrate expertise in 1-2 sentences per card, then create HUNGER for Abigail's premium reading (physical spread photo + deep analysis). Keep it SHORT and tantalizing.
 
 ⚠️ LANGUAGE REQUIREMENT - READ THIS FIRST:
 ${languageInstruction}
-YOU MUST write your ENTIRE response in the specified language. Every single word, sentence, and paragraph must be in this language. DO NOT mix languages. DO NOT switch to English mid-response.
+YOU MUST write your ENTIRE response in the specified language. Every single word, sentence, and paragraph must be in this language. DO NOT mix languages. DO NOT use Hungarian words like "Cigánykártya" unless you are writing in Hungarian.
 
 The 3 cards drawn are:
 1. ${cards[0].name[language]} - ${cards[0].shortMeaning[language]}
 2. ${cards[1].name[language]} - ${cards[1].shortMeaning[language]}
 3. ${cards[2].name[language]} - ${cards[2].shortMeaning[language]}
 
-RULES:
-- Use the traditional meanings of the cards provided above
-- Do not be overly 'dark' or 'scary', but do not ignore warnings in the cards
-- Write exactly 3 paragraphs of interpretation
-- Be specific to ${userName}'s question: "${question}"
-- Do not use generic horoscope language - be insightful and personal
-- REMEMBER: Write EVERYTHING in the specified language above
+STRUCTURE - "BRIEF TEASER" FOR MAXIMUM CONVERSION:
 
-THE CONVERSION HOOK:
-After the 3 paragraphs, explain that while this preliminary digital reading offers a glimpse, only a physical 12-card spread performed by Abigail using her physical deck in the Hungarian tradition can provide the absolute clarity required for deep life questions. Mention that Abigail is currently consulting her physical deck. Use phrases like "the shadows between the cards" or "the hidden currents" that only Abigail can see with her manual spread.
+OPENING + CARD INSIGHTS (120-150 words MAX) - BRIEF BUT INSIGHTFUL:
+- Brief greeting acknowledging ${userName}'s question (1 sentence)
+- Card 1: One insightful observation (1-2 sentences)
+- Card 2: One insightful observation (1-2 sentences)
+- Card 3: Begin to reveal something intriguing, then STOP mid-thought with: "However, the deeper meaning requires Abigail's touch..."
+- DO NOT explain everything - leave them wanting more
+- DO NOT write long paragraphs - be concise and mysterious
 
-THE P.S.:
-Create a personalized P.S. that highlights ONE specific card from their draw as a 'mystery' or 'concern' that Abigail needs to uncover with her physical deck. Choose the most pivotal, complex, or concerning card. Format it as:
+CONVERSION HOOK (80-100 words) - EMPHASIZE VALUE GAP:
+Explain that this digital preview shows only surface meanings. The true patterns, hidden influences, and actionable guidance require Abigail's premium reading, which includes:
+- Physical card spread with her authentic Hungarian Gypsy deck
+- Personalized PHOTO of your actual spread
+- Deep, comprehensive analysis
+Position this as THE solution, not an optional upgrade. Use phrases like "the shadows between the cards" that only Abigail can see.
 
-P.S. [Your 2-sentence cliffhanger about a specific card]
+P.S. (30-40 words) - CARD-SPECIFIC CLIFFHANGER:
+Highlight ONE specific card as a "mystery" or "warning" that only Abigail's full reading can uncover. Create urgency and curiosity.
 
-Example tone: "I see the light in your cards, ${userName}, but only Abigail has the sight to look into the shadows between them."
+LENGTH CONSTRAINTS - CRITICAL:
+- Total: 230-290 words MAX (this is a TEASER, not a reading!)
+- If you write more than 300 words, you are giving away too much
+- Quality over quantity - be brief, intriguing, mysterious
+- Every word must build desire for the premium reading
 
-FINAL REMINDER: Your entire response must be in the specified language. Check your response before submitting to ensure no English words appear if the language is not English.`;
+TONE GUIDELINES:
+- Authentic, not manipulative
+- "I can only glimpse the surface with these digital cards"
+- Position premium reading as essential, not optional
+- Create genuine curiosity - DO NOT satisfy their question
+
+FINAL REMINDER: Your entire response must be in the specified language. DO NOT use Hungarian words like "Cigánykártya" unless writing in Hungarian.`;
 }
 
 /**
@@ -207,7 +224,7 @@ function parseAIResponse(response: string, defaultCard: string, language: Langua
     const parts = response.split(/P\.S\./i);
 
     const interpretation = parts[0].trim();
-    
+
     // Language-specific fallbacks
     const fallbackPS = {
         en: `I sense there is more hidden beneath the surface. Abigail's full reading would reveal the complete picture.`,
@@ -215,7 +232,7 @@ function parseAIResponse(response: string, defaultCard: string, language: Langua
         pt: `Sinto que há mais escondido sob a superfície. A leitura completa de Abigail revelaria o quadro completo.`,
         hu: `Érzem, hogy több rejtőzik a felszín alatt. Abigail teljes olvasata feltárná a teljes képet.`,
     };
-    
+
     const cliffhangerPS = parts[1] ? parts[1].trim() : fallbackPS[language];
 
     return {
@@ -241,32 +258,32 @@ function generateFallbackReading(
             interpretation: cards.map((card, i) =>
                 `Card ${i + 1}: ${card.name[language]} - ${card.shortMeaning[language]}`
             ).join('\n\n'),
-            hook: `While these preliminary cards offer a glimpse, Abigail is currently consulting her physical deck in the Hungarian tradition. Only her full 12-card spread can reveal the deeper currents and hidden influences at play in your situation.`,
-            ps: `P.S. I noticed ${cards[0].name[language]} in your reading. This card carries the dust and wisdom of Eastern Europe, and often holds secrets that only reveal themselves when Abigail performs the complete ritual in her studio.`
+            hook: `While these preliminary cards offer a glimpse, Abigail is currently consulting her physical deck in the Hungarian tradition. Only her premium reading—which includes a physical card spread, a personalized photo of your actual spread, and deep comprehensive analysis—can reveal the deeper currents and hidden influences at play in your situation.`,
+            ps: `P.S. I noticed ${cards[0].name[language]} in your reading. This card holds secrets that only reveal themselves when Abigail performs the complete ritual with her physical deck.`
         },
         de: {
             intro: `Liebe/r ${userName}, ich bin der Lehrling von Abigail, dem Ungarischen Orakel. Ich habe drei Karten als Antwort auf Ihre Frage gezogen...`,
             interpretation: cards.map((card, i) =>
                 `Karte ${i + 1}: ${card.name[language]} - ${card.shortMeaning[language]}`
             ).join('\n\n'),
-            hook: `Während diese vorläufigen Karten einen Einblick bieten, konsultiert Abigail derzeit ihr physisches Deck in der ungarischen Tradition. Nur ihre vollständige 12-Karten-Lesung kann die tieferen Strömungen und verborgenen Einflüsse in Ihrer Situation offenbaren.`,
-            ps: `P.S. Ich bemerkte ${cards[0].name[language]} in Ihrer Lesung. Diese Karte trägt den Staub und die Weisheit Osteuropas und birgt oft Geheimnisse, die sich nur offenbaren, wenn Abigail das vollständige Ritual in ihrem Studio durchführt.`
+            hook: `Während diese vorläufigen Karten einen Einblick bieten, konsultiert Abigail derzeit ihr physisches Deck in der ungarischen Tradition. Nur ihre Premium-Lesung – die eine physische Kartenlegung, ein personalisiertes Foto Ihrer tatsächlichen Legung und eine tiefgehende umfassende Analyse umfasst – kann die tieferen Strömungen und verborgenen Einflüsse in Ihrer Situation offenbaren.`,
+            ps: `P.S. Ich bemerkte ${cards[0].name[language]} in Ihrer Lesung. Diese Karte birgt Geheimnisse, die sich nur offenbaren, wenn Abigail das vollständige Ritual mit ihrem physischen Deck durchführt.`
         },
         pt: {
             intro: `Caro/a ${userName}, sou o Aprendiz de Abigail, A Oráculo Húngara. Tirei três cartas em resposta à sua pergunta...`,
             interpretation: cards.map((card, i) =>
                 `Carta ${i + 1}: ${card.name[language]} - ${card.shortMeaning[language]}`
             ).join('\n\n'),
-            hook: `Embora essas cartas preliminares ofereçam um vislumbre, Abigail está atualmente consultando seu baralho físico na tradição húngara. Somente sua leitura completa de 12 cartas pode revelar as correntes mais profundas e influências ocultas em sua situação.`,
-            ps: `P.S. Notei ${cards[0].name[language]} em sua leitura. Esta carta carrega o pó e a sabedoria do Leste Europeu, e frequentemente guarda segredos que só se revelam quando Abigail realiza o ritual completo em seu estúdio.`
+            hook: `Embora essas cartas preliminares ofereçam um vislumbre, Abigail está atualmente consultando seu baralho físico na tradição húngara. Somente sua leitura premium—que inclui uma disposição física das cartas, uma foto personalizada da sua disposição real e análise profunda e abrangente—pode revelar as correntes mais profundas e influências ocultas em sua situação.`,
+            ps: `P.S. Notei ${cards[0].name[language]} em sua leitura. Esta carta guarda segredos que só se revelam quando Abigail realiza o ritual completo com seu baralho físico.`
         },
         hu: {
             intro: `Kedves ${userName}, én vagyok Abigail, A Magyar Jósnő tanítványa. Három kártyát húztam válaszként a kérdésére...`,
             interpretation: cards.map((card, i) =>
                 `${i + 1}. kártya: ${card.name[language]} - ${card.shortMeaning[language]}`
             ).join('\n\n'),
-            hook: `Bár ezek az előzetes kártyák betekintést nyújtanak, Abigail jelenleg a fizikai pakliját konzultálja a magyar hagyomány szerint. Csak a teljes 12 kártyás olvasata tárhatja fel a helyzetében rejlő mélyebb áramlatokat és rejtett befolyásokat.`,
-            ps: `P.S. Észrevettem a ${cards[0].name[language]} kártyát az olvasatában. Ez a kártya Kelet-Európa porát és bölcsességét hordozza, és gyakran olyan titkokat rejt, amelyek csak akkor tárulnak fel, amikor Abigail elvégzi a teljes rituálét a műtermében.`
+            hook: `Bár ezek az előzetes kártyák betekintést nyújtanak, Abigail jelenleg a fizikai pakliját konzultálja a magyar hagyomány szerint. Csak a prémium olvasata – amely magában foglal egy fizikai kártyavetést, egy személyre szabott fotót a tényleges vetésről és mélyreható átfogó elemzést – tárhatja fel a helyzetében rejlő mélyebb áramlatokat és rejtett befolyásokat.`,
+            ps: `P.S. Észrevettem a ${cards[0].name[language]} kártyát az olvasatában. Ez a kártya olyan titkokat rejt, amelyek csak akkor tárulnak fel, amikor Abigail elvégzi a teljes rituálét fizikai paklijával.`
         }
     };
 

@@ -68,3 +68,4 @@ async def generate_card_reading(request: GenerateReadingRequest):
 
 
 
+

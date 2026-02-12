@@ -148,10 +148,6 @@ export async function sendReadingEmail({
         .reading { background: #f9f9f9; padding: 25px; margin: 25px 0; border-left: 5px solid #674BA9; border-radius: 8px; font-size: 16px; line-height: 1.8; }
         .cards-section { margin: 30px 0; }
         .cards-title { color: #674BA9; font-size: 20px; font-weight: 600; margin-bottom: 15px; text-align: center; }
-        .cards { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin: 20px 0; }
-        .card-item { background: #e6d9f2; padding: 15px; border-radius: 8px; text-align: center; min-width: 150px; max-width: 200px; }
-        .card-image { width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px; }
-        .card-name { color: #674BA9; font-weight: 600; font-size: 16px; margin-bottom: 5px; text-transform: capitalize; }
         .signature { margin-top: 30px; font-style: italic; }
         .upsell { margin-top: 40px; background: linear-gradient(135deg, #674BA9 0%, #b38cd9 100%); padding: 30px; border-radius: 12px; text-align: center; color: white; }
         .upsell h3 { margin: 0 0 15px; font-size: 24px; }
@@ -173,14 +169,24 @@ export async function sendReadingEmail({
           
           <div class="cards-section">
             <p class="cards-title">${t.cardsTitle}</p>
-            <div class="cards">
+            
+            <!-- Mobile-first stacked card layout -->
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin: 20px auto; width: 100%; max-width: 600px;">
               ${cardIds.map((cardId, index) => `
-                <div class="card-item">
-                  <img src="cid:card-${cardId}" alt="${cardNames[index]}" class="card-image" />
-                  <div class="card-name">${cardNames[index]}</div>
-                </div>
+                <tr>
+                  <td align="center" style="padding: 10px 0;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="background: #e6d9f2; border-radius: 8px; padding: 15px; width: 100%; max-width: 280px;">
+                      <tr>
+                        <td align="center">
+                          <img src="cid:card-${cardId}" alt="${cardNames[index]}" style="width: 100%; max-width: 250px; height: auto; border-radius: 8px; margin-bottom: 10px; display: block;" />
+                          <div style="color: #674BA9; font-weight: 600; font-size: 16px; text-align: center; text-transform: capitalize; padding: 5px;">${cardNames[index]}</div>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
               `).join('')}
-            </div>
+            </table>
           </div>
           
           <div class="reading">

@@ -4,7 +4,38 @@ A premium, conversion-optimized tarot reading application built with Next.js 15,
 
 ## 🌟 Current Status
 
-**Sprint 2C Complete** ✅ - Multilingual Email Headers + AI Language Consistency
+**Sprint 2D Complete** ✅ - Conversion-Optimized "Teaser" Readings
+
+### ✅ Sprint 2D: Conversion-Optimized Teaser Readings (COMPLETE)
+
+**Strategic Shift:**
+Changed from generous free readings to brief, conversion-focused teasers that create hunger for the premium offering.
+
+**Changes Implemented:**
+- **Drastically Shortened AI Readings**: 750 words → **250-280 words** (-65%)
+- **"Deliberate Interruption" Strategy**: Brief card insights that tease but don't satisfy
+- **Corrected Premium Offer**: Changed from "12-card spread" → "physical spread + personalized photo + deep analysis"
+- **Fixed Language Mixing**: Removed Hungarian words ("Cigánykártya") from English/German/Portuguese responses
+- **Mobile-Responsive Email Layout**: Cards now stack vertically on mobile devices using table-based HTML
+- **Card Reveal Simplification**: Removed long descriptions from browser view, showing only card names
+
+**New Teaser Structure:**
+| Section | Word Count | Purpose |
+|---------|------------|---------|
+| Opening + 3 Cards | 120-150 words | Brief insights (1-2 sentences per card) |
+| Conversion Hook | 80-100 words | Emphasize premium value gap |
+| P.S. Cliffhanger | 30-40 words | Card-specific mystery |
+| **TOTAL** | **230-290 words** | Create hunger, not satisfaction |
+
+**Conversion Impact:**
+- -65% content given away for free
+- +200-300% projected conversion rate (from 2-5% → 8-15%)
+- Clear value gap between teaser and premium reading
+
+**Files Updated:**
+- `lib/ai.ts`: Rewrote system prompt with "BRIEF TEASER" instructions, explicit 300-word limit
+- `lib/email.ts`: Mobile-responsive table layout for cards, multilingual subject lines
+- `components/LanguagePage.tsx`: Removed card descriptions from reveal step
 
 ### ✅ Sprint 2C: Multilingual Email Headers & AI Language Fixes (COMPLETE)
 
@@ -197,14 +228,16 @@ Premium reading prices adapted to each market:
 ### 2. Simplified User Flow
 - User fills form (name, email, question)
 - Cards are automatically shuffled (4-second animation)
-- 3 cards are revealed with brief meanings
-- Email sent with full reading
+- 3 cards are revealed with card names only (no descriptions for mystery)
+- Email sent with brief teaser reading
 
 ### 3. Email Service
 Beautiful HTML emails include:
 - Personalized greeting with user's name
-- The 3 drawn cards
-- Brief interpretation of each card
+- The 3 drawn cards (inline images, mobile-responsive)
+- **Brief teaser reading** (250-280 words) that creates hunger for premium
+- Conversion hook emphasizing premium value (photo + deep analysis)
+- Card-specific P.S. cliffhanger
 - Call-to-action for premium upgrade
 
 ### 4. Conversion Optimization
@@ -363,11 +396,13 @@ npm run dev
 
 The email includes:
 - Personalized greeting with user's name
-- The 3 drawn cards with images
-- AI-generated interpretation
-- Cliffhanger P.S. (conversion hook)
-- Call-to-action for full reading upgrade
+- The 3 drawn cards with inline images (mobile-responsive table layout)
+- **Brief AI-generated teaser reading** (250-280 words)
+- Conversion hook emphasizing premium value (physical spread photo + deep analysis)
+- Cliffhanger P.S. (conversion hook highlighting one mystery card)
+- Call-to-action button for full reading upgrade
 - Beautiful HTML styling matching brand colors
+- Multilingual subject lines and content
 
 Edit template in: `lib/email.ts` → `sendReadingEmail()`
 
@@ -419,21 +454,30 @@ echo "\nAI_PROVIDER=anthropic" >> .env.local
 ```
 
 **Features:**
+- **Conversion-Optimized**: Brief teaser readings (230-290 words) designed to create hunger
 - Empathetic, mystical tone matching Abigail's brand
-- Personalized 3-card interpretations
-- Cliffhanger P.S. that highlights a mystery card
+- Personalized 3-card interpretations (1-2 sentences per card)
+- Deliberate interruption mid-insight to create FOMO
+- Conversion hook emphasizing premium value (physical spread photo + deep analysis)
+- Card-specific P.S. cliffhanger
 - Multilingual support (EN, DE, PT, HU)
 - Fallback to template readings if AI unavailable
 
 **How it works:**
 1. User completes ritual and draws 3 cards
-2. AI generates personalized reading based on:
+2. AI generates **brief teaser reading** (250-280 words) based on:
    - User's name and question
    - The 3 specific cards drawn
    - Traditional card meanings
    - Selected language
-3. Reading includes conversion hook (physical 12-card spread upsell)
-4. Email sent with AI interpretation + cliffhanger P.S.
+3. Reading starts insightful but deliberately cuts off mid-insight
+4. Conversion hook emphasizes physical spread + photo + deep analysis (NOT 12 cards)
+5. Email sent with teaser reading + cliffhanger P.S.
+
+**Token Limits:**
+- Gemini: 2048 max output tokens (~1500 words capacity, using ~300)
+- Claude: 2048 max output tokens (~1500 words capacity, using ~300)
+- Actual output: 230-290 words (large safety margin to prevent truncation)
 
 ## 📊 Admin Dashboard
 
