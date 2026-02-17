@@ -17,6 +17,10 @@ export const metadata = {
   title: "Abigail | The Hungarian Oracle - Authentic Gypsy Card Readings",
   description: "Certified Hungarian Gypsy Card readings by Abigail. Ancient wisdom from the heart of Eastern Europe.",
   keywords: "Hungarian oracle, gypsy cards, tarot reading, authentic card reading, Hungarian tradition",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({

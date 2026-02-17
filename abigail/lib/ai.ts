@@ -225,8 +225,16 @@ CRITICAL RULES:
  * Parse AI response into structured format
  */
 function parseAIResponse(response: string, defaultCard: string, language: Language): ApprenticeReading {
+    // Remove markdown formatting (**, __, etc.)
+    let cleaned = response
+        .replace(/\*\*([^*]+)\*\*/g, '$1')  // Remove **bold**
+        .replace(/__([^_]+)__/g, '$1')      // Remove __underline__
+        .replace(/\*([^*]+)\*/g, '$1')      // Remove *italic*
+        .replace(/^#{1,6}\s+/gm, '')        // Remove markdown headers
+        .trim();
+
     // Split by P.S. marker
-    const parts = response.split(/P\.S\./i);
+    const parts = cleaned.split(/P\.S\./i);
 
     const interpretation = parts[0].trim();
 
