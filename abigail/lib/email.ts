@@ -103,7 +103,7 @@ export async function sendReadingEmail({
       emailTitle: "Abigail | A Oráculo Húngara",
       emailTagline: "Sabedoria Autêntica das Cartas Ciganas Húngaras",
       emailSubject: `Aprendiz de Abigail: Sua Leitura Está Pronta, ${toName}`,
-      greeting: `Quer/a ${toName},`,
+      greeting: `Querido/a ${toName},`,
       intro: "Abigail está atualmente consultando seu baralho físico na tradição dos mestres húngaros. Seu mapa preliminar de 3 cartas está abaixo:",
       cardsTitle: "Suas Três Cartas Sagradas:",
       closing: "Que a sabedoria das cartas guie seu caminho,\nAbigail",

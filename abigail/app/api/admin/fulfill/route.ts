@@ -48,27 +48,26 @@ export async function POST(request: NextRequest) {
     }
 
     let photoPath: string | null = null;
+    let photoBuffer: Buffer | null = null;
 
     // Handle photo upload
     if (photoFile) {
       const bytes = await photoFile.arrayBuffer();
-      const buffer = Buffer.from(bytes);
+      photoBuffer = Buffer.from(bytes);
 
-      // Create uploads directory if it doesn't exist
-      const uploadsDir = join(process.cwd(), 'public', 'uploads');
-      try {
-        await mkdir(uploadsDir, { recursive: true });
-      } catch (err) {
-        // Directory might already exist
-      }
-
+      // On Vercel, filesystem is read-only except /tmp
+      // Store in /tmp for immediate use in email
+      const uploadsDir = '/tmp';
+      
       // Save file with unique name
       const fileName = `spread-${submissionId}-${Date.now()}.${photoFile.name.split('.').pop()}`;
       const filePath = join(uploadsDir, fileName);
-      await writeFile(filePath, buffer);
-      photoPath = `/uploads/${fileName}`;
+      await writeFile(filePath, photoBuffer);
+      photoPath = filePath; // Store the /tmp path
 
-      console.log(`✅ Photo saved: ${photoPath}`);
+      console.log(`✅ Photo saved to temp: ${photoPath}`);
+      console.log(`⚠️  Note: Photo is in /tmp and will be deleted after function execution`);
+      console.log(`💡 For production, use Vercel Blob or cloud storage`);
     }
 
     // Update database
@@ -102,8 +101,16 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('❌ Error fulfilling order:', error);
+    
+    // Log detailed error info
+    if (error instanceof Error) {
+      console.error('Error name:', error.name);
+      console.error('Error message:', error.message);
+      console.error('Error stack:', error.stack);
+    }
+    
     return NextResponse.json(
-      { error: 'Failed to fulfill order' },
+      { error: 'Failed to fulfill order', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
   }

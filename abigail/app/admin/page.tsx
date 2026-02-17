@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { getCardImageName } from '@/lib/cards';
 
 interface Submission {
     id: number;
@@ -100,7 +101,7 @@ export default function AdminDashboard() {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.error || 'Failed to fulfill order');
+                throw new Error(errorData.details || errorData.error || 'Failed to fulfill order');
             }
 
             alert('Order fulfilled successfully! Email sent to customer.');
@@ -114,21 +115,6 @@ export default function AdminDashboard() {
         } finally {
             setIsSubmitting(false);
         }
-    };
-
-    const getCardImageName = (cardId: number): string => {
-        const cardNames = [
-            'card-01-house', 'card-02-money', 'card-03-widow', 'card-04-love',
-            'card-05-military', 'card-06-child', 'card-07-death', 'card-08-disease',
-            'card-09-journey', 'card-10-gift', 'card-11-bird', 'card-12-falsehood',
-            'card-13-thought', 'card-14-priest', 'card-15-enemy', 'card-16-main-person',
-            'card-17-wedding', 'card-18-widower', 'card-19-gift-2', 'card-20-luck',
-            'card-21-bird-2', 'card-22-servant', 'card-23-business', 'card-24-water',
-            'card-25-thief', 'card-26-friend', 'card-27-high-person', 'card-28-merriment',
-            'card-29-court', 'card-30-letter', 'card-31-news', 'card-32-hope',
-            'card-33-hope-2', 'card-34-prison', 'card-35-jealousy', 'card-36-garden',
-        ];
-        return cardNames[cardId - 1] || 'card-01-house';
     };
 
     if (!isAuthenticated) {
