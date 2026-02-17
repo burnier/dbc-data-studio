@@ -169,7 +169,7 @@ npm install
 cat > .env.local << EOF
 # Email Configuration (Resend)
 RESEND_API_KEY=re_your_resend_api_key_here
-EMAIL_FROM=Abigail <abigail@guidance.dbcdatastudio.com>
+EMAIL_FROM=Abigail <contact@abigail.dbcdatastudio.com>
 
 # Database
 DATABASE_URL=./abigail.db
@@ -265,9 +265,10 @@ Each language has its own route for better marketing tracking and campaign manag
 
 ### 2. Localized Pricing
 Premium reading prices adapted to each market:
-- **English/German**: €19.90
-- **Portuguese**: R$ 59,90 (Brazilian Real)
-- **Hungarian**: 6990 Ft (Forint)
+- **English**: $29.00
+- **German**: €24.90
+- **Portuguese**: R$ 129,00 (Brazilian Real)
+- **Hungarian**: 8.900 Ft (Forint)
 
 ### 2. Simplified User Flow
 - User fills form (name, email, question)
@@ -279,7 +280,7 @@ Premium reading prices adapted to each market:
 Beautiful HTML emails include:
 - Personalized greeting with user's name
 - The 3 drawn cards (inline images, mobile-responsive)
-- **Brief teaser reading** (250-280 words) that creates hunger for premium
+- **Brief teaser reading** (150-180 words) that creates hunger for premium
 - Conversion hook emphasizing premium value (photo + deep analysis)
 - Card-specific P.S. cliffhanger
 - Call-to-action for premium upgrade
@@ -372,7 +373,7 @@ The application sends AI-generated readings via email using **Resend** with **Cl
 
 ### Why Subdomain Strategy?
 
-We use `guidance.dbcdatastudio.com` as the sending domain (instead of the root domain) to:
+We use `abigail.dbcdatastudio.com` as the sending domain (instead of the root domain) to:
 - Protect main domain reputation
 - Create a boutique "Abigail's guidance" brand
 - Isolate email sending from other DBC Data Studio services
@@ -390,7 +391,7 @@ Verify email address
 **2. Add Domain with Cloudflare Auto-Config**
 ```
 1. In Resend Dashboard → "Domains" → "Add Domain"
-2. Enter: guidance.dbcdatastudio.com
+2. Enter: abigail.dbcdatastudio.com
 3. Click "Sign in to Cloudflare" (NOT manual setup)
 4. Authorize Resend to access Cloudflare DNS
 5. Wait 1-2 minutes for automatic configuration
@@ -416,13 +417,13 @@ This automatically configures:
 ```bash
 # In .env.local
 RESEND_API_KEY=re_your_actual_api_key_here
-EMAIL_FROM=Abigail <abigail@guidance.dbcdatastudio.com>
+EMAIL_FROM=Abigail <contact@abigail.dbcdatastudio.com>
 ```
 
 **5. Enable DMARC Monitoring (Optional but Recommended)**
 ```
 1. In Cloudflare Dashboard → Email → DMARC Management
-2. Enable for guidance.dbcdatastudio.com subdomain
+2. Enable for abigail.dbcdatastudio.com subdomain
 3. Monitor reports to ensure high deliverability
 ```
 
@@ -441,7 +442,7 @@ npm run dev
 The email includes:
 - Personalized greeting with user's name
 - The 3 drawn cards with inline images (mobile-responsive table layout)
-- **Brief AI-generated teaser reading** (250-280 words)
+- **AI-generated teaser reading** (150-180 words)
 - Conversion hook emphasizing premium value (physical spread photo + deep analysis)
 - Cliffhanger P.S. (conversion hook highlighting one mystery card)
 - Call-to-action button for full reading upgrade
@@ -498,7 +499,7 @@ echo "\nAI_PROVIDER=anthropic" >> .env.local
 ```
 
 **Features:**
-- **Conversion-Optimized**: Brief teaser readings (230-290 words) designed to create hunger
+- **Conversion-Optimized**: Brief teaser readings (150-180 words) designed to create hunger
 - Empathetic, mystical tone matching Abigail's brand
 - Personalized 3-card interpretations (1-2 sentences per card)
 - Deliberate interruption mid-insight to create FOMO
@@ -509,7 +510,7 @@ echo "\nAI_PROVIDER=anthropic" >> .env.local
 
 **How it works:**
 1. User completes ritual and draws 3 cards
-2. AI generates **brief teaser reading** (250-280 words) based on:
+2. AI generates **brief teaser reading** (150-180 words) based on:
    - User's name and question
    - The 3 specific cards drawn
    - Traditional card meanings
@@ -519,9 +520,9 @@ echo "\nAI_PROVIDER=anthropic" >> .env.local
 5. Email sent with teaser reading + cliffhanger P.S.
 
 **Token Limits:**
-- Gemini: 2048 max output tokens (~1500 words capacity, using ~300)
-- Claude: 2048 max output tokens (~1500 words capacity, using ~300)
-- Actual output: 230-290 words (large safety margin to prevent truncation)
+- Gemini: 2048 max output tokens (~1500 words capacity, using ~200)
+- Claude: 2048 max output tokens (~1500 words capacity, using ~200)
+- Actual output: 150-180 words (large safety margin to prevent truncation)
 
 ## 📊 Admin Dashboard
 

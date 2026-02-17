@@ -18,7 +18,7 @@
 ### Step 2: Add Subdomain with Cloudflare Integration
 - [ ] Click **"Domains"** in left sidebar
 - [ ] Click **"Add Domain"** button
-- [ ] Enter domain: `guidance.dbcdatastudio.com`
+- [ ] Enter domain: `abigail.dbcdatastudio.com`
 - [ ] **CRITICAL:** Click **"Sign in to Cloudflare"** button (blue button, NOT manual setup)
 - [ ] Authorize Resend app in Cloudflare OAuth screen
 - [ ] Wait for automatic DNS configuration (1-2 minutes)
@@ -57,7 +57,7 @@
   ```
 - [ ] Update `EMAIL_FROM`:
   ```
-  EMAIL_FROM=Abigail <abigail@guidance.dbcdatastudio.com>
+  EMAIL_FROM=Abigail <contact@abigail.dbcdatastudio.com>
   ```
 - [ ] Save file
 
@@ -87,7 +87,7 @@
 - [ ] Check inbox (may take 1-30 seconds)
 - [ ] Verify email arrives with:
   - [ ] Subject: "Abigail's Apprentice: Your Reading is Ready, Test User"
-  - [ ] From: "Abigail <abigail@guidance.dbcdatastudio.com>"
+  - [ ] From: "Abigail <contact@abigail.dbcdatastudio.com>"
   - [ ] 3 card images visible
   - [ ] AI-generated reading text
   - [ ] "Full Reading" CTA button visible
@@ -174,7 +174,7 @@ To avoid spam filters, gradually increase sending volume:
 2. Check all DNS records green in Resend
 3. Send test email to https://www.mail-tester.com/ (should score 9+/10)
 4. Implement email warming schedule
-5. Ask recipients to add `abigail@guidance.dbcdatastudio.com` to contacts
+5. Ask recipients to add `contact@abigail.dbcdatastudio.com` to contacts
 
 ### Issue: Rate limit exceeded
 **Solutions:**
