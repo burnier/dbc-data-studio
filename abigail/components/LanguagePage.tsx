@@ -312,9 +312,13 @@ export function LanguagePage({ language }: LandingPageProps) {
         return () => clearInterval(interval);
     }, []);
 
-    // Shuffling animation + AI generation
+    // Shuffling animation + AI generation (parallel)
     useEffect(() => {
         if (step === 'shuffling' && submissionId && drawnCardIds.length === 3) {
+            // Start AI generation immediately (don't wait for animation)
+            generateReading();
+
+            // Run animation in parallel
             const duration = 4000;
             const interval = 50;
             const steps = duration / interval;
@@ -325,8 +329,6 @@ export function LanguagePage({ language }: LandingPageProps) {
                 setShufflingProgress((current / steps) * 100);
                 if (current >= steps) {
                     clearInterval(timer);
-                    // Trigger AI reading + email generation
-                    generateReading();
                 }
             }, interval);
 

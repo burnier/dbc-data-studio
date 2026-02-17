@@ -4,6 +4,8 @@
  */
 import { Resend } from "resend";
 import { getCardImageName } from "./cards";
+import { readFileSync } from "fs";
+import { join } from "path";
 import { EMAIL_CONFIG, type Language } from "./constants";
 
 const resend = process.env.RESEND_API_KEY && process.env.RESEND_API_KEY !== 'placeholder'
