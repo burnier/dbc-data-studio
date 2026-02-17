@@ -1,0 +1,107 @@
+[
+  {
+    "name": "Coursera",
+    "slug": "coursera",
+    "description": "Professional certificate programs from top universities and companies",
+    "focus": "Data Engineering Professional Certificates",
+    "features": [
+      "Industry-recognized certificates",
+      "University partnerships",
+      "Hands-on projects",
+      "Flexible learning schedule",
+      "Career support services"
+    ],
+    "pricing": [
+      {
+        "plan": "Monthly",
+        "price": "$49/month",
+        "features": [
+          "Access to all courses",
+          "Certificates included",
+          "7-day free trial"
+        ]
+      },
+      {
+        "plan": "Annual",
+        "price": "$399/year",
+        "features": [
+          "Save $189/year",
+          "All monthly features",
+          "Priority support"
+        ]
+      }
+    ],
+    "affiliateLink": "#",
+    "website": "https://coursera.org"
+  },
+  {
+    "name": "DataQuest",
+    "slug": "dataquest",
+    "description": "Interactive data science and engineering courses with hands-on practice",
+    "focus": "Python for Data Engineering",
+    "features": [
+      "Interactive coding environment",
+      "Real-world projects",
+      "Python-focused curriculum",
+      "Data engineering specialization",
+      "Progress tracking"
+    ],
+    "pricing": [
+      {
+        "plan": "Monthly",
+        "price": "$49/month",
+        "features": [
+          "All courses",
+          "Projects included",
+          "Community access"
+        ]
+      },
+      {
+        "plan": "Annual",
+        "price": "$390/year",
+        "features": [
+          "Save $198/year",
+          "All monthly features",
+          "Career guidance"
+        ]
+      }
+    ],
+    "affiliateLink": "#",
+    "website": "https://dataquest.io"
+  },
+  {
+    "name": "Pluralsight",
+    "slug": "pluralsight",
+    "description": "Technology skills platform with expert-led courses and assessments",
+    "focus": "AI Infrastructure & MLOps",
+    "features": [
+      "Expert-led courses",
+      "Skill assessments",
+      "Learning paths",
+      "Hands-on labs",
+      "Certification prep"
+    ],
+    "pricing": [
+      {
+        "plan": "Standard",
+        "price": "$29/month",
+        "features": [
+          "2,500+ courses",
+          "Skill assessments",
+          "Mobile app"
+        ]
+      },
+      {
+        "plan": "Premium",
+        "price": "$45/month",
+        "features": [
+          "All Standard features",
+          "Certification practice exams",
+          "Interactive courses"
+        ]
+      }
+    ],
+    "affiliateLink": "#",
+    "website": "https://pluralsight.com"
+  }
+]

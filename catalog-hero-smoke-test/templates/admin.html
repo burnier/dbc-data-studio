@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CatalogHero Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-4xl font-bold text-gray-900 mb-8">CatalogHero Admin Dashboard</h1>
+
+        <!-- Metrics Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h3 class="text-sm font-semibold text-gray-500 uppercase">Page Views</h3>
+                <p class="text-3xl font-bold text-indigo-600 mt-2">{{ metrics.page_views }}</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h3 class="text-sm font-semibold text-gray-500 uppercase">Click to Upload</h3>
+                <p class="text-3xl font-bold text-blue-600 mt-2">{{ metrics.click_to_upload }}</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h3 class="text-sm font-semibold text-gray-500 uppercase">Waitlist Signups</h3>
+                <p class="text-3xl font-bold text-green-600 mt-2">{{ metrics.waitlist_signups }}</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h3 class="text-sm font-semibold text-gray-500 uppercase">Conversion Rate</h3>
+                <p class="text-3xl font-bold text-purple-600 mt-2">{{ metrics.conversion_rate }}%</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h3 class="text-sm font-semibold text-gray-500 uppercase">Click Conversion</h3>
+                <p class="text-3xl font-bold text-orange-600 mt-2">{{ metrics.click_conversion }}%</p>
+            </div>
+        </div>
+
+        <!-- Waitlist Section -->
+        <div class="bg-white rounded-lg shadow mb-8">
+            <div class="p-6 border-b border-gray-200">
+                <h2 class="text-2xl font-bold text-gray-900">Waitlist ({{ waitlist_data|length }} merchants)</h2>
+                <p class="text-gray-600 mt-1">Merchants interested in JSON-to-CSV Flattener</p>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Email</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        {% if waitlist_data %}
+                        {% for row in waitlist_data %}
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ row.email }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ row.timestamp }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="2" class="px-6 py-4 text-center text-sm text-gray-500">No waitlist entries yet
+                            </td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Analytics Section -->
+        <div class="bg-white rounded-lg shadow">
+            <div class="p-6 border-b border-gray-200">
+                <h2 class="text-2xl font-bold text-gray-900">Analytics Events ({{ analytics_data|length }} total)</h2>
+                <p class="text-gray-600 mt-1">Recent user interactions</p>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Event</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Timestamp</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                IP Address</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        {% if analytics_data %}
+                        {% for row in analytics_data[-50:] %}
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                        {% if row.event_name == 'page_view' %}bg-blue-100 text-blue-800
+                                        {% elif row.event_name == 'click_to_upload' %}bg-yellow-100 text-yellow-800
+                                        {% elif row.event_name == 'waitlist_signup' %}bg-green-100 text-green-800
+                                        {% else %}bg-gray-100 text-gray-800{% endif %}">
+                                    {{ row.event_name }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ row.timestamp }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ row.ip_address }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="3" class="px-6 py-4 text-center text-sm text-gray-500">No analytics events yet
+                            </td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

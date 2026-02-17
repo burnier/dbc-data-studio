@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+	<!-- Mobile first -->	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+   
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- Bootstrap Form Validator -->
+	<script src="validator.js"></script>
+    <!-- JS Form -->
+	<script src="contact.js"></script>
+	
+	<!-- GOOGLE Font -->
+	<link href="https://fonts.googleapis.com/css?family=Mystery+Quest" rel="stylesheet">
+	
+	<!-- My CSS File -->
+	<link rel="stylesheet" type="text/css" href="style.css" />	
+    <link rel="stylesheet" type="text/css" href="footer.css" />	
+    
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png"href="Other Images\BlackCatFavicon (32 x 32).ico">
+    			
+	<title>Baralho Cigano</title>
+  </head>
+  
+  <body>
+  
+<!-------------------------------------------------------- FACEBOOK Box ------------------------------------------------------------------->		
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.8&appId=1770325796565044";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+	<!--------------------------------------------------------------------------------------- Navigation Bar ----------------------------------------------------------------------------------------->
+<div class="navbar navbar-custom" role="navigation"> 
+		<div class="container"> 
+			<div class="navbar-header"> 
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> 
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+                <a class="navbar-brand" rel="home" href="index.html" title="AbigailCards">Abigail Cards</a>
+			</div>	
+			<div class="navbar-collapse collapse"> 
+				<ul class="nav navbar-nav">
+						<li class="active"><a href='index.html'>Página Principal</a></li>
+						<li><a href='historia.html'>História do Baralho Cigano</a></li>
+						<li><a href='significado-das-cartas.html'>Significado das Cartas</a></li>
+						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href='exemplos-de-jogos.html'>Exemplos de Tiragens<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="exemplo-1-carta.html">Tiragem de 1 Carta</a></li>
+								<li><a href="exemplo-3-cartas.html">Tiragem de 3 Cartas</a></li>
+								<li><a href="exemplo-mais-cartas.html">Tiragem com Mais Cartas</a></li>
+								<li><a href="carta-do-dia.html">Sua Carta do Dia (Interativo!)</a></li>
+							</ul>
+						</li>
+						<li><a href='contato.html'>Contato</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!--------------------------------------------------------------------------------------- Navigation Bar ----------------------------------------------------------------------------------------->
+	
+	<div class="container">
+		<h1>Contato</h1><br/>
+
+  		<div class="body-text">
+  			<p class="lead">Meu nome é Abigail, sou húngara e tenho bastante experiência em previsões através do baralho cigano, bastante popular em meu país.</p>
+            <p class="lead">Se você se encontra numa situação sem saída e não sabe o que fazer ou se você tem perguntas sobre relacionamento, amor, família, dinheiro ou trabalho eu posso ajudá-lo(a) de maneira competente através da previsão com baralho cigano.</p>
+          	<p class="lead">Eu utilizo diferentes técnicas de tiragem dependendo da complexidade da pergunta. O único tema sobre o qual não trato é relacionado à saúde e doenças, já que o místico não é substituto para a ajuda médica! Como as perguntas mais frequentes são ligadas à relacionamentos e amor, eu sou especializada nesse tema.</p>
+  		</div>
+	
+   
+
+ <!-------------------------------------------------------- CONTACT FORM ------------------------------------------------------------------->	
+  <div class="body-text">
+  			<p class="lead">Use o formulário abaixo para entrar em contato conosco. Responderemos sua mensagem o mais rápido possível.</p>
+  </div>
+ 
+ <div class="well well-sm">
+     <form id="contact-form" method="post" action="contact.php" role="form">
+    
+        <div class="messages"></div>
+    
+        <div class="controls">
+    
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="form_name">Nome *</label>
+                        <input id="form_name" type="text" name="name" class="form-control" placeholder="Escreva seu Nome *" required="required" data-error="Nome é necessário!">
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="form_email">Email *</label>
+                        <input id="form_email" type="email" name="email" class="form-control" placeholder="Escreva seu Email *" required="required" data-error="Email inválido">
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+            </div>
+            
+         
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="form_message">Mensagem *</label>
+                        <textarea id="form_message" name="message" class="form-control" placeholder="Escreva sua Mensagem *" rows="4" required data-error="Por favor escreva sua mensagem."></textarea>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <input type="submit" class="btn btn-success btn-send" value="Send message">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p><strong>*</strong> Esses campos são necessários. </p>
+                </div>
+            </div>
+        </div>
+    
+    </form>
+ </div>
+ 
+ <!-------------------------------------------------------- FACEBOOK & INSTAGRAM Boxes ------------------------------------------------------------------->	
+	<div class="row">	<!-- add class for font style/color!!! -->
+        <div class="col-md-6">
+        	<div class="well well-sm">
+                <p class="text-center">Curta e visite a nossa página no Facebook para ficar sabendo das novidades e mistérios do baralho cigano!</p>
+                    <div class="fb-page" 
+                        data-href="https://www.facebook.com/Baralho-Cigano-682019078623599"
+                        data-width="380" 
+                        data-hide-cover="false"
+                        data-show-facepile="false" 
+                        data-show-posts="false">
+                    </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+        	<div class="well well-sm">
+                <p class="text-center">Visite também nosso Instagram para ver exemplos de tiragens e imagens relacionadas ao baralho cigano!</p>
+    			<div class="text-center">
+                	<a href="https://www.instagram.com/abigailcards/?hl=pt"><img src="Other Images\banner-instagram.jpg" align="middle" class="img-responsive"></a>
+                </div>
+        	</div>
+    	</div>
+	</div>
+ 
+ 
+
+ </div>
+ 
+ 
+ 
+<!------------------------------------------------------------------------------ Footer --------------------------------------------------------------------------------->
+         <footer class="footer-distributed">
+			<div class="footer-left">
+				<img src="Other Images\BlackCat_footer.png" align="middle" class="img-responsive">
+				<p class="footer-company-name">Abigail Cards &copy; 2016</p>
+			</div>
+
+			<div class="footer-right">
+				<div>
+					<i class="fa fa-envelope"></i>
+					<p><a href="mailto:contato@abigailcards.com">contato@abigailcards.com</a></p>
+				</div>
+            
+            	<div class="footer-icons">
+					<a href="https://www.facebook.com/Baralho-Cigano-682019078623599"><i class="fa fa-facebook"></i></a>
+					<a href="https://www.instagram.com/abigailcards/?hl=pt"><i class="fa fa-instagram"></i></a>
+				</div>
+            </div>
+		</footer>
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------------------> 
+
+
+
+  </body>
+</html>

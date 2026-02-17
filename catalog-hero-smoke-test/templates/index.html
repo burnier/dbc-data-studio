@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CatalogHero - commercetools JSON to Shopify CSV</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Hero Section -->
+    <div class="container mx-auto px-4 py-16">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-5xl font-bold text-gray-900 mb-6">
+                Turn complex commercetools JSON into clean Shopify CSVs.
+            </h1>
+            <p class="text-2xl text-gray-700 mb-8">
+                Pick your language, flatten your attributes, and sync in seconds.
+            </p>
+
+            <!-- Upload JSON Button and Download Sample -->
+            <div class="flex flex-col items-center gap-4">
+                <div class="flex gap-4">
+                    <button id="uploadBtn"
+                        class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-4 px-8 rounded-lg text-lg shadow-lg transform transition hover:scale-105">
+                        Upload JSON
+                    </button>
+                    <a href="/static/sample_ct_export.json" download
+                        class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-4 px-8 rounded-lg text-lg shadow-lg transform transition hover:scale-105 inline-flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                            </path>
+                        </svg>
+                        Download Sample JSON
+                    </a>
+                </div>
+                <p class="text-sm text-gray-600 mt-2">
+                    Supports standard .json exports from commercetools. Use our sample file to see it in action.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Before & After Section -->
+    <div class="container mx-auto px-4 py-12">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-gray-900 text-center mb-8">See the Transformation</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- The Problem - Left Side -->
+                <div class="bg-gray-900 rounded-lg p-6 shadow-xl">
+                    <h3 class="text-xl font-semibold text-red-400 mb-4">Complex Nested JSON</h3>
+                    <pre class="text-sm text-gray-300 overflow-x-auto"><code>{
+  "id": "708c81e8-b876-4ab5-8772-403649844abe",
+  "key": "trail-runner-max",
+  "productType": { 
+    "typeId": "product-type", 
+    "key": "apparel-footwear" 
+  },
+  "masterData": {
+    "current": {
+      "name": {
+        "en-US": "Trail Runner Max",
+        "de-DE": "Trail-Läufer Max"
+      },
+      "masterVariant": {
+        "id": 1,
+        "sku": "TR-MAX-01-BL",
+        "prices": [
+          { 
+            "value": { 
+              "currencyCode": "USD", 
+              "centAmount": 12900 
+            }, 
+            "country": "US" 
+          }
+        ],
+        "attributes": [
+          { 
+            "name": "color", 
+            "value": { "en": "Blue", "de": "Blau" } 
+          },
+          { "name": "weight", "value": "300g" }
+        ]
+      }
+    }
+  }
+}</code></pre>
+                </div>
+
+                <!-- The Solution - Right Side -->
+                <div class="bg-white rounded-lg p-6 shadow-xl border-2 border-green-500">
+                    <h3 class="text-xl font-semibold text-green-600 mb-4">Clean Shopify CSV</h3>
+                    <div class="bg-gray-50 rounded p-4 font-mono text-sm">
+                        <table class="w-full text-left">
+                            <thead class="bg-gray-200">
+                                <tr>
+                                    <th class="px-3 py-2 border">SKU</th>
+                                    <th class="px-3 py-2 border">Name</th>
+                                    <th class="px-3 py-2 border">Price</th>
+                                    <th class="px-3 py-2 border">Color</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="px-3 py-2 border">TR-MAX-01-BL</td>
+                                    <td class="px-3 py-2 border">Trail Runner Max</td>
+                                    <td class="px-3 py-2 border">$129.00</td>
+                                    <td class="px-3 py-2 border">Blue</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for "Coming Soon" -->
+    <div id="comingSoonModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-8 max-w-md mx-4 shadow-xl">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Coming Soon</h2>
+            <p class="text-gray-700 mb-6">
+                Transform your commercetools product data into Shopify-ready CSVs. Join the waitlist to be notified when
+                the JSON-to-CSV Flattener launches.
+            </p>
+            <form id="waitlistForm" class="mb-4">
+                <input type="email" id="emailInput" placeholder="Enter your email" required
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent mb-4" />
+                <div id="formMessage" class="hidden mb-4 p-3 rounded-lg"></div>
+                <div class="flex gap-4">
+                    <button type="button" id="closeModal"
+                        class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg transition">
+                        Close
+                    </button>
+                    <button type="submit" id="joinWaitlist"
+                        class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition">
+                        Join Waitlist
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Analytics tracking function
+        async function trackEvent(eventName) {
+            try {
+                await fetch(`/track/${eventName}`, { method: 'GET' });
+            } catch (error) {
+                console.log('Analytics tracking failed:', error);
+            }
+        }
+
+        // Track page view on load
+        trackEvent('page_view');
+
+        const uploadBtn = document.getElementById('uploadBtn');
+        const modal = document.getElementById('comingSoonModal');
+        const closeModal = document.getElementById('closeModal');
+        const waitlistForm = document.getElementById('waitlistForm');
+        const emailInput = document.getElementById('emailInput');
+        const formMessage = document.getElementById('formMessage');
+
+        uploadBtn.addEventListener('click', () => {
+            modal.classList.remove('hidden');
+            // Track click-to-upload
+            trackEvent('click_to_upload');
+        });
+
+        closeModal.addEventListener('click', () => {
+            modal.classList.add('hidden');
+            // Reset form
+            waitlistForm.reset();
+            formMessage.classList.add('hidden');
+        });
+
+        waitlistForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = emailInput.value.trim();
+
+            if (!email) {
+                showMessage('Please enter a valid email address.', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch('/waitlist', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email: email }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showMessage(data.message, 'success');
+                    waitlistForm.reset();
+                    // Auto-close modal after 2 seconds
+                    setTimeout(() => {
+                        modal.classList.add('hidden');
+                        formMessage.classList.add('hidden');
+                    }, 2000);
+                } else {
+                    showMessage('Something went wrong. Please try again.', 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('Something went wrong. Please try again.', 'error');
+            }
+        });
+
+        function showMessage(message, type) {
+            formMessage.textContent = message;
+            formMessage.classList.remove('hidden');
+            if (type === 'success') {
+                formMessage.className = 'mb-4 p-3 rounded-lg bg-green-100 text-green-800';
+            } else {
+                formMessage.className = 'mb-4 p-3 rounded-lg bg-red-100 text-red-800';
+            }
+        }
+
+        // Close modal when clicking outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.add('hidden');
+                waitlistForm.reset();
+                formMessage.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+
+</html>

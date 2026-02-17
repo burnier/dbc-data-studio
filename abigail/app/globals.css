@@ -1,0 +1,145 @@
+@import "tailwindcss";
+
+@theme {
+  --color-charcoal: #1a1a2e;
+  --color-bone-white: #f5f5dc;
+  --color-purple-main: #b38cd9;
+  --color-purple-dark: #674BA9;
+  --color-purple-light: #e6d9f2;
+
+  --font-family-serif: var(--font-playfair), serif;
+  --font-family-sans: var(--font-inter), sans-serif;
+}
+
+:root {
+  --charcoal: #1a1a2e;
+  --bone-white: #f5f5dc;
+  --purple-main: #b38cd9;
+  --purple-dark: #674BA9;
+  --purple-light: #e6d9f2;
+  --purple-gradient: linear-gradient(135deg, #b38cd9 0%, #674BA9 100%);
+  --purple-gradient-reverse: linear-gradient(135deg, #674BA9 0%, #b38cd9 100%);
+}
+
+body {
+  background-color: var(--charcoal);
+  color: var(--bone-white);
+  font-family: var(--font-inter), sans-serif;
+  scroll-behavior: smooth;
+}
+
+.font-serif {
+  font-family: var(--font-playfair), serif;
+}
+
+.bg-charcoal {
+  background-color: var(--charcoal);
+}
+
+.text-bone-white {
+  color: var(--bone-white);
+}
+
+.border-bone-white {
+  border-color: var(--bone-white);
+}
+
+.text-purple-dark {
+  color: var(--purple-dark);
+}
+
+.border-purple-dark {
+  border-color: var(--purple-dark);
+}
+
+.bg-purple-main {
+  background-color: var(--purple-main);
+}
+
+.bg-purple-dark {
+  background-color: var(--purple-dark);
+}
+
+.bg-purple-light {
+  background-color: var(--purple-light);
+}
+
+.bg-purple-gradient {
+  background: var(--purple-gradient);
+}
+
+.bg-purple-gradient-reverse {
+  background: var(--purple-gradient-reverse);
+}
+
+/* Shuffling animation */
+@keyframes shuffle {
+
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+
+  25% {
+    transform: rotate(5deg) scale(1.05);
+  }
+
+  50% {
+    transform: rotate(-5deg) scale(0.95);
+  }
+
+  75% {
+    transform: rotate(3deg) scale(1.02);
+  }
+}
+
+.shuffling {
+  animation: shuffle 0.5s ease-in-out infinite;
+}
+
+/* Card flip animation */
+@keyframes cardFlip {
+  0% {
+    transform: rotateY(0deg);
+  }
+
+  100% {
+    transform: rotateY(180deg);
+  }
+}
+
+.card-flip {
+  animation: cardFlip 0.6s ease-in-out;
+}
+
+/* Scarcity dot glow */
+@keyframes glow {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.scarcity-dot {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Social proof ticker */
+@keyframes ticker {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.ticker {
+  animation: ticker 30s linear infinite;
+}
