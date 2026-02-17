@@ -54,11 +54,13 @@ const translations = {
         emailSent: "✉️ Reading sent to",
         emailNote: "Check your inbox (and spam folder) in the next few minutes",
         cardsMeaning: "Your Cards Speak Of:",
+        shadowIntro: "Your initial map is in your inbox. However, the alignment of these specific three cards suggests a deeper influence that digital draws cannot penetrate.",
+        shadowText: "Abigail is in the studio now, ready to perform the 36-card Physical Ritual for you.",
         urgencyTitle: "⚠️ Abigail Has Sensed Deeper Patterns",
         urgencyText: "in how your cards connect. The surface meanings are just the beginning—",
         urgencyDescription: "Request her personal deep-dive to reveal the hidden connections and what they mean for your path forward.",
         urgencyTimer: "This energy window closes in:",
-        urgencyButton: "Unlock Premium Reading",
+        urgencyButton: "Unlock the 36-Card Deep-Dive",
         aboutTitle: "A Lineage of Insight from the Heart of Hungary",
         aboutText1: "Abigail is a certified practitioner of the Hungarian Gypsy Card Institute (Cigánykártya Magyarország). She carries forward a lineage of wisdom that has guided seekers through Eastern Europe for centuries.",
         aboutText2: "Abigail reads your future not with an algorithm, but with a deck that carries the dust and wisdom of Eastern Europe. Every reading is performed manually, using the specific spreads passed down through Hungarian tradition.",
@@ -110,11 +112,13 @@ const translations = {
         emailSent: "✉️ Lesung gesendet an",
         emailNote: "Überprüfen Sie Ihren Posteingang (und Spam-Ordner) in den nächsten Minuten",
         cardsMeaning: "Ihre Karten Sprechen Von:",
+        shadowIntro: "Ihre erste Karte ist in Ihrem Posteingang. Die Ausrichtung dieser drei spezifischen Karten deutet jedoch auf einen tieferen Einfluss hin, den digitale Ziehungen nicht durchdringen können.",
+        shadowText: "Abigail steht jetzt im Studio bereit, um das 36-Karten Physische Ritual für Sie durchzuführen.",
         urgencyTitle: "⚠️ Abigail Hat Tiefere Muster Wahrgenommen",
         urgencyText: "in der Verbindung Ihrer Karten. Die Oberflächenbedeutungen sind nur der Anfang—",
         urgencyDescription: "Fordern Sie ihre persönliche Tiefenanalyse an, um die verborgenen Verbindungen und ihre Bedeutung für Ihren Weg zu enthüllen.",
         urgencyTimer: "Dieses Energiefenster schließt sich in:",
-        urgencyButton: "Premium-Lesung Freischalten",
+        urgencyButton: "36-Karten Tiefenanalyse Freischalten",
         aboutTitle: "Eine Linie der Einsicht aus dem Herzen Ungarns",
         aboutText1: "Abigail ist zertifizierte Praktikerin des Ungarischen Zigeunerkarten-Instituts (Cigánykártya Magyarország). Sie führt eine Linie der Weisheit fort, die seit Jahrhunderten Suchende in Osteuropa geleitet hat.",
         aboutText2: "Abigail liest Ihre Zukunft nicht mit einem Algorithmus, sondern mit einem Deck, das den Staub und die Weisheit Osteuropas trägt. Jede Lesung wird manuell durchgeführt, mit den spezifischen Legesystemen der ungarischen Tradition.",
@@ -166,11 +170,13 @@ const translations = {
         emailSent: "✉️ Leitura enviada para",
         emailNote: "Verifique sua caixa de entrada (e pasta de spam) nos próximos minutos",
         cardsMeaning: "Suas Cartas Falam De:",
+        shadowIntro: "Seu mapa inicial está em sua caixa de entrada. No entanto, o alinhamento dessas três cartas específicas sugere uma influência mais profunda que os sorteios digitais não podem penetrar.",
+        shadowText: "Abigail está no estúdio agora, pronta para realizar o Ritual Físico de 36 cartas para você.",
         urgencyTitle: "⚠️ Abigail Percebeu Padrões Mais Profundos",
         urgencyText: "na forma como suas cartas se conectam. Os significados superficiais são apenas o começo—",
         urgencyDescription: "Solicite sua análise profunda pessoal para revelar as conexões ocultas e o que elas significam para seu caminho.",
         urgencyTimer: "Esta janela de energia fecha em:",
-        urgencyButton: "Desbloquear Leitura Premium",
+        urgencyButton: "Desbloquear Análise Profunda de 36 Cartas",
         aboutTitle: "Uma Linhagem de Percepção do Coração da Hungria",
         aboutText1: "Abigail é praticante certificada do Instituto Húngaro de Cartas Ciganas (Cigánykártya Magyarország). Ela mantém uma linhagem de sabedoria que tem guiado buscadores através do Leste Europeu por séculos.",
         aboutText2: "Abigail lê seu futuro não com um algoritmo, mas com um baralho que carrega o pó e a sabedoria do Leste Europeu. Cada leitura é realizada manualmente, usando os métodos específicos transmitidos pela tradição húngara.",
@@ -222,11 +228,13 @@ const translations = {
         emailSent: "✉️ Olvasat elküldve ide:",
         emailNote: "Ellenőrizze postafiókját (és spam mappáját) a következő percekben",
         cardsMeaning: "Kártyái Erről Beszélnek:",
+        shadowIntro: "Kezdeti térképe a postaládájában van. Azonban ennek a három konkrét kártyának az összehangolása mélyebb befolyásra utal, amelyet a digitális húzások nem tudnak áthatni.",
+        shadowText: "Abigail most a műteremben áll készen, hogy elvégezze az Ön számára a 36 kártyás Fizikai Rituálét.",
         urgencyTitle: "⚠️ Abigail Mélyebb Mintákat Észlelt",
         urgencyText: "abban, ahogyan kártyái kapcsolódnak egymáshoz. A felszíni jelentések csak a kezdet—",
         urgencyDescription: "Kérje személyes mélyreható elemzését, hogy feltárja a rejtett kapcsolatokat és azok jelentését az Ön útja számára.",
         urgencyTimer: "Ez az energiaablak bezárul:",
-        urgencyButton: "Prémium Olvasat Feloldása",
+        urgencyButton: "36 Kártyás Mély Elemzés Feloldása",
         aboutTitle: "Belátás Leszármazása Magyarország Szívéből",
         aboutText1: "Abigail a Magyar Cigánykártya Intézet (Cigánykártya Magyarország) okleveles gyakorlója. Olyan bölcsesség leszármazását viszi tovább, amely évszázadokon át vezette a keresőket Kelet-Európán keresztül.",
         aboutText2: "Abigail nem algoritmussal olvassa a jövőjét, hanem egy pakli kártyával, amely Kelet-Európa porát és bölcsességét hordozza. Minden olvasat manuálisan történik, a magyar hagyomány által átadott sajátos vetési módszerekkel.",
@@ -730,14 +738,11 @@ export function LanguagePage({ language }: LandingPageProps) {
                                         {/* Warning Icon & Title */}
                                         <div className="text-center mb-6">
                                             <div className="text-5xl mb-3">🌑</div>
-                                            <h3 className="text-2xl md:text-3xl font-serif text-red-400 mb-3">
-                                                {t.urgencyTitle}
+                                            <h3 className="text-xl md:text-2xl font-serif text-bone-white/90 mb-4 leading-relaxed">
+                                                {t.shadowIntro}
                                             </h3>
-                                            <p className="text-bone-white/90 text-lg">
-                                                {t.urgencyText}
-                                            </p>
-                                            <p className="text-bone-white/80 mt-2">
-                                                {t.urgencyDescription}
+                                            <p className="text-purple-light text-lg font-semibold">
+                                                {t.shadowText}
                                             </p>
                                         </div>
 
@@ -770,10 +775,10 @@ export function LanguagePage({ language }: LandingPageProps) {
                                                 }}
                                                 className="px-8 py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black rounded-xl font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all"
                                             >
-                                                💳 {t.urgencyButton} {formatPrice(language)}
+                                                💳 {t.urgencyButton} — {formatPrice(language)}
                                             </button>
-                                            <p className="text-bone-white/50 text-xs mt-3">
-                                                🔒 Secure payment via Stripe
+                                            <p className="text-bone-white/60 text-sm mt-3">
+                                                🔒 100% Secure & Private. Abigail works in spiritual silence.
                                             </p>
                                         </div>
                                     </div>

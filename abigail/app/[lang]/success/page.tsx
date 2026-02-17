@@ -27,49 +27,45 @@ export default function SuccessPage() {
   }
 
   return (
-    <div className="min-h-screen bg-charcoal flex items-center justify-center px-4">
-      <div className="max-w-2xl w-full text-center">
-        {/* Logo */}
-        <div className="relative w-32 h-32 mx-auto mb-8">
-          <Image
-            src="/logo.png"
-            alt="Abigail"
-            fill
-            className="object-cover rounded-full"
-          />
-        </div>
+    <div className="min-h-screen bg-charcoal flex items-center justify-center px-4 relative overflow-hidden">
+      {/* Blurred Background Cards */}
+      <div className="absolute inset-0 opacity-10">
+        <Image
+          src="/cards/card-01-house.jpg"
+          alt=""
+          fill
+          className="object-cover blur-2xl"
+        />
+      </div>
 
-        {/* Success Message */}
-        <div className="bg-gradient-to-br from-purple-dark/30 to-purple-main/20 backdrop-blur-md border-2 border-purple-main/40 rounded-2xl p-8 md:p-12">
-          <h1 className="text-3xl md:text-5xl font-serif text-purple-light mb-4">
-            ✨ Payment Successful ✨
+      <div className="max-w-2xl w-full text-center relative z-10">
+        {/* Mystical Icon */}
+        <div className="text-7xl mb-6">🌙</div>
+
+        {/* Success Message - Dark & Mystical */}
+        <div className="bg-gradient-to-br from-purple-dark/50 to-black/70 backdrop-blur-xl border-2 border-purple-main/40 rounded-2xl p-8 md:p-12 shadow-2xl">
+          <h1 className="text-3xl md:text-5xl font-serif text-purple-light mb-6">
+            The Energy is Set
           </h1>
-          <p className="text-bone-white text-lg md:text-xl mb-6">
-            Thank you for requesting Abigail's premium reading.
-          </p>
           
-          <div className="bg-charcoal/50 rounded-xl p-6 mb-6">
-            <h2 className="text-2xl font-serif text-purple-light mb-3">
-              What Happens Next?
-            </h2>
-            <div className="text-bone-white/90 text-left space-y-3">
-              <p>🔮 <strong>Within 24 hours</strong>, Abigail will perform your physical card spread using her authentic Hungarian Gypsy deck.</p>
-              <p>📸 You will receive a <strong>personalized photo</strong> of your actual card layout.</p>
-              <p>📧 A comprehensive reading will be sent to your email with deep insights and guidance.</p>
-            </div>
+          <div className="bg-charcoal/70 rounded-xl p-8 mb-6 border border-purple-light/20">
+            <p className="text-bone-white text-lg md:text-xl leading-relaxed">
+              Abigail is now at her wooden table, laying out the <span className="text-yellow-400 font-semibold">36-card Hungarian Grand Tableau</span> specifically for your energy.
+            </p>
+            <p className="text-bone-white/80 text-base mt-4">
+              Check your inbox within <strong className="text-purple-light">24 hours</strong> for your photo and analysis.
+            </p>
           </div>
 
           <div className="border-t border-purple-main/30 pt-6">
-            <p className="text-bone-white/70 text-sm">
-              Your reading request has been added to Abigail's sacred queue.
-              <br />
-              Please check your email for confirmation and updates.
+            <p className="text-bone-white/60 text-sm italic">
+              🕯️ Your reading is being prepared in spiritual silence 🕯️
             </p>
           </div>
 
           {sessionId && (
-            <p className="text-bone-white/50 text-xs mt-4">
-              Session ID: {sessionId}
+            <p className="text-bone-white/40 text-xs mt-4">
+              Order ID: {sessionId}
             </p>
           )}
         </div>
@@ -77,7 +73,7 @@ export default function SuccessPage() {
         {/* Return Home */}
         <a
           href="/"
-          className="inline-block mt-8 text-purple-light hover:text-purple-main transition-colors"
+          className="inline-block mt-8 text-purple-light hover:text-purple-main transition-colors text-sm"
         >
           ← Return to Home
         </a>

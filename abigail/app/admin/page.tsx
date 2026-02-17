@@ -285,7 +285,7 @@ export default function AdminDashboard() {
                             <div className="bg-purple-dark/20 border-2 border-purple-main/40 rounded-2xl p-8">
                                 <div className="flex justify-between items-center mb-6">
                                     <h2 className="text-2xl font-serif text-purple-light">
-                                        Fulfill Order #{selectedOrder.id}
+                                        36-Card Physical Deep-Dive — Order #{selectedOrder.id}
                                     </h2>
                                     <button
                                         onClick={() => {
@@ -299,63 +299,72 @@ export default function AdminDashboard() {
                                     </button>
                                 </div>
 
-                                {/* Customer Info */}
-                                <div className="bg-charcoal/50 rounded-xl p-6 mb-6">
-                                    <div className="grid grid-cols-2 gap-4 mb-4">
+                                {/* HIGH-VISIBILITY HEADER: Customer Info + 3 Original Cards */}
+                                <div className="bg-gradient-to-br from-yellow-900/20 to-purple-900/20 border-2 border-yellow-500/40 rounded-xl p-6 mb-6">
+                                    <div className="grid grid-cols-3 gap-6 mb-4">
                                         <div>
-                                            <p className="text-purple-light text-sm mb-1">Customer:</p>
-                                            <p className="text-lg font-semibold">{selectedOrder.name}</p>
+                                            <p className="text-yellow-400 text-sm mb-1 font-semibold uppercase tracking-wide">Seeker:</p>
+                                            <p className="text-2xl font-bold text-bone-white">{selectedOrder.name}</p>
                                         </div>
                                         <div>
-                                            <p className="text-purple-light text-sm mb-1">Email:</p>
-                                            <p className="text-lg">{selectedOrder.email}</p>
+                                            <p className="text-yellow-400 text-sm mb-1 font-semibold uppercase tracking-wide">Language:</p>
+                                            <p className="text-2xl font-bold text-bone-white uppercase">{selectedOrder.language}</p>
                                         </div>
                                         <div>
-                                            <p className="text-purple-light text-sm mb-1">Language:</p>
-                                            <p className="text-lg uppercase">{selectedOrder.language}</p>
-                                        </div>
-                                        <div>
-                                            <p className="text-purple-light text-sm mb-1">Paid Amount:</p>
-                                            <p className="text-lg font-semibold text-green-400">
+                                            <p className="text-yellow-400 text-sm mb-1 font-semibold uppercase tracking-wide">Paid:</p>
+                                            <p className="text-2xl font-bold text-green-400">
                                                 {selectedOrder.paidCurrency} {(selectedOrder.paidAmount || 0) / 100}
                                             </p>
                                         </div>
                                     </div>
-                                    <div>
-                                        <p className="text-purple-light text-sm mb-2">Question:</p>
-                                        <p className="text-lg italic bg-purple-main/10 p-4 rounded-lg">
+                                    <div className="mb-4">
+                                        <p className="text-yellow-400 text-sm mb-2 font-semibold uppercase tracking-wide">Question:</p>
+                                        <p className="text-xl italic bg-purple-main/20 p-4 rounded-lg text-bone-white border border-purple-light/20">
                                             "{selectedOrder.question}"
                                         </p>
                                     </div>
+                                    
+                                    {/* 3 Original Cards - HIGH VISIBILITY */}
+                                    {selectedOrder.cardIdsDrawn && (
+                                        <div>
+                                            <p className="text-yellow-400 text-sm mb-3 font-semibold uppercase tracking-wide">Original 3 Cards Drawn:</p>
+                                            <div className="flex gap-4 justify-center">
+                                                {JSON.parse(selectedOrder.cardIdsDrawn).map((cardId: number, index: number) => (
+                                                    <div key={index} className="text-center">
+                                                        <div className="w-32 h-48 relative rounded-lg overflow-hidden shadow-2xl mb-2 border-2 border-purple-light/30">
+                                                            <Image
+                                                                src={`/cards/${getCardImageName(cardId)}.jpg`}
+                                                                alt={`Card ${cardId}`}
+                                                                fill
+                                                                className="object-cover"
+                                                            />
+                                                        </div>
+                                                        <p className="text-sm text-purple-light font-semibold">Card {index + 1}</p>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
 
-                                {/* Cards Drawn */}
-                                {selectedOrder.cardIdsDrawn && (
-                                    <div className="bg-charcoal/50 rounded-xl p-6 mb-6">
-                                        <h3 className="text-purple-light text-lg mb-4">Cards Drawn:</h3>
-                                        <div className="flex gap-4 justify-center">
-                                            {JSON.parse(selectedOrder.cardIdsDrawn).map((cardId: number, index: number) => (
-                                                <div key={index} className="text-center">
-                                                    <div className="w-32 h-48 relative rounded-lg overflow-hidden shadow-lg mb-2">
-                                                        <Image
-                                                            src={`/cards/${getCardImageName(cardId)}.jpg`}
-                                                            alt={`Card ${cardId}`}
-                                                            fill
-                                                            className="object-cover"
-                                                        />
-                                                    </div>
-                                                    <p className="text-sm text-purple-light">Card {index + 1}</p>
-                                                </div>
-                                            ))}
+                                {/* Additional Info */}
+                                <div className="bg-charcoal/50 rounded-xl p-6 mb-6">
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <p className="text-purple-light text-sm mb-1">Email:</p>
+                                            <p className="text-base">{selectedOrder.email}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-purple-light text-sm mb-1">Order Date:</p>
+                                            <p className="text-base">{selectedOrder.paidAt ? new Date(selectedOrder.paidAt).toLocaleString() : 'N/A'}</p>
                                         </div>
                                     </div>
-                                )}
+                                </div>
 
-                                {/* Fulfillment Form */}
                                 <form onSubmit={handleFulfillOrder} className="space-y-6">
                                     <div>
                                         <label className="block text-purple-light text-sm font-semibold mb-2">
-                                            Your Personal Reading:
+                                            Your 36-Card Physical Deep-Dive Reading:
                                         </label>
                                         <textarea
                                             value={readingText}
@@ -398,7 +407,7 @@ export default function AdminDashboard() {
                                         disabled={isSubmitting || !readingText.trim()}
                                         className="w-full px-8 py-4 bg-purple-gradient text-white rounded-xl font-bold text-lg hover:shadow-2xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                     >
-                                        {isSubmitting ? '⏳ Sending...' : '✨ Fulfill Order & Send Email'}
+                                        {isSubmitting ? '⏳ Sending 36-Card Reading...' : '✨ Complete & Send 36-Card Deep-Dive'}
                                     </button>
                                 </form>
                             </div>
