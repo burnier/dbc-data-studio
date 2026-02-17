@@ -1,11 +1,19 @@
 import type { Config } from "drizzle-kit";
+import * as dotenv from "dotenv";
+
+// Load environment variables
+dotenv.config({ path: ".env.development.local" });
+
+if (!process.env.DATABASE_URL) {
+  throw new Error("DATABASE_URL is not set. Run 'vercel env pull .env.development.local' first.");
+}
 
 export default {
   schema: "./lib/db/schema.ts",
   out: "./drizzle",
-  driver: "better-sqlite",
+  driver: "pg",
   dbCredentials: {
-    url: "./abigail.db",
+    connectionString: process.env.DATABASE_URL,
   },
 } satisfies Config;
 

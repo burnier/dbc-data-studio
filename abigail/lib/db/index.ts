@@ -1,12 +1,12 @@
 /**
- * Database connection using Drizzle ORM with SQLite.
+ * Database connection using Drizzle ORM with Neon Postgres.
  */
-import { drizzle } from "drizzle-orm/better-sqlite3";
-import Database from "better-sqlite3";
+import { drizzle } from "drizzle-orm/neon-serverless";
+import { Pool } from "@neondatabase/serverless";
 import * as schema from "./schema";
 
-const sqlite = new Database(process.env.DATABASE_URL || "./abigail.db");
-export const db = drizzle(sqlite, { schema });
+const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+export const db = drizzle(pool, { schema });
 
 
 
