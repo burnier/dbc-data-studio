@@ -4,8 +4,6 @@
  */
 import { Resend } from "resend";
 import { getCardImageName } from "./cards";
-import { readFileSync } from "fs";
-import { join } from "path";
 import { EMAIL_CONFIG, type Language } from "./constants";
 
 const resend = process.env.RESEND_API_KEY && process.env.RESEND_API_KEY !== 'placeholder'
@@ -151,30 +149,11 @@ export async function sendReadingEmail({
 
   const t = translations[language as keyof typeof translations] || translations.en;
 
-  // Prepare inline attachments for card images
-  const attachments = cardIds.map((cardId) => {
-    const imageName = getCardImageName(cardId);
-    const imagePath = join(process.cwd(), 'public', 'cards', `${imageName}.jpg`);
+  // Use public URLs for images (Vercel deployment-friendly)
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  const attachments: any[] = []; // No attachments, use public URLs instead
 
-    try {
-      const imageBuffer = readFileSync(imagePath);
-      return {
-        filename: `${imageName}.jpg`,
-        content: imageBuffer.toString('base64'),
-        encoding: 'base64',
-        cid: `card-${cardId}`, // Content ID for inline reference
-        disposition: 'inline',
-      };
-    } catch (error) {
-      console.warn(`⚠️  Could not load image: ${imagePath}`, error);
-      return null;
-    }
-  }).filter((att): att is NonNullable<typeof att> => att !== null); // Type-safe null filter
-
-  console.log(`📎 Attaching ${attachments.length} card images to email`);
-
-  // Card image base URL - use CID references for inline attachments
-  const cardImageBaseUrl = 'cid:card-';
+  console.log(`🌐 Using public card image URLs from: ${baseUrl}`);
 
   const htmlContent = `
     <!DOCTYPE html>
@@ -224,20 +203,24 @@ export async function sendReadingEmail({
             
             <!-- Mobile-first stacked card layout -->
             <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin: 20px auto; width: 100%; max-width: 600px;">
-              ${cardIds.map((cardId, index) => `
+              ${cardIds.map((cardId, index) => {
+                const imageName = getCardImageName(cardId);
+                const imageUrl = `${baseUrl}/cards/${imageName}.jpg`;
+                return `
                 <tr>
                   <td align="center" style="padding: 10px 0;">
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="background: #e6d9f2; border-radius: 8px; padding: 15px; width: 100%; max-width: 280px;">
                       <tr>
                         <td align="center">
-                          <img src="cid:card-${cardId}" alt="${cardNames[index]}" style="width: 100%; max-width: 250px; height: auto; border-radius: 8px; margin-bottom: 10px; display: block;" />
+                          <img src="${imageUrl}" alt="${cardNames[index]}" style="width: 100%; max-width: 250px; height: auto; border-radius: 8px; margin-bottom: 10px; display: block;" />
                           <div style="color: #674BA9; font-weight: 600; font-size: 16px; text-align: center; text-transform: capitalize; padding: 5px;">${cardNames[index]}</div>
                         </td>
                       </tr>
                     </table>
                   </td>
                 </tr>
-              `).join('')}
+              `;
+              }).join('')}
             </table>
           </div>
           
