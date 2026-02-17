@@ -378,8 +378,8 @@ export async function sendPremiumReadingEmail({
   
   if (photoPath) {
     try {
-      const fullPath = join(process.cwd(), 'public', photoPath);
-      const photoBuffer = readFileSync(fullPath);
+      // Photo is in /tmp from the fulfill API
+      const photoBuffer = readFileSync(photoPath);
       const photoExt = photoPath.split('.').pop() || 'jpg';
       
       photoAttachment = {
@@ -398,6 +398,7 @@ export async function sendPremiumReadingEmail({
       `;
     } catch (error) {
       console.error('Failed to load photo for email:', error);
+      console.error('Photo path:', photoPath);
     }
   }
 
@@ -450,6 +451,7 @@ export async function sendPremiumReadingEmail({
           line-height: 1.8;
           font-size: 16px;
           white-space: pre-wrap;
+          color: #F5F5DC;
         }
         .signature {
           margin-top: 40px;
@@ -475,7 +477,7 @@ export async function sendPremiumReadingEmail({
         
         <div class="content">
           <p class="greeting">${t.greeting}</p>
-          <p>${t.intro}</p>
+          <p style="color: #F5F5DC;">${t.intro}</p>
           
           ${photoEmbedHtml}
           
