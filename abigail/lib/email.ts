@@ -24,6 +24,7 @@ interface SendReadingEmailParams {
   cardIds: number[];
   language: string;
   thirdCardName?: string; // For personalized P.S. cliffhanger
+  submissionId: number; // For Stripe checkout link
 }
 
 export async function sendReadingEmail({
@@ -34,6 +35,7 @@ export async function sendReadingEmail({
   cardIds,
   language,
   thirdCardName,
+  submissionId,
 }: SendReadingEmailParams): Promise<boolean> {
   if (!resend) {
     // Development mode - log instead of sending
@@ -61,13 +63,13 @@ export async function sendReadingEmail({
       upsellText: "Unlock Abigail's Premium Reading",
       upsellBenefits: "Get a personalized photo of your physical card spread, 3x longer analysis, and actionable guidance for only $29.00.",
       upsellButton: "Unlock Full Reading →",
-      upsellLink: `https://abigailartsoracles.com/${language}/premium`,
+      upsellLink: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/${language}?upgrade=${submissionId}`,
       footerCopyright: "Abigail | The Hungarian Oracle. All rights reserved.",
       abigailNoteTitle: "A Note from Abigail:",
       abigailNoteIntro: "This preliminary reading was prepared by my apprentice to give you a glimpse of each card's energy.",
       abigailNoteMain: `However, the true power of a reading lies in the hidden connections and patterns that emerge when I physically lay out your cards. These deeper insights require my personal attention and can only be revealed through a complete spread.`,
       abigailNoteIncludes: "Your personalized reading includes:",
-      abigailNoteBenefit1: "✓ Physical spread performed by me",
+      abigailNoteBenefit1: "✓ Full 36-card spread (not just 3!)",
       abigailNoteBenefit2: "✓ Photo of your actual card layout",
       abigailNoteBenefit3: "✓ Deep analysis only I can provide",
       abigailNoteUrgency: "I have reserved 24 hours for you to request this.",
@@ -85,13 +87,13 @@ export async function sendReadingEmail({
       upsellText: "Schalten Sie Abigails Premium-Lesung frei",
       upsellBenefits: "Erhalten Sie ein personalisiertes Foto Ihrer physischen Kartenlegung, 3x längere Analyse und umsetzbare Anleitung für nur €24,90.",
       upsellButton: "Vollständige Lesung Freischalten →",
-      upsellLink: `https://abigailartsoracles.com/${language}/premium`,
+      upsellLink: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/${language}?upgrade=${submissionId}`,
       footerCopyright: "Abigail | Das Ungarische Orakel. Alle Rechte vorbehalten.",
       abigailNoteTitle: "Eine Notiz von Abigail:",
       abigailNoteIntro: "Diese vorläufige Lesung wurde von meinem Lehrling vorbereitet, um Ihnen einen Einblick in die Energie jeder Karte zu geben.",
       abigailNoteMain: `Die wahre Kraft einer Lesung liegt jedoch in den verborgenen Verbindungen und Mustern, die entstehen, wenn ich Ihre Karten physisch auslege. Diese tieferen Einsichten erfordern meine persönliche Aufmerksamkeit und können nur durch eine vollständige Legung enthüllt werden.`,
       abigailNoteIncludes: "Ihre personalisierte Lesung umfasst:",
-      abigailNoteBenefit1: "✓ Physische Legung von mir durchgeführt",
+      abigailNoteBenefit1: "✓ Vollständige 36-Karten-Legung (nicht nur 3!)",
       abigailNoteBenefit2: "✓ Foto Ihrer tatsächlichen Kartenlegung",
       abigailNoteBenefit3: "✓ Tiefgehende Analyse, die nur ich bieten kann",
       abigailNoteUrgency: "Ich habe 24 Stunden für Sie reserviert, um dies anzufordern.",
@@ -109,13 +111,13 @@ export async function sendReadingEmail({
       upsellText: "Desbloqueie a Leitura Premium de Abigail",
       upsellBenefits: "Obtenha uma foto personalizada do seu espalhamento físico de cartas, análise 3x mais longa e orientação acionável por apenas R$ 129,00.",
       upsellButton: "Desbloquear Leitura Completa →",
-      upsellLink: `https://abigailartsoracles.com/${language}/premium`,
+      upsellLink: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/${language}?upgrade=${submissionId}`,
       footerCopyright: "Abigail | A Oráculo Húngara. Todos os direitos reservados.",
       abigailNoteTitle: "Uma Nota de Abigail:",
       abigailNoteIntro: "Esta leitura preliminar foi preparada pelo meu aprendiz para lhe dar um vislumbre da energia de cada carta.",
       abigailNoteMain: `No entanto, o verdadeiro poder de uma leitura reside nas conexões ocultas e padrões que emergem quando disponho fisicamente suas cartas. Essas percepções mais profundas requerem minha atenção pessoal e só podem ser reveladas através de um espalhamento completo.`,
       abigailNoteIncludes: "Sua leitura personalizada inclui:",
-      abigailNoteBenefit1: "✓ Espalhamento físico realizado por mim",
+      abigailNoteBenefit1: "✓ Espalhamento completo de 36 cartas (não apenas 3!)",
       abigailNoteBenefit2: "✓ Foto do seu espalhamento real",
       abigailNoteBenefit3: "✓ Análise profunda que só eu posso fornecer",
       abigailNoteUrgency: "Reservei 24 horas para você solicitar isto.",
@@ -133,13 +135,13 @@ export async function sendReadingEmail({
       upsellText: "Oldja Fel Abigail Prémium Olvasatát",
       upsellBenefits: "Kapjon személyre szabott fotót fizikai kártyavetéséről, 3x hosszabb elemzést és gyakorlati útmutatást csak 8.900 Ft-ért.",
       upsellButton: "Teljes Olvasat Feloldása →",
-      upsellLink: `https://abigailartsoracles.com/${language}/premium`,
+      upsellLink: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/${language}?upgrade=${submissionId}`,
       footerCopyright: "Abigail | A Magyar Jósnő. Minden jog fenntartva.",
       abigailNoteTitle: "Jegyzet Abigailtől:",
       abigailNoteIntro: "Ezt az előzetes olvasatot a tanítványom készítette, hogy bepillantást nyújtson minden kártya energiájába.",
       abigailNoteMain: `Az olvasat valódi ereje azonban a rejtett kapcsolatokban és mintákban rejlik, amelyek akkor jelennek meg, amikor fizikailag kirakom kártyáit. Ezek a mélyebb betekintések személyes figyelmemet igénylik, és csak egy teljes vetésen keresztül tárhatók fel.`,
       abigailNoteIncludes: "Személyre szabott olvasata tartalmazza:",
-      abigailNoteBenefit1: "✓ Általam végrehajtott fizikai vetés",
+      abigailNoteBenefit1: "✓ Teljes 36 kártyás vetés (nem csak 3!)",
       abigailNoteBenefit2: "✓ Fotó a valódi kártyaelrendezésről",
       abigailNoteBenefit3: "✓ Mélyreható elemzés, amit csak én tudok nyújtani",
       abigailNoteUrgency: "24 órát foglaltam le Önnek, hogy ezt kérje.",

@@ -24,14 +24,14 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { submissionId, language, email } = body;
 
-    if (!submissionId || !language || !email) {
+    if (!submissionId || !language) {
       return NextResponse.json(
-        { error: 'Missing required fields: submissionId, language, email' },
+        { error: 'Missing required fields: submissionId, language' },
         { status: 400 }
       );
     }
 
-    // Verify submission exists
+    // Verify submission exists and get email if not provided
     const submission = await db.select()
       .from(submissions)
       .where(eq(submissions.id, submissionId))
@@ -52,6 +52,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Use email from parameter or fall back to submission email
+    const customerEmail = email || submission[0].email;
+
     // Get price ID for language
     const priceId = PRICE_IDS[language as Language] || PRICE_IDS.en;
 
@@ -65,11 +68,11 @@ export async function POST(request: NextRequest) {
           quantity: 1,
         },
       ],
-      customer_email: email,
+      customer_email: customerEmail,
       metadata: {
         submissionId: submissionId.toString(),
         language,
-        email,
+        email: customerEmail,
       },
       success_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/${language}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/${language}?canceled=true`,

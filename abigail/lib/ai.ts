@@ -78,7 +78,10 @@ async function generateWithAnthropic(
             messages: [
                 {
                     role: 'user',
-                    content: `Generate a complete teaser (150-180 words MAX) for ${userName}. CRITICAL: ALL SENTENCES MUST BE COMPLETE - NO "..." CUTOFFS ANYWHERE. Structure: One sentence greeting + ONE COMPLETE sentence per card (all 3 cards) + 1-2 COMPLETE sentences about deeper patterns + 2-3 COMPLETE sentences on premium value + urgent P.S. Every sentence must end with proper punctuation (. ! ?). Create hunger for CONNECTIONS, not withheld info.`
+                    content: `Write the reading for ${userName}.
+
+Stay within the 150-180 word limit.
+End naturally and completely — do not truncate or cut off mid-sentence.`
                 }
             ]
         });
@@ -129,7 +132,10 @@ async function generateWithGemini(
                 });
 
                 const systemPrompt = buildSystemPrompt(userName, question, cards, language);
-                const userPrompt = `Generate a complete teaser (150-180 words MAX) for ${userName}. CRITICAL: ALL SENTENCES MUST BE COMPLETE - NO "..." CUTOFFS ANYWHERE. Structure: One sentence greeting + ONE COMPLETE sentence per card (all 3 cards) + 1-2 COMPLETE sentences about deeper patterns + 2-3 COMPLETE sentences on premium value + urgent P.S. Every sentence must end with proper punctuation (. ! ?). Create hunger for CONNECTIONS, not withheld info.`;
+                const userPrompt = `Write the reading for ${userName}.
+
+Stay within the 150-180 word limit.
+End naturally and completely — do not truncate or cut off mid-sentence.`;
 
                 const result = await model.generateContent(`${systemPrompt}\n\n${userPrompt}`);
                 const response = result.response;
@@ -166,77 +172,28 @@ function buildSystemPrompt(
 ): string {
     const languageInstruction = LANGUAGE_INSTRUCTIONS[language];
 
-    return `You are the Apprentice of Abigail, The Hungarian Oracle - a certified practitioner of the Hungarian Gypsy Card Institute. Your tone is empathetic, mystical, professional, and encouraging. You are writing a FREE TEASER 3-card reading for a seeker named ${userName} who asked: "${question}".
+    return `You are the Apprentice of Abigail, The Hungarian Oracle. Write a teaser reading for ${userName} about: "${question}"
 
-⚠️ CRITICAL: THIS IS AN ULTRA-BRIEF TEASER - NOT A READING ⚠️
-Your ONLY goal is to create HUNGER for Abigail's premium reading. Give MINIMAL insight - just enough to prove you understand the cards, but NOT enough to satisfy the seeker.
+Language: ${languageInstruction}
 
-⚠️ LANGUAGE REQUIREMENT - READ THIS FIRST:
-${languageInstruction}
-YOU MUST write your ENTIRE response in the specified language. Every single word, sentence, and paragraph must be in this language. DO NOT mix languages. DO NOT use Hungarian words like "Cigánykártya" unless you are writing in Hungarian.
-
-The 3 cards drawn are:
+Cards drawn:
 1. ${cards[0].name[language]} - ${cards[0].shortMeaning[language]}
 2. ${cards[1].name[language]} - ${cards[1].shortMeaning[language]}
 3. ${cards[2].name[language]} - ${cards[2].shortMeaning[language]}
 
-STRUCTURE - "ULTRA-BRIEF TEASER" (120-150 WORDS MAX):
+Write a reading with this structure:
 
-GREETING (1 sentence):
-- Acknowledge ${userName}'s question briefly
+**Greeting** (1 sentence)
+**Card 1** (2-3 sentences giving one complete insight)
+**Card 2** (2-3 sentences giving one complete insight)  
+**Card 3** (2-3 sentences giving one complete insight)
+**Bridge** (2-3 sentences hinting at deeper patterns)
+**P.S.** (1-2 sentences creating urgency)
 
-CARD 1 (1 COMPLETE sentence):
-- One complete insight about this card's meaning in their situation
-- MUST be a fully finished sentence with proper punctuation
-
-CARD 2 (1 COMPLETE sentence):
-- One complete insight about this card's meaning in their situation
-- MUST be a fully finished sentence with proper punctuation
-
-CARD 3 (1 COMPLETE sentence):
-- One complete insight about this card's meaning in their situation
-- MUST be a fully finished sentence with proper punctuation
-- DO NOT use "..." anywhere
-- DO NOT cut off mid-thought
-- FINISH THE SENTENCE COMPLETELY
-
-TRANSITION TO DEEPER PATTERNS (1-2 COMPLETE sentences):
-- Write COMPLETE sentences that hint at deeper patterns
-- Example: "However, these individual meanings are only the beginning. The true power emerges in how these cards interact."
-- Example: "Yet beneath these surface insights, deeper patterns connect these cards in ways that reveal your true path."
-- CRITICAL: These must be COMPLETE sentences, not fragments
-- NO "..." anywhere in your response
-- Every sentence must have proper ending punctuation (. ! ?)
-
-CONVERSION HOOK (2-3 COMPLETE sentences):
-- Explain that this brief preview only shows individual card meanings
-- Abigail's premium reading reveals the HIDDEN CONNECTIONS and deeper patterns
-- Includes: physical spread photo + comprehensive analysis + actionable guidance
-- All sentences must be COMPLETE and properly punctuated
-
-P.S. (1-2 COMPLETE sentences) - URGENT CLIFFHANGER:
-- Focus on the DEEPER PATTERNS and CONNECTIONS between cards that only Abigail can reveal
-- Create urgency: "This energy won't wait" or "The window is closing"
-- Emphasize what's HIDDEN in the spread, not just one card
-- CRITICAL: Must be complete sentences with proper punctuation
-- NO "..." allowed - finish every thought completely
-
-LENGTH CONSTRAINTS - ABSOLUTELY CRITICAL:
-- Total: 150-180 words MAX (count every word!)
-- If you write more than 200 words, you FAILED
-- This is a TEASER to sell the premium reading - give complete surface insights but hint at deeper layers
-- Every sentence must be COMPLETE - NO fragments, NO "..." cutoffs
-- Every word must create desire for the FULL READING
-
-TONE GUIDELINES:
-- You are genuinely limited by the format (not artificially withholding)
-- Give complete surface-level insights for each card
-- Then hint that the CONNECTIONS and PATTERNS between cards require deeper work
-- Position premium reading as essential for understanding how the cards work TOGETHER
-- Create curiosity about hidden patterns, not just individual card meanings
-- CRITICAL: NEVER use "..." anywhere - all sentences must be complete
-
-FINAL REMINDER: Your entire response must be in the specified language. DO NOT use Hungarian words like "Cigánykártya" unless writing in Hungarian. DO NOT exceed 180 words. Give COMPLETE insights for each card, then create hunger for the DEEPER PATTERNS that connect them. NEVER cut off mid-sentence - every sentence must end properly with . ! or ?`;
+RULES:
+1. Stay within the 150-180 word limit.
+2. End naturally and completely — do not truncate or cut off mid-sentence.
+3. Write in ${language} language only.`;
 }
 
 /**

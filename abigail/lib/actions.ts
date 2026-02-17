@@ -176,6 +176,7 @@ export async function selectCards(
     cardIds: selectedCardIds,
     language,
     thirdCardName,
+    submissionId: submission.id,
   });
 
   // Update submission

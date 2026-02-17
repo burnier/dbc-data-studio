@@ -5,10 +5,11 @@
  * Language-specific page with simplified card reveal flow
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 import { submitRitual, getScarcity, selectCards } from '@/lib/actions';
 import { getCard, getCardImageName } from '@/lib/cards';
 import { CountdownTimer } from '@/components/CountdownTimer';
@@ -58,7 +59,6 @@ const translations = {
         urgencyDescription: "Request her personal deep-dive to reveal the hidden connections and what they mean for your path forward.",
         urgencyTimer: "This energy window closes in:",
         urgencyButton: "Unlock Premium Reading",
-        continueButton: "Continue →",
         aboutTitle: "A Lineage of Insight from the Heart of Hungary",
         aboutText1: "Abigail is a certified practitioner of the Hungarian Gypsy Card Institute (Cigánykártya Magyarország). She carries forward a lineage of wisdom that has guided seekers through Eastern Europe for centuries.",
         aboutText2: "Abigail reads your future not with an algorithm, but with a deck that carries the dust and wisdom of Eastern Europe. Every reading is performed manually, using the specific spreads passed down through Hungarian tradition.",
@@ -69,9 +69,9 @@ const translations = {
         trustPoint3: "100% Manual Physical Spreads",
         upsellTitle: "Want Deeper Insights?",
         upsellSubtitle: "Upgrade to Abigail's Premium Hand-Drawn Reading",
-        upsellFeature1: "🎴 Physical card spread photo from Abigail's studio",
-        upsellFeature2: "📝 In-depth analysis (3x longer than free reading)",
-        upsellFeature3: "💬 Personal guidance & actionable advice",
+        upsellFeature1: "🃏 Full 36-card spread (not just 3!)",
+        upsellFeature2: "📸 Physical card spread photo from Abigail's studio",
+        upsellFeature3: "📝 In-depth analysis (3x longer than free reading)",
         upsellFeature4: "⚡ Priority delivery within 24 hours",
         upsellPrice: "Only $29.00",
         upsellCta: "Unlock Full Reading →",
@@ -115,7 +115,6 @@ const translations = {
         urgencyDescription: "Fordern Sie ihre persönliche Tiefenanalyse an, um die verborgenen Verbindungen und ihre Bedeutung für Ihren Weg zu enthüllen.",
         urgencyTimer: "Dieses Energiefenster schließt sich in:",
         urgencyButton: "Premium-Lesung Freischalten",
-        continueButton: "Weiter →",
         aboutTitle: "Eine Linie der Einsicht aus dem Herzen Ungarns",
         aboutText1: "Abigail ist zertifizierte Praktikerin des Ungarischen Zigeunerkarten-Instituts (Cigánykártya Magyarország). Sie führt eine Linie der Weisheit fort, die seit Jahrhunderten Suchende in Osteuropa geleitet hat.",
         aboutText2: "Abigail liest Ihre Zukunft nicht mit einem Algorithmus, sondern mit einem Deck, das den Staub und die Weisheit Osteuropas trägt. Jede Lesung wird manuell durchgeführt, mit den spezifischen Legesystemen der ungarischen Tradition.",
@@ -126,9 +125,9 @@ const translations = {
         trustPoint3: "100% Manuelle Physische Legungen",
         upsellTitle: "Tiefere Einblicke Gewünscht?",
         upsellSubtitle: "Upgrade auf Abigails Premium-Handgezeichnete Lesung",
-        upsellFeature1: "🎴 Foto der physischen Kartenlegung aus Abigails Studio",
-        upsellFeature2: "📝 Tiefgehende Analyse (3x länger als kostenlose Lesung)",
-        upsellFeature3: "💬 Persönliche Beratung & umsetzbare Ratschläge",
+        upsellFeature1: "🃏 Vollständige 36-Karten-Legung (nicht nur 3!)",
+        upsellFeature2: "📸 Foto der physischen Kartenlegung aus Abigails Studio",
+        upsellFeature3: "📝 Tiefgehende Analyse (3x länger als kostenlose Lesung)",
         upsellFeature4: "⚡ Prioritätslieferung innerhalb von 24 Stunden",
         upsellPrice: "Nur €24,90",
         upsellCta: "Vollständige Lesung Freischalten →",
@@ -172,7 +171,6 @@ const translations = {
         urgencyDescription: "Solicite sua análise profunda pessoal para revelar as conexões ocultas e o que elas significam para seu caminho.",
         urgencyTimer: "Esta janela de energia fecha em:",
         urgencyButton: "Desbloquear Leitura Premium",
-        continueButton: "Continuar →",
         aboutTitle: "Uma Linhagem de Percepção do Coração da Hungria",
         aboutText1: "Abigail é praticante certificada do Instituto Húngaro de Cartas Ciganas (Cigánykártya Magyarország). Ela mantém uma linhagem de sabedoria que tem guiado buscadores através do Leste Europeu por séculos.",
         aboutText2: "Abigail lê seu futuro não com um algoritmo, mas com um baralho que carrega o pó e a sabedoria do Leste Europeu. Cada leitura é realizada manualmente, usando os métodos específicos transmitidos pela tradição húngara.",
@@ -183,9 +181,9 @@ const translations = {
         trustPoint3: "100% Leituras Físicas Manuais",
         upsellTitle: "Quer Insights Mais Profundos?",
         upsellSubtitle: "Atualize para a Leitura Premium Desenhada à Mão de Abigail",
-        upsellFeature1: "🎴 Foto do espalhamento físico de cartas do estúdio de Abigail",
-        upsellFeature2: "📝 Análise aprofundada (3x mais longa que a leitura gratuita)",
-        upsellFeature3: "💬 Orientação pessoal e conselhos acionáveis",
+        upsellFeature1: "🃏 Espalhamento completo de 36 cartas (não apenas 3!)",
+        upsellFeature2: "📸 Foto do espalhamento físico de cartas do estúdio de Abigail",
+        upsellFeature3: "📝 Análise aprofundada (3x mais longa que a leitura gratuita)",
         upsellFeature4: "⚡ Entrega prioritária em até 24 horas",
         upsellPrice: "Apenas R$ 129,00",
         upsellCta: "Desbloquear Leitura Completa →",
@@ -229,7 +227,6 @@ const translations = {
         urgencyDescription: "Kérje személyes mélyreható elemzését, hogy feltárja a rejtett kapcsolatokat és azok jelentését az Ön útja számára.",
         urgencyTimer: "Ez az energiaablak bezárul:",
         urgencyButton: "Prémium Olvasat Feloldása",
-        continueButton: "Folytatás →",
         aboutTitle: "Belátás Leszármazása Magyarország Szívéből",
         aboutText1: "Abigail a Magyar Cigánykártya Intézet (Cigánykártya Magyarország) okleveles gyakorlója. Olyan bölcsesség leszármazását viszi tovább, amely évszázadokon át vezette a keresőket Kelet-Európán keresztül.",
         aboutText2: "Abigail nem algoritmussal olvassa a jövőjét, hanem egy pakli kártyával, amely Kelet-Európa porát és bölcsességét hordozza. Minden olvasat manuálisan történik, a magyar hagyomány által átadott sajátos vetési módszerekkel.",
@@ -240,9 +237,9 @@ const translations = {
         trustPoint3: "100% Manuális Fizikai Vetések",
         upsellTitle: "Mélyebb Betekintést Szeretne?",
         upsellSubtitle: "Váltson Abigail Prémium Kézzel Rajzolt Olvasatára",
-        upsellFeature1: "🎴 Fizikai kártyavetés fotó Abigail stúdiójából",
-        upsellFeature2: "📝 Mélyreható elemzés (3x hosszabb, mint az ingyenes olvasat)",
-        upsellFeature3: "💬 Személyes útmutatás és gyakorlati tanácsok",
+        upsellFeature1: "🃏 Teljes 36 kártyás vetés (nem csak 3!)",
+        upsellFeature2: "📸 Fizikai kártyavetés fotó Abigail stúdiójából",
+        upsellFeature3: "📝 Mélyreható elemzés (3x hosszabb, mint az ingyenes olvasat)",
         upsellFeature4: "⚡ Prioritásos kiszállítás 24 órán belül",
         upsellPrice: "Csak 8.900 Ft",
         upsellCta: "Teljes Olvasat Feloldása →",
@@ -257,7 +254,10 @@ const translations = {
     },
 };
 
-export default function LanguagePage({ language }: LandingPageProps) {
+export function LanguagePage({ language }: LandingPageProps) {
+    const searchParams = useSearchParams();
+    const upgradeSubmissionId = searchParams?.get('upgrade');
+    
     const [step, setStep] = useState<Step>('form');
     const [submissionId, setSubmissionId] = useState<number | null>(null);
     const [submissionTimestamp, setSubmissionTimestamp] = useState<Date | null>(null);
@@ -271,6 +271,22 @@ export default function LanguagePage({ language }: LandingPageProps) {
 
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormData>();
     const t = translations[language];
+
+    // Handle email upgrade link
+    useEffect(() => {
+        if (upgradeSubmissionId) {
+            // User clicked from email - trigger Stripe checkout immediately
+            const id = parseInt(upgradeSubmissionId, 10);
+            if (!isNaN(id)) {
+                // We don't have email from URL, but Stripe checkout will retrieve it from DB
+                redirectToCheckout({
+                    submissionId: id,
+                    language,
+                    email: '', // Email will be fetched in checkout route from DB
+                });
+            }
+        }
+    }, [upgradeSubmissionId, language]);
 
     // Fetch scarcity (for social proof)
     useEffect(() => {
@@ -763,17 +779,6 @@ export default function LanguagePage({ language }: LandingPageProps) {
                                     </div>
                                 </motion.div>
                             )}
-
-                            <div className="text-center">
-                                <motion.button
-                                    onClick={() => setStep('upsell')}
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    className="px-10 py-5 bg-purple-gradient text-white rounded-xl font-bold text-lg hover:shadow-2xl transition-all"
-                                >
-                                    {t.continueButton}
-                                </motion.button>
-                            </div>
                         </motion.div>
                     )}
 
@@ -855,6 +860,15 @@ export default function LanguagePage({ language }: LandingPageProps) {
                 </AnimatePresence>
             </div>
         </div>
+    );
+}
+
+// Wrapper component with Suspense boundary for useSearchParams
+export default function LanguagePageWithSuspense(props: LandingPageProps) {
+    return (
+        <Suspense fallback={<div className="min-h-screen bg-charcoal" />}>
+            <LanguagePage {...props} />
+        </Suspense>
     );
 }
 

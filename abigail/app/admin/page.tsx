@@ -261,11 +261,11 @@ export default function AdminDashboard() {
                                                     {sub.fulfilled ? (
                                                         <span className="text-green-400">✓ Fulfilled</span>
                                                     ) : sub.paidUpgrade ? (
-                                                        <span className="text-yellow-400">💰 Paid</span>
+                                                        <span className="text-yellow-400">⏳ Awaiting Fulfillment</span>
                                                     ) : (sub as any).emailSent || sub.email_sent ? (
-                                                        <span className="text-blue-400">📧 Teaser</span>
+                                                        <span className="text-blue-400">📧 Teaser Sent</span>
                                                     ) : (
-                                                        <span className="text-gray-400">⏳ Pending</span>
+                                                        <span className="text-gray-400">⚠️ No Teaser</span>
                                                     )}
                                                 </td>
                                             </tr>
