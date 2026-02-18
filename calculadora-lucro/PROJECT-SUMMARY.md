@@ -99,7 +99,7 @@
 - Permite parcelamento
 
 ### Pix / Venda Direta
-- 0% a 1% gateway (customizável)
+- 0% a 1% intermediação (customizável)
 - Padrão: 0,5%
 
 ### Impostos

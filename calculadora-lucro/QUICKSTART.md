@@ -75,7 +75,7 @@ calculadora-lucro/
 - [x] **Shopee**: 20% (14% + 6% frete) + R$ 4,00
 - [x] **ML Clássico**: ~12,5% + R$ 6,50 (se < R$ 79)
 - [x] **ML Premium**: ~17,5% + R$ 6,50 (se < R$ 79)
-- [x] **Pix**: 0-1% gateway (customizável)
+- [x] **Pix**: 0-1% intermediação (customizável)
 
 ### ✅ Dashboard de Resultados
 - [x] Lucro Líquido (verde se positivo, vermelho se negativo)

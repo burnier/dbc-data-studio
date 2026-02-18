@@ -30,7 +30,7 @@ Uma calculadora moderna e otimizada para SEO que ajuda vendedores brasileiros a 
 - Permite parcelamento
 
 ### Pix / Venda Direta
-- 0% a 1% taxa de gateway (personalizável)
+- 0% a 1% taxa de intermediação (personalizável)
 
 ### Impostos
 - **MEI**: DAS fixo de R$ 81,05/mês

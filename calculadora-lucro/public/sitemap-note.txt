@@ -1,0 +1,9 @@
+# Sitemap Generator (optional - for better SEO)
+# You can create this later if needed
+
+# For now, you can manually submit to Google Search Console:
+# URL: https://calculadora.dbcdatastudio.com
+
+# Main pages to index:
+# - https://calculadora.dbcdatastudio.com (main calculator)
+

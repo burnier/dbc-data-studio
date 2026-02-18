@@ -15,7 +15,7 @@ export default function Home() {
             </h1>
           </div>
           <p className="text-center text-green-100 text-lg max-w-3xl mx-auto mb-3">
-            Descubra seu lucro real em vendas online. Calcule as taxas dos marketplaces, comissões e impostos para precificar seus produtos corretamente.
+            Descubra seu lucro real em vendas online. Calcule taxas, comissões e impostos com precisão profissional.
           </p>
           <p className="text-center text-green-200 text-sm font-semibold">
             ✓ Atualizado com as taxas de Março de 2026
@@ -58,8 +58,8 @@ export default function Home() {
             </h2>
             <div className="prose prose-gray max-w-none">
               <p className="text-gray-700 leading-relaxed mb-4">
-                Muitos vendedores iniciantes acreditam que calcular o lucro é só diminuir o custo do produto do preço de venda. Mas essa conta simplificada pode levar ao prejuízo! 
-                No mercado brasileiro de 2026, é essencial considerar <strong>todas as taxas dos marketplaces, custos operacionais e impostos</strong> para ter uma visão real da rentabilidade do seu negócio.
+                Como especialista em e-commerce brasileiro, preciso alertar: calcular o lucro real nas vendas online vai muito além de subtrair o custo do produto do preço de venda. 
+                Para vendedores brasileiros em 2026, é fundamental considerar <strong>todas as taxas e impostos dos marketplaces</strong> para garantir a saúde financeira do seu negócio.
               </p>
 
               <h3 id="taxas-shopee" className="text-xl font-semibold text-gray-900 mt-6 mb-3">
@@ -105,12 +105,13 @@ export default function Home() {
               </div>
 
               <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">
-                Vendas Diretas por Pix: Muito Mais Lucrativo
+                Vendas por Pix: A Alternativa Mais Lucrativa
               </h3>
               <p className="text-gray-700 leading-relaxed mb-4">
-                Se você vende direto pelo WhatsApp, Instagram ou tem site próprio, aceitar Pix é disparado a opção mais rentável. 
-                As plataformas de pagamento Pix cobram entre <strong>0% a 1% por transação</strong> — uma diferença brutal comparado aos marketplaces. 
-                Veja só: numa venda de R$ 100, você economiza até R$ 23,50 em taxas comparado ao Shopee!
+                Para vendas diretas via WhatsApp, Instagram ou site próprio usando Pix, as taxas são significativamente menores. 
+                Gateways de pagamento Pix costumam cobrar entre <strong>0% a 1% por transação</strong>, sendo uma alternativa 
+                extremamente lucrativa para quem consegue construir uma base de clientes fora dos marketplaces. 
+                Compare: em uma venda de R$ 100, você economiza até R$ 23,50 em relação ao Shopee!
               </p>
             </div>
           </section>
@@ -130,8 +131,8 @@ export default function Home() {
               </p>
               <div className="bg-green-50 border border-green-200 rounded-lg p-4 my-4">
                 <p className="text-sm text-gray-700">
-                  <strong>💡 Dica importante:</strong> Nossa calculadora não desconta o DAS do MEI por venda (mantém R$ 0), pois ele é um custo fixo mensal que independe do volume de vendas. 
-                  Se quiser incluir na análise, divida os R$ 81,05 pelo seu número médio de vendas por mês e considere como custo adicional por unidade.
+                  <strong>💡 Dica de especialista:</strong> Nossa calculadora considera o DAS do MEI como custo fixo mensal (R$ 0 por venda individual), pois ele não varia com cada transação. 
+                  Para análise mais precisa, divida os R$ 81,05 pelo número médio de vendas mensais.
                 </p>
               </div>
 
@@ -139,9 +140,9 @@ export default function Home() {
                 Simples Nacional - Anexo I (Comércio)
               </h3>
               <p className="text-gray-700 leading-relaxed mb-4">
-                Ultrapassou o limite do MEI ou já começou direto no Simples Nacional? Nesse regime, você paga um percentual sobre cada venda que varia conforme seu faturamento total acumulado. 
-                Para comércio (Anexo I), as alíquotas começam em torno de <strong>4% a 6%</strong> nas faixas menores de faturamento e podem chegar a 
-                <strong>11,35%</strong> nas faixas mais altas. Esse imposto é calculado sobre cada venda que você realiza.
+                Se você ultrapassou o limite do MEI ou optou pelo Simples Nacional, a alíquota varia conforme seu faturamento anual e atividade. 
+                Para comércio (Anexo I), as alíquotas começam em torno de <strong>4% a 6%</strong> para faixas iniciais de faturamento e podem chegar a 
+                <strong>11,35%</strong> nas faixas maiores. Esta porcentagem incide sobre cada venda realizada.
               </p>
             </div>
           </section>
@@ -149,7 +150,7 @@ export default function Home() {
           <section id="dicas" className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
               <DollarSign className="h-6 w-6 text-green-600" aria-hidden="true" />
-              7 Estratégias para Aumentar sua Margem de Lucro
+              7 Estratégias Profissionais para Aumentar sua Margem de Lucro
             </h2>
             <div className="prose prose-gray max-w-none">
               <ul className="list-disc list-inside text-gray-700 space-y-4">
@@ -162,12 +163,12 @@ export default function Home() {
                   no frete e no material. Embalagens menores e mais leves podem reduzir custos de envio em até 40%.
                 </li>
                 <li>
-                  <strong>Teste o mesmo produto em diferentes marketplaces:</strong> Use nossa calculadora para simular quanto você ganharia vendendo o mesmo item na Shopee, Mercado Livre Clássico, ML Premium ou por Pix. 
-                  Escolha o canal mais lucrativo para cada tipo de produto do seu catálogo.
+                  <strong>Compare marketplaces antes de listar:</strong> Use nossa calculadora para simular o mesmo produto em diferentes 
+                  plataformas (Shopee, ML Clássico, ML Premium, Pix) e escolha o canal mais lucrativo para cada tipo de produto.
                 </li>
                 <li>
-                  <strong>Construa canais de venda direta:</strong> Invista em canais próprios (Instagram, WhatsApp, site) 
-                  para reduzir a dependência dos marketplaces e suas taxas. Vendas diretas para clientes recorrentes podem ter margem até 3x maior.
+                  <strong>Desenvolva canais de venda direta:</strong> Invista em canais próprios (Instagram, WhatsApp, site) 
+                  para reduzir dependência e taxas de marketplace. Clientes recorrentes diretos têm margem até 300% maior.
                 </li>
                 <li>
                   <strong>Domine seu ponto de equilíbrio:</strong> Saiba exatamente o preço mínimo que você pode vender sem ter prejuízo. 
@@ -178,8 +179,8 @@ export default function Home() {
                   Recalcule seus preços sempre que houver alterações para manter sua margem protegida.
                 </li>
                 <li>
-                  <strong>Compare produtos de alta rotação com produtos de alta margem:</strong> Nem sempre o produto mais vendido é o mais lucrativo. 
-                  Equilibre seu mix de produtos entre itens de volume (menor margem, muitas vendas) e produtos premium (alta margem, menos vendas).
+                  <strong>Analise produtos de alta rotação vs. alta margem:</strong> Nem sempre o produto mais vendido é o mais lucrativo. 
+                  Balance seu portfólio entre produtos de volume (menor margem, muitas vendas) e produtos premium (alta margem, menos vendas).
                 </li>
               </ul>
             </div>
@@ -296,7 +297,7 @@ export default function Home() {
                     <strong>Vantagens do Pix para MEI:</strong>
                   </p>
                   <ul className="list-disc list-inside text-sm space-y-1 ml-4">
-                    <li>Taxa de intermediação geralmente entre 0% a 1%</li>
+                    <li>Taxa de gateway geralmente entre 0% a 1%</li>
                     <li>Margem de lucro até 2,5x maior que marketplaces</li>
                     <li>Recebimento instantâneo (não precisa esperar 14-30 dias)</li>
                     <li>Relacionamento direto com o cliente (fidelização)</li>
@@ -351,7 +352,7 @@ export default function Home() {
                 </AccordionTrigger>
                 <AccordionContent>
                   <p className="mb-3">
-                    O <strong>ponto de equilíbrio</strong> é o preço mínimo que você precisa vender para não ter prejuízo (lucro = zero).
+                    O <strong>ponto de equilíbrio</strong> (ou breakeven) é o preço mínimo que você precisa vender para não ter prejuízo (lucro = zero).
                   </p>
                   <p className="mb-2">
                     <strong>Por que é importante?</strong>
@@ -364,7 +365,7 @@ export default function Home() {
                   </ul>
                   <p className="text-sm bg-gray-50 p-3 rounded">
                     <strong>Exemplo:</strong> Se seu ponto de equilíbrio é R$ 80 e você está vendendo por R$ 100, 
-                    sua &ldquo;margem de segurança&rdquo; é de R$ 20. Você pode fazer promoções de até 20% de desconto sem ter prejuízo.
+                    sua "margem de segurança" é de R$ 20. Você pode fazer promoções de até 20% de desconto sem ter prejuízo.
                   </p>
                 </AccordionContent>
               </AccordionItem>
@@ -395,9 +396,9 @@ export default function Home() {
                 </p>
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900 mb-2">✅ Compartilhamento Fácil</h3>
-<p className="text-gray-700 text-sm">
-                  Envie o resumo completo direto para o WhatsApp da sua equipe ou contador com um clique.
+                <h3 className="font-semibold text-gray-900 mb-2">✅ Compartilhamento Rápido</h3>
+                <p className="text-gray-700 text-sm">
+                  Copie o resumo formatado e cole direto no WhatsApp para sua equipe ou contador.
                 </p>
               </div>
               <div>
@@ -435,3 +436,189 @@ export default function Home() {
     </main>
   );
 }
+
+        {/* Como Calcular Section - SEO Content */}
+        <div className="mt-12 space-y-8">
+          <section className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <TrendingUp className="h-6 w-6 text-green-600" />
+              Como Calcular o Lucro Real em Marketplaces
+            </h2>
+            <div className="prose prose-gray max-w-none">
+              <p className="text-gray-700 leading-relaxed mb-4">
+                Calcular o lucro real nas vendas online vai muito além de subtrair o custo do produto do preço de venda. 
+                Para vendedores brasileiros em 2026, é essencial considerar todas as taxas e impostos dos marketplaces.
+              </p>
+
+              <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">
+                Taxas do Shopee em 2026
+              </h3>
+              <p className="text-gray-700 leading-relaxed mb-2">
+                O Shopee cobra uma estrutura de taxas composta por:
+              </p>
+              <ul className="list-disc list-inside text-gray-700 space-y-2 mb-4">
+                <li><strong>14% de comissão base</strong> sobre o valor do produto</li>
+                <li><strong>6% adicional para Frete Grátis</strong> (programa obrigatório em muitas categorias)</li>
+                <li><strong>R$ 4,00 de taxa fixa</strong> por item vendido</li>
+              </ul>
+              <p className="text-gray-700 leading-relaxed">
+                Total: aproximadamente 20% + R$ 4,00 por venda.
+              </p>
+
+              <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">
+                Taxas do Mercado Livre em 2026
+              </h3>
+              <p className="text-gray-700 leading-relaxed mb-2">
+                O Mercado Livre oferece dois tipos de anúncio:
+              </p>
+              <div className="space-y-4 mb-4">
+                <div>
+                  <h4 className="font-semibold text-gray-900">Anúncio Clássico:</h4>
+                  <ul className="list-disc list-inside text-gray-700 space-y-1 ml-4">
+                    <li>Comissão entre 11% a 14% (varia por categoria, média ~12,5%)</li>
+                    <li>R$ 6,50 de taxa fixa para produtos abaixo de R$ 79,00</li>
+                    <li>Não permite parcelamento sem juros</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-gray-900">Anúncio Premium:</h4>
+                  <ul className="list-disc list-inside text-gray-700 space-y-1 ml-4">
+                    <li>Comissão entre 16% a 19% (média ~17,5%)</li>
+                    <li>R$ 6,50 de taxa fixa para produtos abaixo de R$ 79,00</li>
+                    <li>Permite parcelamento e maior destaque nos resultados</li>
+                  </ul>
+                </div>
+              </div>
+
+              <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">
+                Vendas por Pix ou Diretas
+              </h3>
+              <p className="text-gray-700 leading-relaxed mb-4">
+                Para vendas diretas via WhatsApp, Instagram ou site próprio, as taxas são bem menores. 
+                Gateways de pagamento Pix costumam cobrar entre 0% a 1% por transação, sendo uma alternativa 
+                muito mais lucrativa para quem consegue vender sem depender dos marketplaces.
+              </p>
+            </div>
+          </section>
+
+          <section className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <Shield className="h-6 w-6 text-green-600" />
+              Impostos para Vendedores Online
+            </h2>
+            <div className="prose prose-gray max-w-none">
+              <h3 className="text-xl font-semibold text-gray-900 mt-4 mb-3">
+                MEI - Microempreendedor Individual
+              </h3>
+              <p className="text-gray-700 leading-relaxed mb-4">
+                Se você é MEI, paga um valor fixo mensal de <strong>R$ 81,05</strong> através do DAS (Documento de Arrecadação do Simples Nacional). 
+                Este valor já cobre INSS, ISS/ICMS e não varia com o faturamento. O limite de faturamento anual para MEI em 2026 é de R$ 81.000,00.
+              </p>
+
+              <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">
+                Simples Nacional
+              </h3>
+              <p className="text-gray-700 leading-relaxed mb-4">
+                Se você ultrapassou o limite do MEI ou optou pelo Simples Nacional, a alíquota varia conforme seu faturamento e atividade. 
+                Para comércio (Anexo I), as alíquotas começam em torno de <strong>4% a 6%</strong> para faixas iniciais e podem chegar a 
+                <strong>11,35%</strong> em faixas maiores.
+              </p>
+            </div>
+          </section>
+
+          <section className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <DollarSign className="h-6 w-6 text-green-600" />
+              Dicas para Aumentar sua Margem de Lucro
+            </h2>
+            <div className="prose prose-gray max-w-none">
+              <ul className="list-disc list-inside text-gray-700 space-y-3">
+                <li>
+                  <strong>Negocie com fornecedores:</strong> Quanto menor o custo do produto, maior seu lucro. 
+                  Compre em volume para conseguir descontos.
+                </li>
+                <li>
+                  <strong>Otimize embalagens:</strong> Use embalagens adequadas ao tamanho do produto para economizar 
+                  no frete e no material.
+                </li>
+                <li>
+                  <strong>Compare marketplaces:</strong> Use nossa calculadora para simular o mesmo produto em diferentes 
+                  plataformas e escolha a mais lucrativa.
+                </li>
+                <li>
+                  <strong>Considere vendas diretas:</strong> Invista em canais próprios (Instagram, WhatsApp, site) 
+                  para reduzir taxas de marketplace.
+                </li>
+                <li>
+                  <strong>Conheça seu ponto de equilíbrio:</strong> Saiba o preço mínimo que você pode vender sem ter prejuízo 
+                  e use isso nas negociações e promoções.
+                </li>
+                <li>
+                  <strong>Mantenha-se atualizado:</strong> As taxas dos marketplaces mudam periodicamente. 
+                  Recalcule seus preços sempre que houver alterações.
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <section id="por-que-usar" className="bg-green-50 rounded-xl border-2 border-green-200 p-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              Por que usar esta calculadora profissional?
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h3 className="font-semibold text-gray-900 mb-2">✅ Atualizada com Taxas de Março 2026</h3>
+                <p className="text-gray-700 text-sm">
+                  Todas as taxas e regras dos marketplaces brasileiros verificadas e atualizadas mensalmente.
+                </p>
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-900 mb-2">✅ 100% Gratuita e Sem Limites</h3>
+                <p className="text-gray-700 text-sm">
+                  Sem cadastro, sem limite de uso, sem anúncios invasivos. Use quantas vezes precisar.
+                </p>
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-900 mb-2">✅ Cálculo Completo e Profissional</h3>
+                <p className="text-gray-700 text-sm">
+                  Considera todas as taxas, impostos MEI/Simples, custos operacionais e ponto de equilíbrio.
+                </p>
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-900 mb-2">✅ Compartilhamento Rápido</h3>
+                <p className="text-gray-700 text-sm">
+                  Copie o resumo formatado e cole direto no WhatsApp para sua equipe ou contador.
+                </p>
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-900 mb-2">✅ Suporte a 4 Canais</h3>
+                <p className="text-gray-700 text-sm">
+                  Compare lado a lado: Shopee, Mercado Livre Clássico, Mercado Livre Premium e Pix.
+                </p>
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-900 mb-2">✅ Responsiva e Rápida</h3>
+                <p className="text-gray-700 text-sm">
+                  Funciona perfeitamente em celular, tablet e desktop. Cálculos instantâneos em tempo real.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-8 mt-16">
+        <div className="max-w-5xl mx-auto px-4 text-center">
+          <p className="text-gray-400 text-sm">
+            © 2026 DBC Data Studio. Calculadora de Lucro para Marketplaces Brasileiros.
+          </p>
+          <p className="text-gray-500 text-xs mt-2">
+            Esta calculadora é uma ferramenta educacional. Consulte sempre um contador para orientações específicas sobre impostos.
+          </p>
+        </div>
+      </footer>
+    </main>
+  );
+}
+
