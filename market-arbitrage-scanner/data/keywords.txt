@@ -1,0 +1,137 @@
+# Sample Keywords for Market Arbitrage Scanner
+# One keyword per line. Lines starting with # are comments.
+
+# Document Conversion Tools
+PDF to Excel
+PDF to Word
+Excel to PDF
+Image to Text OCR
+Word to PDF
+
+# Video Tools
+YouTube Thumbnail Downloader
+Video Compressor
+YouTube to MP3
+Video Editor Online
+GIF Maker
+
+# Image Tools
+PNG to JPG Converter
+Background Remover
+Image Compressor
+Watermark Remover
+Photo Editor
+
+# Productivity Tools
+QR Code Generator
+Resume Builder
+Invoice Generator
+Signature Generator
+Barcode Generator
+
+# Social Media Tools
+Instagram Story Viewer
+TikTok Video Downloader
+Twitter Video Downloader
+Meme Generator
+Caption Generator
+
+# Web Development Tools
+URL Shortener
+HTML Minifier
+CSS Compressor
+JSON Formatter
+Color Picker
+
+# Text Tools
+Word Counter
+Grammar Checker
+Plagiarism Checker
+Text to Speech
+Paraphrasing Tool
+
+# Design Tools
+Logo Maker
+Poster Maker
+Flyer Designer
+Business Card Maker
+Banner Creator
+
+# Data Tools
+CSV to JSON
+JSON to CSV
+Data Visualization Tool
+Chart Generator
+Table Generator
+
+# Marketing Tools
+Email Signature Generator
+Landing Page Builder
+QR Menu Generator
+Coupon Code Generator
+Survey Builder
+
+# Finance Tools
+Loan Calculator
+Mortgage Calculator
+Budget Calculator
+Tax Calculator
+Investment Calculator
+
+# Health Tools
+BMI Calculator
+Calorie Counter
+Meal Planner
+Workout Generator
+Sleep Tracker
+
+# Education Tools
+Flashcard Maker
+Quiz Generator
+Study Planner
+Grade Calculator
+Citation Generator
+
+# File Tools
+File Compressor
+ZIP Extractor
+PDF Merger
+PDF Splitter
+File Converter
+
+# Audio Tools
+Audio Trimmer
+Audio Merger
+Voice Recorder
+Podcast Editor
+Audio Converter
+
+# Crypto Tools
+Crypto Converter
+Wallet Generator
+Gas Fee Calculator
+NFT Generator
+Token Creator
+
+# SEO Tools
+Meta Tag Generator
+Sitemap Generator
+Robot.txt Generator
+Schema Markup Generator
+Keyword Density Checker
+
+# Developer Tools
+API Tester
+Regex Tester
+Code Formatter
+Password Generator
+Lorem Ipsum Generator
+
+# Additional High-Potential Tools
+Screen Recorder
+Whiteboard Online
+Mind Map Creator
+Flowchart Maker
+Timeline Generator
+Calendar Creator
+
