@@ -26,6 +26,9 @@ class SerpScraper:
         self.rate_limit = rate_limit
         self.ua = UserAgent()
         self.session = requests.Session()
+        # Disable SSL warnings
+        import urllib3
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
     
     def _get_headers(self) -> dict:
         """Generate request headers with rotating user agent"""
@@ -86,11 +89,12 @@ class SerpScraper:
             url = self._build_google_url(keyword, geo, num_results=top_n * 2)
             logger.info(f"Fetching SERP for '{keyword}' in {geo}")
             
-            # Make request
+            # Make request (with SSL verification disabled for macOS compatibility)
             response = self.session.get(
                 url,
                 headers=self._get_headers(),
-                timeout=10
+                timeout=10,
+                verify=False  # Disable SSL verification to avoid certificate errors
             )
             response.raise_for_status()
             
@@ -101,11 +105,13 @@ class SerpScraper:
             urls = []
             
             # Look for result divs (Google's structure may change)
-            # Try multiple selectors
+            # Try multiple selectors and methods
             selectors = [
-                'div.yuRUbf > a',  # Standard result link
-                'a[jsname="UWckNb"]',  # Alternative selector
-                'div.g a[href^="http"]'  # Fallback
+                'div.yuRUbf > a',           # Standard result link
+                'a[jsname="UWckNb"]',       # Alternative selector
+                'div.g a[href^="http"]',    # Fallback 1
+                'div#search a[href^="http"]', # Fallback 2
+                'a[href^="http"]'           # Last resort
             ]
             
             for selector in selectors:
@@ -113,13 +119,30 @@ class SerpScraper:
                 for link in links:
                     href = link.get('href')
                     if href and href.startswith('http'):
-                        # Filter out Google's own URLs
-                        if not any(x in href for x in ['google.com', 'youtube.com', 'support.google']):
+                        # Filter out Google's own URLs and irrelevant ones
+                        skip_domains = ['google.com', 'google.com.br', 'youtube.com', 
+                                       'support.google', 'accounts.google', 'maps.google',
+                                       'play.google', 'policies.google']
+                        if not any(domain in href for domain in skip_domains):
                             if href not in urls:
                                 urls.append(href)
+                                if len(urls) >= top_n * 2:  # Get extra in case some are filtered
+                                    break
                 
-                if urls:
+                if len(urls) >= top_n:
                     break
+            
+            # If still no results, try finding any anchor tags in main content
+            if not urls:
+                logger.warning(f"Standard selectors failed, trying alternative extraction")
+                all_links = soup.find_all('a', href=True)
+                for link in all_links:
+                    href = link['href']
+                    if href.startswith('http') and 'google' not in href:
+                        if href not in urls:
+                            urls.append(href)
+                            if len(urls) >= top_n:
+                                break
             
             # Return top N
             result_urls = urls[:top_n]

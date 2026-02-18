@@ -27,6 +27,9 @@ class QualityAnalyzer:
         self.timeout = timeout
         self.ua = UserAgent()
         self.session = requests.Session()
+        # Disable SSL warnings
+        import urllib3
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
     
     def _get_headers(self) -> dict:
         """Generate request headers"""
@@ -59,13 +62,14 @@ class QualityAnalyzer:
             # Check HTTPS
             metrics['has_https'] = url.startswith('https://')
             
-            # Fetch page
+            # Fetch page (with SSL verification disabled for macOS compatibility)
             time.sleep(1)  # Rate limiting
             response = self.session.get(
                 url,
                 headers=self._get_headers(),
                 timeout=self.timeout,
-                allow_redirects=True
+                allow_redirects=True,
+                verify=False  # Disable SSL verification to avoid certificate errors
             )
             
             if response.status_code == 200:

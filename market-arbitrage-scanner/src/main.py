@@ -20,6 +20,7 @@ from models import GapAnalysis
 from services.translator import TranslationService
 from services.search_volume import SearchVolumeService
 from services.serp_scraper import SerpScraper
+from services.serpapi_service import SerpApiService
 from services.quality_analyzer import QualityAnalyzer
 from scoring.gap_scorer import GapScorer
 from output.markdown_generator import MarkdownGenerator
@@ -50,7 +51,24 @@ class MarketScanner:
         """Initialize all services"""
         self.translator = TranslationService()
         self.search_volume = SearchVolumeService(timeframe=Config.TRENDS_TIMEFRAME)
+        
+        # Try SerpAPI first, fall back to free scraper
+        self.serpapi = SerpApiService(api_key=Config.SERPAPI_KEY)
         self.serp_scraper = SerpScraper(rate_limit=Config.SERP_RATE_LIMIT)
+        self.use_serpapi = Config.USE_SERPAPI and self.serpapi.enabled
+        
+        if self.use_serpapi:
+            logger.info("🚀 Using SerpAPI for reliable SERP data")
+            # Show account info
+            account = self.serpapi.get_account_info()
+            if 'plan' in account:
+                logger.info(
+                    f"   Plan: {account['plan']} | "
+                    f"Used: {account.get('this_month_usage', 0)}/{account.get('searches_per_month', 0)}"
+                )
+        else:
+            logger.info("🔧 Using free scraper (SerpAPI not configured)")
+        
         self.quality_analyzer = QualityAnalyzer(timeout=Config.REQUEST_TIMEOUT)
         self.gap_scorer = GapScorer()
         self.markdown_gen = MarkdownGenerator(output_dir=Config.RESULTS_DIR)
@@ -78,8 +96,12 @@ class MarketScanner:
         br_volume = volumes['BR']
         
         # Step 3: Get top URLs for both markets
-        logger.info("   Scraping top URLs...")
-        urls = self.serp_scraper.get_urls_for_both_markets(keyword, pt_keyword, top_n=Config.TOP_N_RESULTS)
+        logger.info("   Fetching top URLs...")
+        if self.use_serpapi:
+            urls = self.serpapi.get_urls_for_both_markets(keyword, pt_keyword, top_n=Config.TOP_N_RESULTS)
+        else:
+            urls = self.serp_scraper.get_urls_for_both_markets(keyword, pt_keyword, top_n=Config.TOP_N_RESULTS)
+        
         us_urls = urls['US']
         br_urls = urls['BR']
         
@@ -259,6 +281,45 @@ def version():
     """Show version information"""
     click.echo("Market Arbitrage Scanner v1.0.0")
     click.echo("Built with: Python, Google Trends, BeautifulSoup")
+
+
+@cli.command()
+def status():
+    """Check SerpAPI status and remaining credits"""
+    setup_logging(verbose=False)
+    
+    serpapi = SerpApiService()
+    
+    if not serpapi.enabled:
+        click.echo("❌ SerpAPI is not configured")
+        click.echo("\nTo enable SerpAPI:")
+        click.echo("1. Sign up at https://serpapi.com (free tier: 250 searches/month)")
+        click.echo("2. Get your API key")
+        click.echo("3. Create .env file with: SERPAPI_KEY=your_key_here")
+        click.echo("\nSee SERPAPI_SETUP.md for detailed instructions")
+        return
+    
+    click.echo("🔍 Checking SerpAPI status...\n")
+    
+    account = serpapi.get_account_info()
+    
+    if 'error' in account:
+        click.echo(f"❌ Error: {account['error']}")
+        return
+    
+    click.echo("✅ SerpAPI is configured and working!\n")
+    click.echo(f"📊 Account Details:")
+    click.echo(f"   Plan: {account.get('plan', 'Unknown')}")
+    click.echo(f"   Monthly Limit: {account.get('searches_per_month', 'Unknown')} searches")
+    click.echo(f"   Used This Month: {account.get('this_month_usage', 0)}")
+    click.echo(f"   Remaining: {account.get('total_searches_left', 'Unknown')}")
+    
+    remaining = account.get('total_searches_left', 0)
+    if remaining:
+        keywords_remaining = remaining // 2
+        click.echo(f"\n💡 You can scan ~{keywords_remaining} more keywords this month")
+    
+    click.echo(f"\n🔗 Manage your account: https://serpapi.com/account")
 
 
 if __name__ == '__main__':

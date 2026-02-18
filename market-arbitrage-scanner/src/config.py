@@ -28,6 +28,8 @@ class Config:
     
     # SERP settings
     TOP_N_RESULTS = 3  # Number of top URLs to analyze
+    USE_SERPAPI = os.getenv('USE_SERPAPI', 'true').lower() == 'true'  # Use SerpAPI if available
+    SERPAPI_KEY = os.getenv('SERPAPI_KEY')  # Get from https://serpapi.com
     
     # Retry settings
     MAX_RETRIES = 3
