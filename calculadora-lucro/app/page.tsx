@@ -58,7 +58,7 @@ export default function Home() {
             </h2>
             <div className="prose prose-gray max-w-none">
               <p className="text-gray-700 leading-relaxed mb-4">
-                Muitos vendedores iniciantes acreditam que calcular o lucro é só diminuir o custo do produto do preço de venda. Mas essa conta simplificada pode levar ao prejuízo! 
+                Muitos vendedores iniciantes acreditam que calcular o lucro é só diminuir o custo do produto do preço de venda. Mas essa conta simplificada pode levar ao prejuízo!
                 No mercado brasileiro de 2026, é essencial considerar <strong>todas as taxas dos marketplaces, custos operacionais e impostos</strong> para ter uma visão real da rentabilidade do seu negócio.
               </p>
 
@@ -108,8 +108,8 @@ export default function Home() {
                 Vendas Diretas por Pix: Muito Mais Lucrativo
               </h3>
               <p className="text-gray-700 leading-relaxed mb-4">
-                Se você vende direto pelo WhatsApp, Instagram ou tem site próprio, aceitar Pix é disparado a opção mais rentável. 
-                As plataformas de pagamento Pix cobram entre <strong>0% a 1% por transação</strong> — uma diferença brutal comparado aos marketplaces. 
+                Se você vende direto pelo WhatsApp, Instagram ou tem site próprio, aceitar Pix é disparado a opção mais rentável.
+                As plataformas de pagamento Pix cobram entre <strong>0% a 1% por transação</strong> — uma diferença brutal comparado aos marketplaces.
                 Veja só: numa venda de R$ 100, você economiza até R$ 23,50 em taxas comparado ao Shopee!
               </p>
             </div>
@@ -125,12 +125,12 @@ export default function Home() {
                 MEI - Microempreendedor Individual
               </h3>
               <p className="text-gray-700 leading-relaxed mb-4">
-                Se você é MEI, paga um valor fixo mensal de <strong>R$ 81,05</strong> através do DAS (Documento de Arrecadação do Simples Nacional). 
+                Se você é MEI, paga um valor fixo mensal de <strong>R$ 81,05</strong> através do DAS (Documento de Arrecadação do Simples Nacional).
                 Esta contribuição já cobre INSS, ISS/ICMS e não varia com o faturamento. <strong>Atenção:</strong> O limite de faturamento anual para MEI em 2026 permanece em R$ 81.000,00 (aproximadamente R$ 6.750,00 por mês).
               </p>
               <div className="bg-green-50 border border-green-200 rounded-lg p-4 my-4">
                 <p className="text-sm text-gray-700">
-                  <strong>💡 Dica importante:</strong> Nossa calculadora não desconta o DAS do MEI por venda (mantém R$ 0), pois ele é um custo fixo mensal que independe do volume de vendas. 
+                  <strong>💡 Dica importante:</strong> Nossa calculadora não desconta o DAS do MEI por venda (mantém R$ 0), pois ele é um custo fixo mensal que independe do volume de vendas.
                   Se quiser incluir na análise, divida os R$ 81,05 pelo seu número médio de vendas por mês e considere como custo adicional por unidade.
                 </p>
               </div>
@@ -139,8 +139,8 @@ export default function Home() {
                 Simples Nacional - Anexo I (Comércio)
               </h3>
               <p className="text-gray-700 leading-relaxed mb-4">
-                Ultrapassou o limite do MEI ou já começou direto no Simples Nacional? Nesse regime, você paga um percentual sobre cada venda que varia conforme seu faturamento total acumulado. 
-                Para comércio (Anexo I), as alíquotas começam em torno de <strong>4% a 6%</strong> nas faixas menores de faturamento e podem chegar a 
+                Ultrapassou o limite do MEI ou já começou direto no Simples Nacional? Nesse regime, você paga um percentual sobre cada venda que varia conforme seu faturamento total acumulado.
+                Para comércio (Anexo I), as alíquotas começam em torno de <strong>4% a 6%</strong> nas faixas menores de faturamento e podem chegar a
                 <strong>11,35%</strong> nas faixas mais altas. Esse imposto é calculado sobre cada venda que você realiza.
               </p>
             </div>
@@ -154,31 +154,31 @@ export default function Home() {
             <div className="prose prose-gray max-w-none">
               <ul className="list-disc list-inside text-gray-700 space-y-4">
                 <li>
-                  <strong>Negocie em volume com fornecedores:</strong> Quanto menor o custo do produto, maior seu lucro final. 
+                  <strong>Negocie em volume com fornecedores:</strong> Quanto menor o custo do produto, maior seu lucro final.
                   Faça cotações com múltiplos fornecedores e negocie descontos progressivos por volume de compra. Uma redução de 10% no custo pode dobrar sua margem.
                 </li>
                 <li>
-                  <strong>Otimize o peso e tamanho das embalagens:</strong> Use embalagens adequadas ao tamanho do produto para economizar 
+                  <strong>Otimize o peso e tamanho das embalagens:</strong> Use embalagens adequadas ao tamanho do produto para economizar
                   no frete e no material. Embalagens menores e mais leves podem reduzir custos de envio em até 40%.
                 </li>
                 <li>
-                  <strong>Teste o mesmo produto em diferentes marketplaces:</strong> Use nossa calculadora para simular quanto você ganharia vendendo o mesmo item na Shopee, Mercado Livre Clássico, Mercado Livre Premium ou por Pix. 
+                  <strong>Teste o mesmo produto em diferentes marketplaces:</strong> Use nossa calculadora para simular quanto você ganharia vendendo o mesmo item na Shopee, Mercado Livre Clássico, Mercado Livre Premium ou por Pix.
                   Escolha o canal mais lucrativo para cada tipo de produto do seu catálogo.
                 </li>
                 <li>
-                  <strong>Construa canais de venda direta:</strong> Invista em canais próprios (Instagram, WhatsApp, site) 
+                  <strong>Construa canais de venda direta:</strong> Invista em canais próprios (Instagram, WhatsApp, site)
                   para reduzir a dependência dos marketplaces e suas taxas. Vendas diretas para clientes recorrentes podem ter margem até 3x maior.
                 </li>
                 <li>
-                  <strong>Domine seu ponto de equilíbrio:</strong> Saiba exatamente o preço mínimo que você pode vender sem ter prejuízo. 
+                  <strong>Domine seu ponto de equilíbrio:</strong> Saiba exatamente o preço mínimo que você pode vender sem ter prejuízo.
                   Use esse conhecimento estrategicamente em negociações, promoções e liquidações de estoque.
                 </li>
                 <li>
-                  <strong>Monitore mudanças de taxas mensalmente:</strong> Os marketplaces ajustam suas taxas periodicamente. 
+                  <strong>Monitore mudanças de taxas mensalmente:</strong> Os marketplaces ajustam suas taxas periodicamente.
                   Recalcule seus preços sempre que houver alterações para manter sua margem protegida.
                 </li>
                 <li>
-                  <strong>Compare produtos de alta rotação com produtos de alta margem:</strong> Nem sempre o produto mais vendido é o mais lucrativo. 
+                  <strong>Compare produtos de alta rotação com produtos de alta margem:</strong> Nem sempre o produto mais vendido é o mais lucrativo.
                   Equilibre seu mix de produtos entre itens de volume (menor margem, muitas vendas) e produtos premium (alta margem, menos vendas).
                 </li>
               </ul>
@@ -248,7 +248,7 @@ export default function Home() {
                     </div>
                   </div>
                   <p className="mt-3 text-sm bg-yellow-50 p-2 rounded">
-                    <strong>Importante:</strong> A taxa fixa de R$ 6,50 é removida automaticamente quando o produto custa R$ 79 ou mais. 
+                    <strong>Importante:</strong> A taxa fixa de R$ 6,50 é removida automaticamente quando o produto custa R$ 79 ou mais.
                     Para produtos abaixo desse valor, essa taxa pode impactar significativamente a margem.
                   </p>
                 </AccordionContent>
@@ -303,7 +303,7 @@ export default function Home() {
                     <li>Sem burocracia de plataforma</li>
                   </ul>
                   <p className="mt-3 text-sm">
-                    <strong>Desafio:</strong> Você precisa gerar tráfego próprio (redes sociais, anúncios, indicações). 
+                    <strong>Desafio:</strong> Você precisa gerar tráfego próprio (redes sociais, anúncios, indicações).
                     A estratégia ideal é usar marketplaces para adquirir clientes e converter para vendas diretas via Pix.
                   </p>
                 </AccordionContent>
@@ -338,8 +338,8 @@ export default function Home() {
                     </div>
                   </div>
                   <p className="mt-3 text-sm bg-blue-50 p-3 rounded">
-                    <strong>Quando migrar?</strong> Se você está faturando próximo aos R$ 6.500/mês e tem margem de lucro acima de 20%, 
-                    considere migrar para Simples Nacional para ter espaço de crescimento. Porém, faça as contas com um contador, 
+                    <strong>Quando migrar?</strong> Se você está faturando próximo aos R$ 6.500/mês e tem margem de lucro acima de 20%,
+                    considere migrar para Simples Nacional para ter espaço de crescimento. Porém, faça as contas com um contador,
                     pois o Simples pode reduzir sua margem em 4-6% por venda.
                   </p>
                 </AccordionContent>
@@ -369,7 +369,7 @@ export default function Home() {
                     <li>Mostra se um produto é viável de vender naquele marketplace</li>
                   </ul>
                   <p className="text-sm bg-gray-50 p-3 rounded mb-2">
-                    <strong>Exemplo prático:</strong> Se seu ponto de equilíbrio é R$ 80 e você vende por R$ 100, 
+                    <strong>Exemplo prático:</strong> Se seu ponto de equilíbrio é R$ 80 e você vende por R$ 100,
                     você tem R$ 20 de &quot;margem de segurança&quot;. Isso significa que pode dar até 20% de desconto (R$ 20) sem ter prejuízo.
                   </p>
                   <p className="text-xs text-gray-600 mt-2">
@@ -405,7 +405,7 @@ export default function Home() {
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900 mb-2">✅ Compartilhamento Fácil</h3>
-<p className="text-gray-700 text-sm">
+                <p className="text-gray-700 text-sm">
                   Envie o resumo completo direto para o WhatsApp da sua equipe ou contador com um clique.
                 </p>
               </div>
@@ -433,7 +433,7 @@ export default function Home() {
             © 2026 DBC Data Studio. Calculadora de Lucro para Marketplaces Brasileiros.
           </p>
           <p className="text-gray-500 text-xs mt-2">
-            Esta calculadora é uma ferramenta educacional desenvolvida por especialistas em e-commerce. 
+            Esta calculadora é uma ferramenta educacional desenvolvida por especialistas em e-commerce.
             Consulte sempre um contador para orientações específicas sobre impostos e enquadramento fiscal.
           </p>
           <p className="text-gray-600 text-xs mt-3">

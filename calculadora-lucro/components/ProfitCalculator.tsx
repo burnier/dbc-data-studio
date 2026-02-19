@@ -3,8 +3,10 @@
 import { useState, useEffect } from 'react';
 import { Calculator, TrendingUp, DollarSign, Package, Truck, Copy, Check } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { NumberInputField } from '@/components/ui/number-input-field';
+import { MetricCard } from '@/components/ui/metric-card';
+import { BreakdownLine } from '@/components/ui/breakdown-line';
 import {
   calculateProfit,
   generateSummary,
@@ -12,7 +14,7 @@ import {
   type CalculatorInputs,
   type CalculatorResult,
 } from '@/lib/calculator';
-import { formatCurrency, formatPercent, parseCurrency } from '@/lib/utils';
+import { formatCurrency, formatPercent } from '@/lib/utils';
 
 const marketplaceOptions: { value: MarketplaceType; label: string; description: string; ariaLabel: string }[] = [
   { 
@@ -41,17 +43,17 @@ const marketplaceOptions: { value: MarketplaceType; label: string; description: 
   },
 ];
 
-export default function ProfitCalculator() {
-  // Store inputs as strings for better UX, convert to numbers for calculations
-  const [inputStrings, setInputStrings] = useState({
-    precoVenda: '100',
-    custoProduto: '40',
-    custoEmbalagem: '5',
-    custoFrete: '15',
-    aliquotaImposto: '0',
-    pixGatewayFee: '0.5',
-  });
+const DEFAULT_VALUES = {
+  precoVenda: '100',
+  custoProduto: '40',
+  custoEmbalagem: '5',
+  custoFrete: '15',
+  aliquotaImposto: '0',
+  pixGatewayFee: '0.5',
+};
 
+export default function ProfitCalculator() {
+  const [inputStrings, setInputStrings] = useState(DEFAULT_VALUES);
   const [inputs, setInputs] = useState<CalculatorInputs>({
     precoVenda: 100,
     custoProduto: 40,
@@ -66,40 +68,24 @@ export default function ProfitCalculator() {
   const [result, setResult] = useState<CalculatorResult | null>(null);
   const [copied, setCopied] = useState(false);
 
-  // Recalcula quando inputs mudam
   useEffect(() => {
     const calculated = calculateProfit(inputs);
     setResult(calculated);
   }, [inputs]);
 
   const handleInputChange = (field: keyof CalculatorInputs, value: string | number | boolean) => {
-    setInputs((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
+    setInputs((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleNumberInput = (field: keyof CalculatorInputs, inputValue: string) => {
-    // Update the string representation
-    setInputStrings((prev) => ({
-      ...prev,
-      [field]: inputValue,
-    }));
+    setInputStrings((prev) => ({ ...prev, [field]: inputValue }));
 
-    // Convert to number for calculations
     if (inputValue === '' || inputValue === '-') {
-      // Allow empty or just minus sign temporarily
-      setInputs((prev) => ({
-        ...prev,
-        [field]: 0,
-      }));
+      setInputs((prev) => ({ ...prev, [field]: 0 }));
     } else {
       const numValue = parseFloat(inputValue);
       if (!isNaN(numValue)) {
-        setInputs((prev) => ({
-          ...prev,
-          [field]: numValue,
-        }));
+        setInputs((prev) => ({ ...prev, [field]: numValue }));
       }
     }
   };
@@ -157,77 +143,45 @@ export default function ProfitCalculator() {
 
           {/* Inputs de Valores */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label htmlFor="preco-venda" className="block text-sm font-medium text-gray-700 mb-2">
-                <DollarSign className="inline h-4 w-4 mr-1" aria-hidden="true" />
-                Preço de Venda (R$)
-              </label>
-              <Input
-                id="preco-venda"
-                type="number"
-                step="0.01"
-                min="0"
-                value={inputStrings.precoVenda}
-                onChange={(e) => handleNumberInput('precoVenda', e.target.value)}
-                placeholder="100,00"
-                aria-describedby="preco-venda-desc"
-              />
-              <p id="preco-venda-desc" className="sr-only">Digite o preço de venda do produto em reais</p>
-            </div>
+            <NumberInputField
+              id="preco-venda"
+              label="Preço de Venda (R$)"
+              value={inputStrings.precoVenda}
+              onChange={(value) => handleNumberInput('precoVenda', value)}
+              placeholder="100,00"
+              description="Digite o preço de venda do produto em reais"
+              icon={<DollarSign className="h-4 w-4" />}
+            />
 
-            <div>
-              <label htmlFor="custo-produto" className="block text-sm font-medium text-gray-700 mb-2">
-                <Package className="inline h-4 w-4 mr-1" aria-hidden="true" />
-                Custo do Produto (R$)
-              </label>
-              <Input
-                id="custo-produto"
-                type="number"
-                step="0.01"
-                min="0"
-                value={inputStrings.custoProduto}
-                onChange={(e) => handleNumberInput('custoProduto', e.target.value)}
-                placeholder="40,00"
-                aria-describedby="custo-produto-desc"
-              />
-              <p id="custo-produto-desc" className="sr-only">Digite o custo de aquisição do produto</p>
-            </div>
+            <NumberInputField
+              id="custo-produto"
+              label="Custo do Produto (R$)"
+              value={inputStrings.custoProduto}
+              onChange={(value) => handleNumberInput('custoProduto', value)}
+              placeholder="40,00"
+              description="Digite o custo de aquisição do produto"
+              icon={<Package className="h-4 w-4" />}
+            />
 
-            <div>
-              <label htmlFor="custo-embalagem" className="block text-sm font-medium text-gray-700 mb-2">
-                <Package className="inline h-4 w-4 mr-1" aria-hidden="true" />
-                Custo de Embalagem (R$)
-              </label>
-              <Input
-                id="custo-embalagem"
-                type="number"
-                step="0.01"
-                min="0"
-                value={inputStrings.custoEmbalagem}
-                onChange={(e) => handleNumberInput('custoEmbalagem', e.target.value)}
-                placeholder="5,00"
-                aria-describedby="custo-embalagem-desc"
-              />
-              <p id="custo-embalagem-desc" className="sr-only">Digite o custo da embalagem do produto</p>
-            </div>
+            <NumberInputField
+              id="custo-embalagem"
+              label="Custo de Embalagem (R$)"
+              value={inputStrings.custoEmbalagem}
+              onChange={(value) => handleNumberInput('custoEmbalagem', value)}
+              placeholder="5,00"
+              description="Digite o custo da embalagem do produto"
+              icon={<Package className="h-4 w-4" />}
+            />
 
-            <div>
-              <label htmlFor="custo-frete" className="block text-sm font-medium text-gray-700 mb-2">
-                <Truck className="inline h-4 w-4 mr-1" aria-hidden="true" />
-                Custo de Frete/Envio (R$)
-              </label>
-              <Input
-                id="custo-frete"
-                type="number"
-                step="0.01"
-                min="0"
-                value={inputStrings.custoFrete}
-                onChange={(e) => handleNumberInput('custoFrete', e.target.value)}
-                placeholder="15,00"
-                aria-describedby="custo-frete-desc"
-              />
-              <p id="custo-frete-desc" className="sr-only">Digite o custo de frete ou envio</p>
-            </div>
+            <NumberInputField
+              id="custo-frete"
+              label="Custo de Frete/Envio (R$)"
+              value={inputStrings.custoFrete}
+              onChange={(value) => handleNumberInput('custoFrete', value)}
+              placeholder="15,00"
+              description="Digite o custo de frete ou envio"
+              icon={<Truck className="h-4 w-4" />}
+            />
           </div>
 
           {/* Configurações de Impostos */}
@@ -246,39 +200,25 @@ export default function ProfitCalculator() {
             </div>
 
             {!inputs.isMEI && (
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Alíquota Simples Nacional (%)
-                </label>
-                <Input
-                  type="number"
-                  step="0.1"
-                  value={inputStrings.aliquotaImposto}
-                  onChange={(e) => handleNumberInput('aliquotaImposto', e.target.value)}
-                  placeholder="6,0"
-                />
-                <p className="text-xs text-gray-500 mt-1">
-                  Informe sua alíquota do Simples Nacional (ex: 6.0% para Comércio Anexo I)
-                </p>
-              </div>
+              <NumberInputField
+                id="aliquota-imposto"
+                label="Alíquota Simples Nacional (%)"
+                value={inputStrings.aliquotaImposto}
+                onChange={(value) => handleNumberInput('aliquotaImposto', value)}
+                placeholder="6,0"
+                description="Informe sua alíquota do Simples Nacional (ex: 6.0% para Comércio Anexo I)"
+              />
             )}
 
             {inputs.marketplace === 'pix' && (
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Taxa do Intermediador Pix (%)
-                </label>
-                <Input
-                  type="number"
-                  step="0.1"
-                  value={inputStrings.pixGatewayFee}
-                  onChange={(e) => handleNumberInput('pixGatewayFee', e.target.value)}
-                  placeholder="0,5"
-                />
-                <p className="text-xs text-gray-500 mt-1">
-                  Taxa cobrada pelo intermediador de pagamento (geralmente 0% a 1%)
-                </p>
-              </div>
+              <NumberInputField
+                id="pix-gateway-fee"
+                label="Taxa do Intermediador Pix (%)"
+                value={inputStrings.pixGatewayFee}
+                onChange={(value) => handleNumberInput('pixGatewayFee', value)}
+                placeholder="0,5"
+                description="Taxa cobrada pelo intermediador de pagamento (geralmente 0% a 1%)"
+              />
             )}
           </div>
         </CardContent>
@@ -296,85 +236,86 @@ export default function ProfitCalculator() {
           <CardContent className="space-y-6">
             {/* Principais Métricas */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className={`p-6 rounded-lg ${lucroPositivo ? 'bg-green-50 border-2 border-green-200' : 'bg-red-50 border-2 border-red-200'}`}>
-                <div className="text-sm text-gray-600 mb-1">Lucro Líquido</div>
-                <div className={`text-3xl font-bold ${lucroPositivo ? 'text-green-700' : 'text-red-700'}`}>
-                  {formatCurrency(result.lucroLiquido)}
-                </div>
-              </div>
+              <MetricCard
+                label="Lucro Líquido"
+                value={formatCurrency(result.lucroLiquido)}
+                colorClass={lucroPositivo ? 'bg-green-50' : 'bg-red-50'}
+                borderColorClass={lucroPositivo ? 'border-green-200' : 'border-red-200'}
+                textColorClass={lucroPositivo ? 'text-green-700' : 'text-red-700'}
+              />
 
-              <div className="p-6 rounded-lg bg-blue-50 border-2 border-blue-200">
-                <div className="text-sm text-gray-600 mb-1">Margem de Lucro</div>
-                <div className="text-3xl font-bold text-blue-700">
-                  {formatPercent(result.margemLucro)}
-                </div>
-              </div>
+              <MetricCard
+                label="Margem de Lucro"
+                value={formatPercent(result.margemLucro)}
+                colorClass="bg-blue-50"
+                borderColorClass="border-blue-200"
+                textColorClass="text-blue-700"
+              />
 
-              <div className="p-6 rounded-lg bg-purple-50 border-2 border-purple-200">
-                <div className="text-sm text-gray-600 mb-1">
-                  Ponto de Equilíbrio
-                  <span className="text-xs ml-1 text-purple-600">(Preço Mínimo)</span>
-                </div>
-                <div className="text-3xl font-bold text-purple-700">
-                  {formatCurrency(result.pontoEquilibrio)}
-                </div>
-                <p className="text-xs text-purple-600 mt-1">
-                  Venda abaixo disso = prejuízo
-                </p>
-              </div>
+              <MetricCard
+                label="Ponto de Equilíbrio"
+                value={formatCurrency(result.pontoEquilibrio)}
+                colorClass="bg-purple-50"
+                borderColorClass="border-purple-200"
+                textColorClass="text-purple-700"
+                subtitle="(Preço Mínimo)"
+                footer="Venda abaixo disso = prejuízo"
+              />
             </div>
 
             {/* Breakdown Detalhado */}
             <div className="border-t pt-4">
               <h4 className="font-semibold text-gray-900 mb-3">Composição do Lucro</h4>
               <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Preço de Venda</span>
-                  <span className="font-semibold text-gray-900">{formatCurrency(result.precoVenda)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">- Custo do Produto</span>
-                  <span className="text-red-600">-{formatCurrency(result.breakdown.custoProduto)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">- Custo de Embalagem</span>
-                  <span className="text-red-600">-{formatCurrency(result.breakdown.custoEmbalagem)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">- Custo de Frete</span>
-                  <span className="text-red-600">-{formatCurrency(result.breakdown.custoFrete)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">- Comissão Marketplace</span>
-                  <span className="text-red-600">-{formatCurrency(result.breakdown.comissaoMarketplace)}</span>
-                </div>
+                <BreakdownLine 
+                  label="Preço de Venda" 
+                  value={formatCurrency(result.precoVenda)} 
+                />
+                <BreakdownLine 
+                  label="- Custo do Produto" 
+                  value={formatCurrency(result.breakdown.custoProduto)} 
+                  isNegative 
+                />
+                <BreakdownLine 
+                  label="- Custo de Embalagem" 
+                  value={formatCurrency(result.breakdown.custoEmbalagem)} 
+                  isNegative 
+                />
+                <BreakdownLine 
+                  label="- Custo de Frete" 
+                  value={formatCurrency(result.breakdown.custoFrete)} 
+                  isNegative 
+                />
+                <BreakdownLine 
+                  label="- Comissão Marketplace" 
+                  value={formatCurrency(result.breakdown.comissaoMarketplace)} 
+                  isNegative 
+                />
                 {result.breakdown.taxaFixaMarketplace > 0 && (
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">- Taxa Fixa Marketplace</span>
-                    <span className="text-red-600">-{formatCurrency(result.breakdown.taxaFixaMarketplace)}</span>
-                  </div>
+                  <BreakdownLine 
+                    label="- Taxa Fixa Marketplace" 
+                    value={formatCurrency(result.breakdown.taxaFixaMarketplace)} 
+                    isNegative 
+                  />
                 )}
                 {result.breakdown.impostos > 0 && (
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">- Impostos</span>
-                    <span className="text-red-600">-{formatCurrency(result.breakdown.impostos)}</span>
-                  </div>
+                  <BreakdownLine 
+                    label="- Impostos" 
+                    value={formatCurrency(result.breakdown.impostos)} 
+                    isNegative 
+                  />
                 )}
-                <div className="border-t pt-2 flex justify-between font-semibold text-base">
-                  <span className={lucroPositivo ? 'text-green-700' : 'text-red-700'}>= Lucro Líquido</span>
-                  <span className={lucroPositivo ? 'text-green-700' : 'text-red-700'}>
-                    {formatCurrency(result.lucroLiquido)}
-                  </span>
-                </div>
+                <BreakdownLine 
+                  label="= Lucro Líquido" 
+                  value={formatCurrency(result.lucroLiquido)} 
+                  isTotal 
+                  textColor={lucroPositivo ? 'text-green-700' : 'text-red-700'}
+                />
               </div>
             </div>
 
             {/* Botão Copiar */}
-            <Button
-              onClick={handleCopyToClipboard}
-              variant="outline"
-              className="w-full"
-            >
+            <Button onClick={handleCopyToClipboard} variant="outline" className="w-full">
               {copied ? (
                 <>
                   <Check className="h-4 w-4 mr-2" aria-hidden="true" />
@@ -393,4 +334,3 @@ export default function ProfitCalculator() {
     </div>
   );
 }
-
