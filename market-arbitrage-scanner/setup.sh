@@ -37,3 +37,4 @@ echo ""
 echo "For more options:"
 echo "  python src/main.py --help"
 
+

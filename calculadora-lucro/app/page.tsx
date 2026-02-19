@@ -162,7 +162,7 @@ export default function Home() {
                   no frete e no material. Embalagens menores e mais leves podem reduzir custos de envio em até 40%.
                 </li>
                 <li>
-                  <strong>Teste o mesmo produto em diferentes marketplaces:</strong> Use nossa calculadora para simular quanto você ganharia vendendo o mesmo item na Shopee, Mercado Livre Clássico, ML Premium ou por Pix. 
+                  <strong>Teste o mesmo produto em diferentes marketplaces:</strong> Use nossa calculadora para simular quanto você ganharia vendendo o mesmo item na Shopee, Mercado Livre Clássico, Mercado Livre Premium ou por Pix. 
                   Escolha o canal mais lucrativo para cada tipo de produto do seu catálogo.
                 </li>
                 <li>
@@ -279,7 +279,7 @@ export default function Home() {
                           <td className="text-right">R$ 16,00</td>
                         </tr>
                         <tr>
-                          <td className="py-1">ML Premium</td>
+                          <td className="py-1">Mercado Livre Premium</td>
                           <td className="text-right">R$ 17,50</td>
                           <td className="text-right">R$ 22,50</td>
                         </tr>
@@ -347,24 +347,33 @@ export default function Home() {
 
               <AccordionItem value="faq-5">
                 <AccordionTrigger>
-                  Como funciona o ponto de equilíbrio na calculadora?
+                  O que é &quot;Ponto de Equilíbrio&quot; na calculadora?
                 </AccordionTrigger>
                 <AccordionContent>
                   <p className="mb-3">
-                    O <strong>ponto de equilíbrio</strong> é o preço mínimo que você precisa vender para não ter prejuízo (lucro = zero).
+                    O <strong>ponto de equilíbrio</strong> (também chamado de &quot;preço de custo&quot; ou &quot;break-even&quot;) é o preço mínimo que você precisa vender para <strong>não ter prejuízo</strong>. É quando seu lucro é exatamente R$ 0,00.
                   </p>
+                  <div className="bg-blue-50 border-l-4 border-blue-400 p-3 mb-3">
+                    <p className="text-sm font-semibold text-blue-900 mb-1">📌 Em outras palavras:</p>
+                    <p className="text-sm text-blue-800">
+                      É o valor que cobre todos os seus custos (produto + embalagem + frete + taxas + impostos), mas não dá lucro nem prejuízo.
+                    </p>
+                  </div>
                   <p className="mb-2">
-                    <strong>Por que é importante?</strong>
+                    <strong>Por que é importante conhecer?</strong>
                   </p>
                   <ul className="list-disc list-inside text-sm space-y-1 ml-4 mb-3">
-                    <li>Define seu preço mínimo em promoções</li>
-                    <li>Ajuda a negociar com clientes sem prejuízo</li>
+                    <li>Define seu <strong>preço mínimo</strong> em promoções e liquidações</li>
+                    <li>Ajuda a negociar com clientes sem ter prejuízo</li>
                     <li>Permite liquidar estoque parado sem perder dinheiro</li>
-                    <li>Mostra se um produto é viável no marketplace</li>
+                    <li>Mostra se um produto é viável de vender naquele marketplace</li>
                   </ul>
-                  <p className="text-sm bg-gray-50 p-3 rounded">
-                    <strong>Exemplo:</strong> Se seu ponto de equilíbrio é R$ 80 e você está vendendo por R$ 100, 
-                    sua &ldquo;margem de segurança&rdquo; é de R$ 20. Você pode fazer promoções de até 20% de desconto sem ter prejuízo.
+                  <p className="text-sm bg-gray-50 p-3 rounded mb-2">
+                    <strong>Exemplo prático:</strong> Se seu ponto de equilíbrio é R$ 80 e você vende por R$ 100, 
+                    você tem R$ 20 de &quot;margem de segurança&quot;. Isso significa que pode dar até 20% de desconto (R$ 20) sem ter prejuízo.
+                  </p>
+                  <p className="text-xs text-gray-600 mt-2">
+                    💡 <strong>Dica:</strong> Sempre venda acima do ponto de equilíbrio! Vender abaixo significa operar no prejuízo.
                   </p>
                 </AccordionContent>
               </AccordionItem>

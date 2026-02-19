@@ -121,3 +121,4 @@ class SearchVolumeService:
             logger.error(f"Error getting related queries for '{keyword}': {e}")
             return None
 
+

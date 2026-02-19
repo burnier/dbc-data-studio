@@ -62,3 +62,4 @@ class ScannerConfig:
     br_geo: str = 'BR'
     results_dir: str = 'data/results'
 
+

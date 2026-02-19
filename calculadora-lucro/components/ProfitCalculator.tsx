@@ -23,13 +23,13 @@ const marketplaceOptions: { value: MarketplaceType; label: string; description: 
   },
   { 
     value: 'mercadolivre-classico', 
-    label: 'ML Clássico', 
+    label: 'Mercado Livre Clássico', 
     description: '~12.5% + taxa variável',
     ariaLabel: 'Mercado Livre Clássico - Taxa de 12,5% mais taxa variável'
   },
   { 
     value: 'mercadolivre-premium', 
-    label: 'ML Premium', 
+    label: 'Mercado Livre Premium', 
     description: '~17.5% + taxa variável',
     ariaLabel: 'Mercado Livre Premium - Taxa de 17,5% mais taxa variável'
   },
@@ -42,6 +42,16 @@ const marketplaceOptions: { value: MarketplaceType; label: string; description: 
 ];
 
 export default function ProfitCalculator() {
+  // Store inputs as strings for better UX, convert to numbers for calculations
+  const [inputStrings, setInputStrings] = useState({
+    precoVenda: '100',
+    custoProduto: '40',
+    custoEmbalagem: '5',
+    custoFrete: '15',
+    aliquotaImposto: '0',
+    pixGatewayFee: '0.5',
+  });
+
   const [inputs, setInputs] = useState<CalculatorInputs>({
     precoVenda: 100,
     custoProduto: 40,
@@ -67,6 +77,31 @@ export default function ProfitCalculator() {
       ...prev,
       [field]: value,
     }));
+  };
+
+  const handleNumberInput = (field: keyof CalculatorInputs, inputValue: string) => {
+    // Update the string representation
+    setInputStrings((prev) => ({
+      ...prev,
+      [field]: inputValue,
+    }));
+
+    // Convert to number for calculations
+    if (inputValue === '' || inputValue === '-') {
+      // Allow empty or just minus sign temporarily
+      setInputs((prev) => ({
+        ...prev,
+        [field]: 0,
+      }));
+    } else {
+      const numValue = parseFloat(inputValue);
+      if (!isNaN(numValue)) {
+        setInputs((prev) => ({
+          ...prev,
+          [field]: numValue,
+        }));
+      }
+    }
   };
 
   const handleCopyToClipboard = () => {
@@ -132,8 +167,8 @@ export default function ProfitCalculator() {
                 type="number"
                 step="0.01"
                 min="0"
-                value={inputs.precoVenda}
-                onChange={(e) => handleInputChange('precoVenda', parseFloat(e.target.value) || 0)}
+                value={inputStrings.precoVenda}
+                onChange={(e) => handleNumberInput('precoVenda', e.target.value)}
                 placeholder="100,00"
                 aria-describedby="preco-venda-desc"
               />
@@ -150,8 +185,8 @@ export default function ProfitCalculator() {
                 type="number"
                 step="0.01"
                 min="0"
-                value={inputs.custoProduto}
-                onChange={(e) => handleInputChange('custoProduto', parseFloat(e.target.value) || 0)}
+                value={inputStrings.custoProduto}
+                onChange={(e) => handleNumberInput('custoProduto', e.target.value)}
                 placeholder="40,00"
                 aria-describedby="custo-produto-desc"
               />
@@ -168,8 +203,8 @@ export default function ProfitCalculator() {
                 type="number"
                 step="0.01"
                 min="0"
-                value={inputs.custoEmbalagem}
-                onChange={(e) => handleInputChange('custoEmbalagem', parseFloat(e.target.value) || 0)}
+                value={inputStrings.custoEmbalagem}
+                onChange={(e) => handleNumberInput('custoEmbalagem', e.target.value)}
                 placeholder="5,00"
                 aria-describedby="custo-embalagem-desc"
               />
@@ -186,8 +221,8 @@ export default function ProfitCalculator() {
                 type="number"
                 step="0.01"
                 min="0"
-                value={inputs.custoFrete}
-                onChange={(e) => handleInputChange('custoFrete', parseFloat(e.target.value) || 0)}
+                value={inputStrings.custoFrete}
+                onChange={(e) => handleNumberInput('custoFrete', e.target.value)}
                 placeholder="15,00"
                 aria-describedby="custo-frete-desc"
               />
@@ -218,8 +253,8 @@ export default function ProfitCalculator() {
                 <Input
                   type="number"
                   step="0.1"
-                  value={inputs.aliquotaImposto || 0}
-                  onChange={(e) => handleInputChange('aliquotaImposto', parseFloat(e.target.value) || 0)}
+                  value={inputStrings.aliquotaImposto}
+                  onChange={(e) => handleNumberInput('aliquotaImposto', e.target.value)}
                   placeholder="6,0"
                 />
                 <p className="text-xs text-gray-500 mt-1">
@@ -236,8 +271,8 @@ export default function ProfitCalculator() {
                 <Input
                   type="number"
                   step="0.1"
-                  value={inputs.pixGatewayFee || 0}
-                  onChange={(e) => handleInputChange('pixGatewayFee', parseFloat(e.target.value) || 0)}
+                  value={inputStrings.pixGatewayFee}
+                  onChange={(e) => handleNumberInput('pixGatewayFee', e.target.value)}
                   placeholder="0,5"
                 />
                 <p className="text-xs text-gray-500 mt-1">
@@ -276,10 +311,16 @@ export default function ProfitCalculator() {
               </div>
 
               <div className="p-6 rounded-lg bg-purple-50 border-2 border-purple-200">
-                <div className="text-sm text-gray-600 mb-1">Ponto de Equilíbrio</div>
+                <div className="text-sm text-gray-600 mb-1">
+                  Ponto de Equilíbrio
+                  <span className="text-xs ml-1 text-purple-600">(Preço Mínimo)</span>
+                </div>
                 <div className="text-3xl font-bold text-purple-700">
                   {formatCurrency(result.pontoEquilibrio)}
                 </div>
+                <p className="text-xs text-purple-600 mt-1">
+                  Venda abaixo disso = prejuízo
+                </p>
               </div>
             </div>
 

@@ -194,3 +194,4 @@ class GapScorer:
         
         return f"{category['category']}: {', '.join(insights)}"
 
+
