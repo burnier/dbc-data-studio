@@ -16,6 +16,8 @@ lib64/
 !autostack-bridge/lib/
 # Exception: abigail lib folder should be tracked
 !abigail/lib/
+# Exception: calculadora-lucro lib folder should be tracked
+!calculadora-lucro/lib/
 parts/
 sdist/
 var/
