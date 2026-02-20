@@ -63,3 +63,4 @@ class ScannerConfig:
     results_dir: str = 'data/results'
 
 
+

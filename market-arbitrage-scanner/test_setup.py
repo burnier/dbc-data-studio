@@ -74,3 +74,4 @@ print("3. Scan all keywords: python src/main.py batch data/keywords.txt")
 print("\nFor help: python src/main.py --help\n")
 
 
+
