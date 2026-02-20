@@ -6,9 +6,7 @@ import { eq } from 'drizzle-orm';
 import { PRICING, type Language } from '@/lib/constants';
 
 // Initialize Stripe
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_placeholder', {
-  apiVersion: '2026-01-28.clover',
-});
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_placeholder');
 
 // Price mapping by language (configured via environment variables)
 // See STRIPE_SETUP_GUIDE.md for setup instructions
