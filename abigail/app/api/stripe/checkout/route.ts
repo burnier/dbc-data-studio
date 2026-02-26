@@ -8,13 +8,41 @@ import { PRICING, type Language } from '@/lib/constants';
 // Initialize Stripe
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_placeholder');
 
-// Price mapping by language (configured via environment variables)
-// See STRIPE_SETUP_GUIDE.md for setup instructions
-const PRICE_IDS: Record<Language, string> = {
-  en: process.env.STRIPE_PRICE_USD || 'price_placeholder_usd',
-  de: process.env.STRIPE_PRICE_EUR || 'price_placeholder_eur',
-  pt: process.env.STRIPE_PRICE_BRL || 'price_placeholder_brl',
-  hu: process.env.STRIPE_PRICE_HUF || 'price_placeholder_huf',
+// Stripe locale mapping
+const STRIPE_LOCALE: Record<Language, Stripe.Checkout.SessionCreateParams.Locale> = {
+  en: 'en',
+  de: 'de',
+  pt: 'pt-BR',
+  hu: 'hu',
+};
+
+// Localized product content for the checkout page
+const PRODUCT_CONTENT: Record<Language, { name: string; description: string }> = {
+  en: {
+    name: "Abigail's 36-Card Physical Reading",
+    description: "Full Grand Tableau performed by hand by Abigail, the Hungarian Oracle. Includes a photo of your card spread and a deep personal analysis. Delivered within 24 hours.",
+  },
+  de: {
+    name: "Abigails 36-Karten Physische Legung",
+    description: "Vollständiges Grand Tableau, manuell von Abigail, der Ungarischen Orakelin, durchgeführt. Inklusive Foto Ihrer Kartenlegung und persönlicher Tiefenanalyse. Lieferung innerhalb von 24 Stunden.",
+  },
+  pt: {
+    name: "Ritual de 36 Cartas de Abigail",
+    description: "Grand Tableau completo realizado à mão por Abigail, o Oráculo Húngaro. Inclui foto da sua tiragem e análise pessoal aprofundada. Entregue em até 24 horas.",
+  },
+  hu: {
+    name: "Abigail 36 Kártyás Fizikai Olvasata",
+    description: "Teljes Grand Tableau, amelyet Abigail, a Magyar Jósnő kézzel végez. Tartalmaz egy fotót a kártyavetésről és személyes mélyreható elemzést. 24 órán belül kézbesítve.",
+  },
+};
+
+// Amount in smallest currency unit (cents, centavos, fillér)
+// HUF is a zero-decimal currency in Stripe
+const STRIPE_AMOUNTS: Record<Language, { amount: number; currency: string }> = {
+  en: { amount: 2900,   currency: 'usd' },
+  de: { amount: 2490,   currency: 'eur' },
+  pt: { amount: 12900,  currency: 'brl' },
+  hu: { amount: 8900,   currency: 'huf' },
 };
 
 export async function POST(request: NextRequest) {
@@ -50,30 +78,37 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Use email from parameter or fall back to submission email
     const customerEmail = email || submission[0].email;
+    const lang = (language as Language) in STRIPE_LOCALE ? (language as Language) : 'en';
+    const product = PRODUCT_CONTENT[lang];
+    const pricing = STRIPE_AMOUNTS[lang];
 
-    // Get price ID for language
-    const priceId = PRICE_IDS[language as Language] || PRICE_IDS.en;
-
-    // Create Stripe Checkout Session
+    // Create Stripe Checkout Session with localized content
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       payment_method_types: ['card'],
+      locale: STRIPE_LOCALE[lang],
       line_items: [
         {
-          price: priceId,
           quantity: 1,
+          price_data: {
+            currency: pricing.currency,
+            unit_amount: pricing.amount,
+            product_data: {
+              name: product.name,
+              description: product.description,
+            },
+          },
         },
       ],
       customer_email: customerEmail,
       metadata: {
         submissionId: submissionId.toString(),
-        language,
+        language: lang,
         email: customerEmail,
       },
-      success_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/${language}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/${language}?canceled=true`,
+      success_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/${lang}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/${lang}?canceled=true`,
     });
 
     return NextResponse.json({ 

@@ -60,8 +60,8 @@ export const AI_CONFIG = {
     maxOutputTokens: 2048,
     temperature: 0.7,
     wordCountTarget: {
-        min: 150,
-        max: 180,
+        min: 200,
+        max: 230,
     },
 } as const;
 

@@ -80,7 +80,7 @@ async function generateWithAnthropic(
                     role: 'user',
                     content: `Write the reading for ${userName.split(' ')[0]}.
 
-Stay within the 150-180 word limit.
+Stay within the 200-230 word limit.
 End naturally and completely — do not truncate or cut off mid-sentence.
 
 Provide COMPLETE interpretations for all 3 cards.
@@ -131,13 +131,19 @@ async function generateWithGemini(
                     generationConfig: {
                         temperature: AI_CONFIG.temperature,
                         maxOutputTokens: AI_CONFIG.maxOutputTokens,
-                    }
+                        // Disable internal "thinking" tokens for preview models.
+                        // Without this, gemini-3-flash-preview consumes its token budget
+                        // on reasoning and truncates the output after ~80 tokens.
+                        ...(modelName.includes('preview') || modelName.includes('flash')
+                            ? { thinkingConfig: { thinkingBudget: 0 } }
+                            : {}),
+                    } as any,
                 });
 
                 const systemPrompt = buildSystemPrompt(userName, question, cards, language);
                 const userPrompt = `Write the reading for ${userName.split(' ')[0]}.
 
-Stay within the 150-180 word limit.
+Stay within the 200-230 word limit.
 End naturally and completely — do not truncate or cut off mid-sentence.
 
 Provide COMPLETE interpretations for all 3 cards.
@@ -213,7 +219,7 @@ Write a reading with this structure:
 - Emphasize that Abigail is ready to perform the physical ritual now
 
 CRITICAL RULES:
-1. Stay within the 150-180 word limit.
+1. Stay within the 200-230 word limit.
 2. End naturally and completely — do not truncate or cut off mid-sentence.
 3. All 3 cards must have COMPLETE interpretations. No cutoffs.
 4. The "gap" is not in the cards themselves, but in the PATTERN they form together.
