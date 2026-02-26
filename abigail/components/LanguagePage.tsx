@@ -34,7 +34,6 @@ const translations = {
         heroTitle: "Unlock Your Destiny",
         heroSubtitle: "Ancient Gypsy Card Reading by Abigail",
         heroCta: "Get Your Free Reading",
-        trustBadge: "⭐ Over 10,000 readings • 4.9/5 rating",
         scarcityTitle: "🔥 Only",
         scarcitySlots: "readings left today",
         scarcityUrgency: "Abigail personally reviews each reading",
@@ -42,7 +41,9 @@ const translations = {
         formSubtitle: "Receive your personalized 3-card reading via email in minutes",
         namePlaceholder: "Your Name",
         emailPlaceholder: "Your Email Address",
-        questionPlaceholder: "What question weighs on your heart? (love, career, life path...)",
+        questionPlaceholder: "Describe what's on your heart — the more context you share, the deeper the reading. (e.g. love, a difficult decision, a path you're unsure about...)",
+        questionHint: "💡 Tip: Open questions give richer readings. Instead of \"Will I get the job?\", try \"What energies surround my career path right now?\"",
+        questionMinError: "Please share a little more — the cards need context to speak clearly (min 20 characters)",
         privacyNote: "🔒 Your information is 100% confidential",
         submitButton: "Reveal My Cards →",
         submitting: "Consulting the Cards...",
@@ -54,7 +55,7 @@ const translations = {
         emailSent: "✉️ Reading sent to",
         emailNote: "Check your inbox (and spam folder) in the next few minutes",
         cardsMeaning: "Your Cards Speak Of:",
-        shadowIntro: "Your initial reading is in your inbox. However, the alignment of these specific three cards suggests a deeper influence that digital draws cannot penetrate.",
+        shadowIntro: "Your initial reading is in your inbox. However, the way these three cards align together suggests a deeper pattern that a digital draw alone cannot fully reveal.",
         shadowText: "Abigail is in the studio now, ready to perform the 36-card Physical Ritual for you.",
         urgencyTitle: "⚠️ Abigail Has Sensed Deeper Patterns",
         urgencyText: "in how your cards connect. The surface meanings are just the beginning—",
@@ -63,12 +64,13 @@ const translations = {
         urgencyButton: "Unlock the 36-Card Deep-Dive",
         aboutTitle: "A Lineage of Insight from the Heart of Hungary",
         aboutText1: "Abigail is a certified practitioner of the Hungarian Gypsy Card Institute (Cigánykártya Magyarország). She carries forward a lineage of wisdom that has guided seekers through Eastern Europe for centuries.",
-        aboutText2: "Abigail reads your future not with an algorithm, but with a deck that carries the dust and wisdom of Eastern Europe. Every reading is performed manually, using the specific spreads passed down through Hungarian tradition.",
+        aboutText2: "Your free reading offers a first glimpse of your cards' energy. Abigail's full 36-card ritual is performed entirely by hand — no screens, no shortcuts — using the sacred spreads passed down through the Hungarian tradition.",
         aboutBadge: "✓ Certified by Hungarian Gypsy Card Institute",
         trustTitle: "Why Trust Abigail?",
         trustPoint1: "Authentic Hungarian Tradition",
         trustPoint2: "Institute Certified Expert",
-        trustPoint3: "100% Manual Physical Spreads",
+        trustPoint3: "Premium Reading: 100% Physical",
+        trustPoint3Desc: "Your full 36-card spread is performed by Abigail in person",
         upsellTitle: "Want Deeper Insights?",
         upsellSubtitle: "Upgrade to Abigail's Premium Hand-Drawn Reading",
         upsellFeature1: "🃏 Full 36-card spread (not just 3!)",
@@ -88,19 +90,20 @@ const translations = {
     },
     de: {
         siteName: "Abigail | Das Ungarische Orakel",
-        tagline: "Authentische ungarische Zigeunerkarten-Weisheit",
-        heroTitle: "Entdecken Sie Ihr Schicksal",
+        tagline: "Authentische Weisheit der Ungarischen Zigeunerkarten",
+        heroTitle: "Enthüllen Sie Ihr Schicksal",
         heroSubtitle: "Alte Zigeunerkarten-Lesung von Abigail",
         heroCta: "Kostenlose Lesung Erhalten",
-        trustBadge: "⭐ Über 10.000 Lesungen • 4,9/5 Bewertung",
         scarcityTitle: "🔥 Nur noch",
         scarcitySlots: "Lesungen heute verfügbar",
         scarcityUrgency: "Abigail prüft jede Lesung persönlich",
-        formTitle: "Was Sucht Ihr Herz?",
+        formTitle: "Was Bewegt Ihr Herz?",
         formSubtitle: "Erhalten Sie Ihre personalisierte 3-Karten-Lesung per E-Mail in Minuten",
         namePlaceholder: "Ihr Name",
         emailPlaceholder: "Ihre E-Mail-Adresse",
-        questionPlaceholder: "Welche Frage bewegt Ihr Herz? (Liebe, Karriere, Lebensweg...)",
+        questionPlaceholder: "Beschreiben Sie, was Ihr Herz bewegt — je mehr Kontext Sie teilen, desto tiefer die Lesung. (z.B. Liebe, eine schwierige Entscheidung, ein Lebensweg...)",
+        questionHint: "💡 Tipp: Offene Fragen ergeben reichhaltigere Deutungen. Statt \"Bekomme ich den Job?\" versuchen Sie: \"Welche Energien umgeben meinen Berufsweg gerade?\"",
+        questionMinError: "Bitte teilen Sie etwas mehr mit — die Karten brauchen Kontext (mind. 20 Zeichen)",
         privacyNote: "🔒 Ihre Daten sind 100% vertraulich",
         submitButton: "Meine Karten Enthüllen →",
         submitting: "Karten werden konsultiert...",
@@ -112,21 +115,22 @@ const translations = {
         emailSent: "✉️ Lesung gesendet an",
         emailNote: "Überprüfen Sie Ihren Posteingang (und Spam-Ordner) in den nächsten Minuten",
         cardsMeaning: "Ihre Karten Sprechen Von:",
-        shadowIntro: "Ihre erste Deutung ist in Ihrem Posteingang. Die Ausrichtung dieser drei spezifischen Karten deutet jedoch auf einen tieferen Einfluss hin, den digitale Ziehungen nicht durchdringen können.",
+        shadowIntro: "Ihre erste Deutung ist in Ihrem Posteingang. Die Art, wie diese drei Karten zusammenwirken, deutet auf ein tieferes Muster hin, das ein digitales Ziehen allein nicht vollständig enthüllen kann.",
         shadowText: "Abigail steht jetzt im Studio bereit, um das 36-Karten Physische Ritual für Sie durchzuführen.",
         urgencyTitle: "⚠️ Abigail Hat Tiefere Muster Wahrgenommen",
         urgencyText: "in der Verbindung Ihrer Karten. Die Oberflächenbedeutungen sind nur der Anfang—",
         urgencyDescription: "Fordern Sie ihre persönliche Tiefenanalyse an, um die verborgenen Verbindungen und ihre Bedeutung für Ihren Weg zu enthüllen.",
         urgencyTimer: "Dieses Energiefenster schließt sich in:",
         urgencyButton: "36-Karten Tiefenanalyse Freischalten",
-        aboutTitle: "Eine Linie der Einsicht aus dem Herzen Ungarns",
+        aboutTitle: "Eine Linie der Weisheit aus dem Herzen Ungarns",
         aboutText1: "Abigail ist zertifizierte Praktikerin des Ungarischen Zigeunerkarten-Instituts (Cigánykártya Magyarország). Sie führt eine Linie der Weisheit fort, die seit Jahrhunderten Suchende in Osteuropa geleitet hat.",
-        aboutText2: "Abigail liest Ihre Zukunft nicht mit einem Algorithmus, sondern mit einem Deck, das den Staub und die Weisheit Osteuropas trägt. Jede Lesung wird manuell durchgeführt, mit den spezifischen Legesystemen der ungarischen Tradition.",
+        aboutText2: "Ihre kostenlose Lesung gibt einen ersten Einblick in die Energie Ihrer Karten. Abigails vollständiges 36-Karten-Ritual wird vollständig von Hand durchgeführt — ohne Bildschirme, ohne Abkürzungen — mit den heiligen Legesystemen der ungarischen Tradition.",
         aboutBadge: "✓ Zertifiziert vom Ungarischen Zigeunerkarten-Institut",
         trustTitle: "Warum Abigail Vertrauen?",
         trustPoint1: "Authentische Ungarische Tradition",
         trustPoint2: "Institut-Zertifizierte Expertin",
-        trustPoint3: "100% Manuelle Physische Legungen",
+        trustPoint3: "Premium-Lesung: 100% Physisch",
+        trustPoint3Desc: "Ihre vollständige 36-Karten-Legung wird von Abigail persönlich durchgeführt",
         upsellTitle: "Tiefere Einblicke Gewünscht?",
         upsellSubtitle: "Upgrade auf Abigails Premium-Handgezeichnete Lesung",
         upsellFeature1: "🃏 Vollständige 36-Karten-Legung (nicht nur 3!)",
@@ -137,78 +141,79 @@ const translations = {
         upsellCta: "Vollständige Lesung Freischalten →",
         upsellGuarantee: "100% Geld-zurück-Garantie",
         testimonialsTitle: "Was Andere Sagen",
-        testimonial1: '"Abigails Lesung gab mir die Klarheit, die ich verzweifelt brauchte. Jeden Cent wert!"',
+        testimonial1: '"Abigails Lesung gab mir die Klarheit, die ich so dringend brauchte. Jeden Cent wert!"',
         testimonial1Author: "— Maria, Wien",
         testimonial2: '"Unheimlich genau. Die Karten wussten Dinge, die ich niemandem erzählt hatte."',
         testimonial2Author: "— Thomas, Berlin",
-        testimonial3: '"Hat meine Perspektive auf eine schwierige Entscheidung verändert. Sehr empfehlenswert!"',
+        testimonial3: '"Hat meine Sichtweise auf eine schwierige Entscheidung verändert. Sehr empfehlenswert!"',
         testimonial3Author: "— Sofia, Budapest",
     },
     pt: {
-        siteName: "Abigail | A Oráculo Húngara",
+        siteName: "Abigail | O Oráculo Húngaro",
         tagline: "Sabedoria Autêntica das Cartas Ciganas Húngaras",
         heroTitle: "Desvende Seu Destino",
-        heroSubtitle: "Leitura Antiga de Cartas Ciganas por Abigail",
+        heroSubtitle: "Leitura Ancestral de Cartas Ciganas por Abigail",
         heroCta: "Obter Minha Leitura Grátis",
-        trustBadge: "⭐ Mais de 10.000 leituras • 4,9/5 avaliação",
         scarcityTitle: "🔥 Apenas",
         scarcitySlots: "leituras restantes hoje",
         scarcityUrgency: "Abigail revisa pessoalmente cada leitura",
         formTitle: "O Que Seu Coração Busca?",
         formSubtitle: "Receba sua leitura personalizada de 3 cartas por e-mail em minutos",
         namePlaceholder: "Seu Nome",
-        emailPlaceholder: "Seu Endereço de E-mail",
-        questionPlaceholder: "Qual pergunta pesa em seu coração? (amor, carreira, caminho de vida...)",
+        emailPlaceholder: "Seu E-mail",
+        questionPlaceholder: "Descreva o que pesa no seu coração — quanto mais contexto você compartilhar, mais profunda será a leitura. (ex: amor, uma decisão difícil, um caminho incerto...)",
+        questionHint: "💡 Dica: Perguntas abertas geram leituras mais ricas. Em vez de \"Vou conseguir o emprego?\", tente: \"Que energias envolvem meu caminho profissional agora?\"",
+        questionMinError: "Por favor, compartilhe um pouco mais — as cartas precisam de contexto para falar (mín. 20 caracteres)",
         privacyNote: "🔒 Suas informações são 100% confidenciais",
         submitButton: "Revelar Minhas Cartas →",
         submitting: "Consultando as Cartas...",
-        shufflingTitle: "Abigail Está Embaralhando o Baralho Antigo...",
+        shufflingTitle: "Abigail Está Embaralhando o Baralho Ancestral...",
         shufflingText: "As cartas estão se alinhando com sua energia...",
-        revealTitle: "Suas 3 Cartas Foram Puxadas!",
+        revealTitle: "Suas 3 Cartas Foram Reveladas!",
         revealSubtitle: "Verifique seu e-mail para a leitura completa",
-        revealText: "Abigail puxou suas 3 cartas sagradas e está preparando sua leitura personalizada.",
+        revealText: "Abigail revelou suas 3 cartas sagradas e está preparando sua leitura personalizada.",
         emailSent: "✉️ Leitura enviada para",
-        emailNote: "Verifique sua caixa de entrada (e pasta de spam) nos próximos minutos",
-        cardsMeaning: "Suas Cartas Falam De:",
-        shadowIntro: "Sua leitura inicial está em sua caixa de entrada. No entanto, o alinhamento dessas três cartas específicas sugere uma influência mais profunda que os sorteios digitais não podem penetrar.",
+        emailNote: "Verifique sua caixa de entrada (e a pasta de spam) nos próximos minutos",
+        cardsMeaning: "Suas Cartas Revelam:",
+        shadowIntro: "Sua leitura inicial está na sua caixa de entrada. Porém, a forma como essas três cartas se combinam sugere um padrão mais profundo que uma tiragem digital sozinha não consegue revelar completamente.",
         shadowText: "Abigail está no estúdio agora, pronta para realizar o Ritual Físico de 36 cartas para você.",
         urgencyTitle: "⚠️ Abigail Percebeu Padrões Mais Profundos",
         urgencyText: "na forma como suas cartas se conectam. Os significados superficiais são apenas o começo—",
         urgencyDescription: "Solicite sua análise profunda pessoal para revelar as conexões ocultas e o que elas significam para seu caminho.",
         urgencyTimer: "Esta janela de energia fecha em:",
         urgencyButton: "Desbloquear Análise Profunda de 36 Cartas",
-        aboutTitle: "Uma Linhagem de Percepção do Coração da Hungria",
-        aboutText1: "Abigail é praticante certificada do Instituto Húngaro de Cartas Ciganas (Cigánykártya Magyarország). Ela mantém uma linhagem de sabedoria que tem guiado buscadores através do Leste Europeu por séculos.",
-        aboutText2: "Abigail lê seu futuro não com um algoritmo, mas com um baralho que carrega o pó e a sabedoria do Leste Europeu. Cada leitura é realizada manualmente, usando os métodos específicos transmitidos pela tradição húngara.",
+        aboutTitle: "Uma Linhagem de Sabedoria do Coração da Hungria",
+        aboutText1: "Abigail é praticante certificada do Instituto Húngaro de Cartas Ciganas (Cigánykártya Magyarország). Ela mantém uma linhagem de sabedoria que tem guiado buscadores pelo Leste Europeu por séculos.",
+        aboutText2: "Sua leitura gratuita oferece um primeiro vislumbre da energia das suas cartas. O ritual completo de 36 cartas de Abigail é realizado inteiramente à mão — sem telas, sem atalhos — usando os jogos sagrados transmitidos pela tradição húngara.",
         aboutBadge: "✓ Certificada pelo Instituto Húngaro de Cartas Ciganas",
         trustTitle: "Por Que Confiar em Abigail?",
         trustPoint1: "Tradição Húngara Autêntica",
         trustPoint2: "Especialista Certificada por Instituto",
-        trustPoint3: "100% Leituras Físicas Manuais",
-        upsellTitle: "Quer Insights Mais Profundos?",
-        upsellSubtitle: "Atualize para a Leitura Premium Desenhada à Mão de Abigail",
-        upsellFeature1: "🃏 Espalhamento completo de 36 cartas (não apenas 3!)",
-        upsellFeature2: "📸 Foto do espalhamento físico de cartas do estúdio de Abigail",
+        trustPoint3: "Leitura Premium: 100% Física",
+        trustPoint3Desc: "Sua tiragem completa de 36 cartas é realizada pessoalmente por Abigail",
+        upsellTitle: "Quer Uma Visão Mais Profunda?",
+        upsellSubtitle: "Faça o Upgrade para a Leitura Premium de Abigail",
+        upsellFeature1: "🃏 Tiragem completa de 36 cartas (não apenas 3!)",
+        upsellFeature2: "📸 Foto da tiragem física do estúdio de Abigail",
         upsellFeature3: "📝 Análise aprofundada (3x mais longa que a leitura gratuita)",
         upsellFeature4: "⚡ Entrega prioritária em até 24 horas",
         upsellPrice: "Apenas R$ 129,00",
         upsellCta: "Desbloquear Leitura Completa →",
-        upsellGuarantee: "Garantia de Devolução de 100% do Dinheiro",
-        testimonialsTitle: "O Que Os Outros Estão Dizendo",
-        testimonial1: '"A leitura de Abigail me deu a clareza que eu precisava desesperadamente. Vale cada centavo!"',
+        upsellGuarantee: "Garantia de Reembolso Total",
+        testimonialsTitle: "O Que Dizem Nossos Clientes",
+        testimonial1: '"A leitura de Abigail me deu a clareza que eu tanto precisava. Vale cada centavo!"',
         testimonial1Author: "— Maria, Viena",
-        testimonial2: '"Assustadoramente precisa. As cartas sabiam coisas que eu não havia contado a ninguém."',
+        testimonial2: '"Surpreendentemente precisa. As cartas sabiam coisas que eu não havia contado a ninguém."',
         testimonial2Author: "— Thomas, Berlim",
-        testimonial3: '"Mudou minha perspectiva sobre uma decisão difícil. Altamente recomendado!"',
+        testimonial3: '"Mudou minha perspectiva sobre uma decisão difícil. Recomendo muito!"',
         testimonial3Author: "— Sofia, Budapeste",
     },
     hu: {
         siteName: "Abigail | A Magyar Jósnő",
         tagline: "Hiteles Magyar Cigánykártya Bölcsesség",
-        heroTitle: "Fedezze Fel Sorsát",
+        heroTitle: "Tárja Fel Sorsát",
         heroSubtitle: "Ősi Cigánykártya Olvasás Abigailtől",
         heroCta: "Ingyenes Olvasat Kérése",
-        trustBadge: "⭐ Több mint 10.000 olvasat • 4,9/5 értékelés",
         scarcityTitle: "🔥 Csak",
         scarcitySlots: "olvasat maradt ma",
         scarcityUrgency: "Abigail személyesen áttekint minden olvasatot",
@@ -216,7 +221,9 @@ const translations = {
         formSubtitle: "Kapja meg személyre szabott 3 kártyás olvasatát e-mailben perceken belül",
         namePlaceholder: "Az Ön Neve",
         emailPlaceholder: "Az Ön E-mail Címe",
-        questionPlaceholder: "Milyen kérdés nyomja a szívét? (szerelem, karrier, életút...)",
+        questionPlaceholder: "Írja le, mi nyomja a szívét — minél több összefüggést oszt meg, annál mélyebb az olvasat. (pl. szerelem, egy nehéz döntés, bizonytalan életút...)",
+        questionHint: "💡 Tipp: A nyílt kérdések gazdagabb olvasatot adnak. A »Megkapom az állást?« helyett próbálja: »Milyen energiák veszik körül jelenleg az életutamat?«",
+        questionMinError: "Kérem, osszon meg egy kicsit többet — a kártyáknak összefüggésre van szükségük (min. 20 karakter)",
         privacyNote: "🔒 Az Ön adatai 100%-ban bizalmasak",
         submitButton: "Kártyáim Felfedése →",
         submitting: "Kártyák Konzultálása...",
@@ -227,37 +234,38 @@ const translations = {
         revealText: "Abigail kihúzta 3 szent kártyáját és készíti személyre szabott olvasatát.",
         emailSent: "✉️ Olvasat elküldve ide:",
         emailNote: "Ellenőrizze postafiókját (és spam mappáját) a következő percekben",
-        cardsMeaning: "Kártyái Erről Beszélnek:",
-        shadowIntro: "Kezdeti olvasata a postaládájában van. Azonban ennek a három konkrét kártyának az összehangolása mélyebb befolyásra utal, amelyet a digitális húzások nem tudnak áthatni.",
+        cardsMeaning: "Kártyái Erről Szólnak:",
+        shadowIntro: "Az első olvasata a postaládájában van. Azonban az a mód, ahogyan ez a három kártya együtt hat, egy mélyebb mintára utal, amelyet egy digitális húzás önmagában nem tud teljesen feltárni.",
         shadowText: "Abigail most a műteremben áll készen, hogy elvégezze az Ön számára a 36 kártyás Fizikai Rituálét.",
         urgencyTitle: "⚠️ Abigail Mélyebb Mintákat Észlelt",
         urgencyText: "abban, ahogyan kártyái kapcsolódnak egymáshoz. A felszíni jelentések csak a kezdet—",
         urgencyDescription: "Kérje személyes mélyreható elemzését, hogy feltárja a rejtett kapcsolatokat és azok jelentését az Ön útja számára.",
         urgencyTimer: "Ez az energiaablak bezárul:",
         urgencyButton: "36 Kártyás Mély Elemzés Feloldása",
-        aboutTitle: "Belátás Leszármazása Magyarország Szívéből",
+        aboutTitle: "Bölcsesség Leszármazása Magyarország Szívéből",
         aboutText1: "Abigail a Magyar Cigánykártya Intézet (Cigánykártya Magyarország) okleveles gyakorlója. Olyan bölcsesség leszármazását viszi tovább, amely évszázadokon át vezette a keresőket Kelet-Európán keresztül.",
-        aboutText2: "Abigail nem algoritmussal olvassa a jövőjét, hanem egy pakli kártyával, amely Kelet-Európa porát és bölcsességét hordozza. Minden olvasat manuálisan történik, a magyar hagyomány által átadott sajátos vetési módszerekkel.",
+        aboutText2: "Az ingyenes olvasat megadja az első betekintést kártyáinak energiájába. Abigail teljes 36 kártyás rituáléja teljes egészében kézzel történik — képernyők és rövidítések nélkül — a magyar hagyomány által átadott szent vetési módszerekkel.",
         aboutBadge: "✓ Magyar Cigánykártya Intézet által hitelesítve",
         trustTitle: "Miért Bízzon Abigailben?",
         trustPoint1: "Autentikus Magyar Hagyomány",
         trustPoint2: "Intézeti Hitelesítésű Szakértő",
-        trustPoint3: "100% Manuális Fizikai Vetések",
+        trustPoint3: "Prémium Olvasat: 100% Fizikai",
+        trustPoint3Desc: "Az Ön teljes 36 kártyás vetését Abigail személyesen végzi",
         upsellTitle: "Mélyebb Betekintést Szeretne?",
-        upsellSubtitle: "Váltson Abigail Prémium Kézzel Rajzolt Olvasatára",
+        upsellSubtitle: "Váltson Abigail Prémium Kézzel Végzett Olvasatára",
         upsellFeature1: "🃏 Teljes 36 kártyás vetés (nem csak 3!)",
         upsellFeature2: "📸 Fizikai kártyavetés fotó Abigail stúdiójából",
         upsellFeature3: "📝 Mélyreható elemzés (3x hosszabb, mint az ingyenes olvasat)",
-        upsellFeature4: "⚡ Prioritásos kiszállítás 24 órán belül",
+        upsellFeature4: "⚡ Prioritásos kézbesítés 24 órán belül",
         upsellPrice: "Csak 8.900 Ft",
         upsellCta: "Teljes Olvasat Feloldása →",
-        upsellGuarantee: "100%-os Pénzvisszafizetési Garancia",
+        upsellGuarantee: "100%-os Visszafizetési Garancia",
         testimonialsTitle: "Mit Mondanak Mások",
-        testimonial1: '"Abigail olvasata megadta nekem a világosságot, amire kétségbeesetten szükségem volt. Megérte minden fillért!"',
+        testimonial1: '"Abigail olvasata megadta nekem a világosságot, amire annyira szükségem volt. Megérte!"',
         testimonial1Author: "— Maria, Bécs",
-        testimonial2: '"Hátborzongatóan pontos. A kártyák olyan dolgokat tudtak, amiket senkinek sem mondtam el."',
+        testimonial2: '"Megdöbbentően pontos. A kártyák olyan dolgokat tudtak, amiket senkinek sem mondtam el."',
         testimonial2Author: "— Thomas, Berlin",
-        testimonial3: '"Megváltoztatta a perspektívámat egy nehéz döntésről. Nagyon ajánlom!"',
+        testimonial3: '"Új szemszögből láttam egy nehéz döntést. Nagyon ajánlom!"',
         testimonial3Author: "— Sofia, Budapest",
     },
 };
@@ -283,15 +291,14 @@ export function LanguagePage({ language }: LandingPageProps) {
     // Handle email upgrade link
     useEffect(() => {
         if (upgradeSubmissionId) {
-            // User clicked from email - trigger Stripe checkout immediately
             const id = parseInt(upgradeSubmissionId, 10);
             if (!isNaN(id)) {
-                // We don't have email from URL, but Stripe checkout will retrieve it from DB
+                setIsLoading(true);
                 redirectToCheckout({
                     submissionId: id,
                     language,
-                    email: '', // Email will be fetched in checkout route from DB
-                });
+                    email: '',
+                }).catch(() => setIsLoading(false));
             }
         }
     }, [upgradeSubmissionId, language]);
@@ -503,14 +510,6 @@ export function LanguagePage({ language }: LandingPageProps) {
                                 >
                                     {t.heroSubtitle}
                                 </motion.p>
-                                <motion.p
-                                    className="text-bone-white/80 text-lg"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ delay: 0.8 }}
-                                >
-                                    {t.trustBadge}
-                                </motion.p>
                             </div>
 
                             {/* Form Card - ONLY element with heavy styling for focus */}
@@ -556,13 +555,14 @@ export function LanguagePage({ language }: LandingPageProps) {
                                         <textarea
                                             {...register('question', {
                                                 required: 'Question is required',
-                                                minLength: { value: 10, message: 'Please be more specific (min 10 characters)' }
+                                                minLength: { value: 20, message: t.questionMinError }
                                             })}
                                             placeholder={t.questionPlaceholder}
                                             rows={4}
                                             className="w-full px-5 py-4 bg-charcoal/50 border-2 border-purple-light/20 rounded-xl text-bone-white placeholder-purple-light/40 focus:outline-none focus:border-purple-main resize-none transition-all text-base"
                                         />
                                         {errors.question && <p className="text-red-400 text-sm mt-2">{errors.question.message}</p>}
+                                        <p className="text-purple-light/50 text-xs mt-2 leading-relaxed">{t.questionHint}</p>
                                     </div>
 
                                     <p className="text-sm text-purple-light/70 text-center">{t.privacyNote}</p>
@@ -624,7 +624,7 @@ export function LanguagePage({ language }: LandingPageProps) {
                                     <div className="bg-purple-dark/20 border border-purple-light/20 rounded-xl p-6">
                                         <div className="text-4xl mb-3">✋</div>
                                         <h4 className="text-purple-light font-semibold mb-2">{t.trustPoint3}</h4>
-                                        <p className="text-sm text-bone-white/70">No algorithms, pure tradition</p>
+                                        <p className="text-sm text-bone-white/70">{t.trustPoint3Desc}</p>
                                     </div>
                                 </div>
                             </div>
@@ -763,13 +763,14 @@ export function LanguagePage({ language }: LandingPageProps) {
                                         <div className="text-center">
                                             <button
                                                 onClick={async () => {
+                                                    setIsLoading(true);
                                                     try {
-                                                        setIsLoading(true);
                                                         await redirectToCheckout({
                                                             submissionId,
                                                             language,
                                                             email: userEmail,
                                                         });
+                                                        // Keep isLoading true — page will navigate away
                                                     } catch (error) {
                                                         setError('Failed to start checkout. Please try again.');
                                                         setIsLoading(false);
