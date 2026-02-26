@@ -19,8 +19,8 @@ export const metadata = {
   description: "Certified Hungarian Gypsy Card readings by Abigail. Ancient wisdom from the heart of Eastern Europe.",
   keywords: "Hungarian oracle, gypsy cards, tarot reading, authentic card reading, Hungarian tradition",
   icons: {
-    icon: "/logo.png",
-    apple: "/logo.png",
+    icon: "/favicon.png",
+    apple: "/favicon.png",
   },
 };
 
