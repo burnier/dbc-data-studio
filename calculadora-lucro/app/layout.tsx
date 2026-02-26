@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Script from 'next/script';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -9,9 +10,9 @@ export const metadata: Metadata = {
   title: 'Calculadora de Lucro Shopee e Mercado Livre 2026 | Taxas Atualizadas Março 2026',
   description: 'Calculadora gratuita de lucro para vendedores brasileiros. Calcule taxas Shopee 2026 (20%), Mercado Livre Clássico/Premium e Pix. Simulador de lucro marketplace com taxas atualizadas de Março 2026. Ideal para MEI e Simples Nacional.',
   icons: {
-    icon: '/dbc-calculadora.jpg',
-    shortcut: '/dbc-calculadora.jpg',
-    apple: '/dbc-calculadora.jpg',
+    icon: '/dbc-calculadora.png',
+    shortcut: '/dbc-calculadora.png',
+    apple: '/dbc-calculadora.png',
   },
   keywords: [
     'calculadora de lucro shopee 2026',
@@ -41,7 +42,7 @@ export const metadata: Metadata = {
     siteName: 'Calculadora de Lucro DBC',
     images: [
       {
-        url: '/dbc-calculadora.jpg',
+        url: '/dbc-calculadora.png',
         width: 1200,
         height: 1200,
         alt: 'Calculadora de Lucro DBC - Logo',
@@ -137,7 +138,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
