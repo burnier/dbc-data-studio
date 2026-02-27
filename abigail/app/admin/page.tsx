@@ -50,7 +50,8 @@ export default function AdminDashboard() {
             sessionStorage.setItem('admin_authenticated', 'true');
             loadData();
         } else {
-            setError('Invalid password');
+            const data = await response.json().catch(() => ({}));
+            setError(data.error || 'Invalid password');
         }
     };
 
