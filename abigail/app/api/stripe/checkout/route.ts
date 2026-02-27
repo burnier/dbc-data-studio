@@ -6,7 +6,8 @@ import { eq } from 'drizzle-orm';
 import { PRICING, type Language } from '@/lib/constants';
 
 // Initialize Stripe
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_placeholder');
+if (!process.env.STRIPE_SECRET_KEY) throw new Error('STRIPE_SECRET_KEY is not set');
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // Stripe locale mapping
 const STRIPE_LOCALE: Record<Language, Stripe.Checkout.SessionCreateParams.Locale> = {

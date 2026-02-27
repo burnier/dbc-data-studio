@@ -8,8 +8,13 @@ import { NextResponse } from 'next/server';
 const COOKIE_NAME = 'admin_session';
 
 async function computeToken(): Promise<string> {
-  const secret = process.env.ADMIN_SECRET || 'admin-fallback-secret';
-  const password = process.env.ADMIN_PASSWORD || 'changeme123';
+  const secret = process.env.ADMIN_SECRET;
+  const password = process.env.ADMIN_PASSWORD;
+
+  if (!secret || !password) {
+    throw new Error('ADMIN_SECRET and ADMIN_PASSWORD must be set as environment variables');
+  }
+
   const combined = `${password}:${secret}`;
 
   const key = await crypto.subtle.importKey(
