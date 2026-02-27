@@ -45,6 +45,9 @@ const translations = {
         questionHint: "💡 Tip: Open questions give richer readings. Instead of \"Will I get the job?\", try \"What energies surround my career path right now?\"",
         questionMinError: "Please share a little more — the cards need context to speak clearly (min 20 characters)",
         privacyNote: "🔒 Your information is 100% confidential",
+        legalPrivacy: "Privacy Policy",
+        legalTerms: "Terms of Service",
+        legalRefund: "Refund Policy",
         submitButton: "Reveal My Cards →",
         submitting: "Consulting the Cards...",
         shufflingTitle: "Abigail is Shuffling the Ancient Deck...",
@@ -105,6 +108,9 @@ const translations = {
         questionHint: "💡 Tipp: Offene Fragen ergeben reichhaltigere Deutungen. Statt \"Bekomme ich den Job?\" versuchen Sie: \"Welche Energien umgeben meinen Berufsweg gerade?\"",
         questionMinError: "Bitte teilen Sie etwas mehr mit — die Karten brauchen Kontext (mind. 20 Zeichen)",
         privacyNote: "🔒 Ihre Daten sind 100% vertraulich",
+        legalPrivacy: "Datenschutzrichtlinie",
+        legalTerms: "Nutzungsbedingungen",
+        legalRefund: "Rückerstattungsrichtlinie",
         submitButton: "Meine Karten Enthüllen →",
         submitting: "Karten werden konsultiert...",
         shufflingTitle: "Abigail Mischt das Uralte Deck...",
@@ -165,6 +171,9 @@ const translations = {
         questionHint: "💡 Dica: Perguntas abertas geram leituras mais ricas. Em vez de \"Vou conseguir o emprego?\", tente: \"Que energias envolvem meu caminho profissional agora?\"",
         questionMinError: "Por favor, compartilhe um pouco mais — as cartas precisam de contexto para falar (mín. 20 caracteres)",
         privacyNote: "🔒 Suas informações são 100% confidenciais",
+        legalPrivacy: "Política de Privacidade",
+        legalTerms: "Termos de Serviço",
+        legalRefund: "Política de Reembolso",
         submitButton: "Revelar Minhas Cartas →",
         submitting: "Consultando as Cartas...",
         shufflingTitle: "Abigail Está Embaralhando o Baralho Ancestral...",
@@ -225,6 +234,9 @@ const translations = {
         questionHint: "💡 Tipp: A nyílt kérdések gazdagabb olvasatot adnak. A »Megkapom az állást?« helyett próbálja: »Milyen energiák veszik körül jelenleg az életutamat?«",
         questionMinError: "Kérem, osszon meg egy kicsit többet — a kártyáknak összefüggésre van szükségük (min. 20 karakter)",
         privacyNote: "🔒 Az Ön adatai 100%-ban bizalmasak",
+        legalPrivacy: "Adatvédelmi Irányelvek",
+        legalTerms: "Szolgáltatási Feltételek",
+        legalRefund: "Visszatérítési Szabályzat",
         submitButton: "Kártyáim Felfedése →",
         submitting: "Kártyák Konzultálása...",
         shufflingTitle: "Abigail Keveri az Ősi Paklit...",
@@ -870,11 +882,11 @@ export function LanguagePage({ language }: LandingPageProps) {
 
             {/* Footer with legal links */}
             <footer className="mt-16 pb-8 text-center text-xs text-bone-white/30 space-x-4">
-                <a href="/privacy" className="hover:text-bone-white/60 transition-colors">Privacy Policy</a>
+                <a href={`/${language}/privacy`} className="hover:text-bone-white/60 transition-colors">{t.legalPrivacy}</a>
                 <span>·</span>
-                <a href="/terms" className="hover:text-bone-white/60 transition-colors">Terms of Service</a>
+                <a href={`/${language}/terms`} className="hover:text-bone-white/60 transition-colors">{t.legalTerms}</a>
                 <span>·</span>
-                <a href="/refund" className="hover:text-bone-white/60 transition-colors">Refund Policy</a>
+                <a href={`/${language}/refund`} className="hover:text-bone-white/60 transition-colors">{t.legalRefund}</a>
             </footer>
         </div>
     );
