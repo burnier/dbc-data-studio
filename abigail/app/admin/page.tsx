@@ -56,6 +56,12 @@ export default function AdminDashboard() {
 
     const loadData = async () => {
         const response = await fetch('/api/admin/submissions');
+        if (response.status === 401) {
+            // Session expired — force re-login
+            setIsAuthenticated(false);
+            sessionStorage.removeItem('admin_authenticated');
+            return;
+        }
         if (response.ok) {
             const data = await response.json();
             setSubmissions(data.submissions);
@@ -71,7 +77,8 @@ export default function AdminDashboard() {
         }
     }, []);
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
+        await fetch('/api/admin/auth', { method: 'DELETE' });
         setIsAuthenticated(false);
         sessionStorage.removeItem('admin_authenticated');
     };

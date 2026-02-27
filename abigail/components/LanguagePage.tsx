@@ -867,6 +867,15 @@ export function LanguagePage({ language }: LandingPageProps) {
                     )}
                 </AnimatePresence>
             </div>
+
+            {/* Footer with legal links */}
+            <footer className="mt-16 pb-8 text-center text-xs text-bone-white/30 space-x-4">
+                <a href="/privacy" className="hover:text-bone-white/60 transition-colors">Privacy Policy</a>
+                <span>·</span>
+                <a href="/terms" className="hover:text-bone-white/60 transition-colors">Terms of Service</a>
+                <span>·</span>
+                <a href="/refund" className="hover:text-bone-white/60 transition-colors">Refund Policy</a>
+            </footer>
         </div>
     );
 }

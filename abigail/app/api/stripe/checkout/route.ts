@@ -102,6 +102,9 @@ export async function POST(request: NextRequest) {
         },
       ],
       customer_email: customerEmail,
+      payment_intent_data: {
+        receipt_email: customerEmail,
+      },
       metadata: {
         submissionId: submissionId.toString(),
         language: lang,

@@ -529,4 +529,86 @@ export async function sendPremiumReadingEmail({
   }
 }
 
+/**
+ * Send payment confirmation email after successful Stripe checkout.
+ */
+interface SendPaymentConfirmationEmailParams {
+  toEmail: string;
+  toName: string;
+  language: string;
+}
 
+export async function sendPaymentConfirmationEmail({
+  toEmail,
+  toName,
+  language,
+}: SendPaymentConfirmationEmailParams): Promise<boolean> {
+  if (!resend) {
+    console.log(`\n📧 [EMAIL DEV MODE] Would send payment confirmation to: ${toEmail}`);
+    return false;
+  }
+
+  const firstName = toName.split(' ')[0];
+
+  const translations: Record<string, { subject: string; heading: string; body: string; footer: string }> = {
+    en: {
+      subject: `Payment confirmed, ${firstName} — Abigail is preparing your reading`,
+      heading: 'Payment Confirmed ✨',
+      body: `Dear ${firstName},<br><br>Your payment has been received. Abigail has been notified and will personally perform your full 36-card spread within <strong>24 hours</strong>.<br><br>You will receive your complete reading and a photo of your physical card layout by email as soon as it is ready.<br><br>Thank you for trusting Abigail with your journey.`,
+      footer: '© 2025 Abigail | The Hungarian Oracle. All rights reserved.',
+    },
+    de: {
+      subject: `Zahlung bestätigt, ${firstName} — Abigail bereitet Ihre Deutung vor`,
+      heading: 'Zahlung bestätigt ✨',
+      body: `Liebe/r ${firstName},<br><br>Ihre Zahlung wurde empfangen. Abigail wurde benachrichtigt und wird Ihre vollständige 36-Karten-Legung persönlich innerhalb von <strong>24 Stunden</strong> durchführen.<br><br>Sie erhalten Ihre vollständige Deutung und ein Foto Ihrer physischen Karten-Legung per E-Mail, sobald sie fertig ist.<br><br>Vielen Dank, dass Sie Abigail Ihr Vertrauen schenken.`,
+      footer: '© 2025 Abigail | Das Ungarische Orakel. Alle Rechte vorbehalten.',
+    },
+    pt: {
+      subject: `Pagamento confirmado, ${firstName} — Abigail está preparando sua tiragem`,
+      heading: 'Pagamento Confirmado ✨',
+      body: `Querido(a) ${firstName},<br><br>Seu pagamento foi recebido. Abigail foi notificada e irá realizar pessoalmente sua tiragem completa de 36 cartas em até <strong>24 horas</strong>.<br><br>Você receberá sua leitura completa e uma foto da sua tiragem física por e-mail assim que estiver pronta.<br><br>Obrigada por confiar sua jornada a Abigail.`,
+      footer: '© 2025 Abigail | O Oráculo Húngaro. Todos os direitos reservados.',
+    },
+    hu: {
+      subject: `Fizetés megerősítve, ${firstName} — Abigail készíti az olvasást`,
+      heading: 'Fizetés megerősítve ✨',
+      body: `Kedves ${firstName}!<br><br>Fizetése megérkezett. Abigail értesítést kapott, és személyesen elvégzi az Ön teljes 36 lapos kártyavetését <strong>24 órán belül</strong>.<br><br>A teljes olvasását és a fizikai kártyavetéséről készült fényképet e-mailben kapja meg, amint elkészül.<br><br>Köszönjük, hogy Abigailre bízta útját.`,
+      footer: '© 2025 Abigail | A Magyar Jós. Minden jog fenntartva.',
+    },
+  };
+
+  const t = translations[language] || translations.en;
+
+  const html = `
+    <!DOCTYPE html>
+    <html>
+    <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head>
+    <body style="margin:0;padding:0;background:#1a1a2e;font-family:Georgia,serif;">
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:#1a1a2e;">
+        <tr><td align="center" style="padding:40px 20px;">
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width:560px;background:#2a1a4e;border-radius:12px;overflow:hidden;">
+            <tr><td style="padding:32px 32px 24px;text-align:center;background:linear-gradient(135deg,#b38cd9,#674BA9);">
+              <h1 style="margin:0;color:#f5f5dc;font-size:22px;font-family:Georgia,serif;">${t.heading}</h1>
+            </td></tr>
+            <tr><td style="padding:32px;color:#f5f5dc;font-size:15px;line-height:1.7;">
+              <p style="margin:0;">${t.body}</p>
+            </td></tr>
+            <tr><td style="padding:16px 32px 32px;text-align:center;color:#b38cd9;font-size:12px;">
+              <p style="margin:0;">${t.footer}</p>
+            </td></tr>
+          </table>
+        </td></tr>
+      </table>
+    </body>
+    </html>
+  `;
+
+  try {
+    await resend.emails.send({ from: EMAIL_FROM, to: toEmail, subject: t.subject, html });
+    console.log(`✅ Payment confirmation email sent to ${toEmail}`);
+    return true;
+  } catch (error) {
+    console.error('❌ Error sending payment confirmation email:', error);
+    return false;
+  }
+}
