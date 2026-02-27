@@ -3,7 +3,7 @@ import Stripe from 'stripe';
 import { db } from '@/lib/db';
 import { submissions } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
-import { sendPaymentConfirmationEmail } from '@/lib/email';
+import { sendPaymentConfirmationEmail, sendAdminNotificationEmail } from '@/lib/email';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
@@ -77,6 +77,16 @@ export async function POST(request: NextRequest) {
         toEmail: email,
         toName: submissionData?.name || '',
         language,
+      });
+
+      // Notify Abigail that a new order needs fulfillment
+      await sendAdminNotificationEmail({
+        customerName: submissionData?.name || 'Unknown',
+        customerEmail: email,
+        language,
+        amountPaid: session.amount_total || 0,
+        currency: (session.currency || 'usd').toUpperCase(),
+        submissionId,
       });
       if (!emailSent) {
         console.warn(`⚠️  Confirmation email failed for ${email} — order is paid and recorded`);

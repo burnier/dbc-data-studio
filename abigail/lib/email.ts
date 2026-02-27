@@ -372,33 +372,46 @@ export async function sendPremiumReadingEmail({
 
   const t = translations[language as keyof typeof translations] || translations.en;
 
-  // Prepare photo attachment if provided
+  // Prepare photo for email — supports Vercel Blob URLs and local /tmp paths
   let photoAttachment = null;
   let photoEmbedHtml = '';
-  
+
   if (photoPath) {
     try {
-      // Photo is in /tmp from the fulfill API
-      const photoBuffer = readFileSync(photoPath);
-      const photoExt = photoPath.split('.').pop() || 'jpg';
-      
-      photoAttachment = {
-        filename: `spread-photo.${photoExt}`,
-        content: photoBuffer,
-        cid: 'spread-photo',
-      };
+      const isUrl = photoPath.startsWith('https://');
 
-      photoEmbedHtml = `
-        <div style="margin: 30px 0; text-align: center;">
-          <h3 style="color: #D8B4FE; font-family: serif; font-size: 18px; margin-bottom: 15px;">
-            ${t.photoTitle}
-          </h3>
-          <img src="cid:spread-photo" alt="Your card spread" style="max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);" />
-        </div>
-      `;
+      if (isUrl) {
+        // Vercel Blob URL — embed directly as <img src>
+        photoEmbedHtml = `
+          <div style="margin: 30px 0; text-align: center;">
+            <h3 style="color: #D8B4FE; font-family: serif; font-size: 18px; margin-bottom: 15px;">
+              ${t.photoTitle}
+            </h3>
+            <img src="${photoPath}" alt="Your card spread" style="max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);" />
+          </div>
+        `;
+      } else {
+        // Local /tmp file path — read and attach inline
+        const photoBuffer = readFileSync(photoPath);
+        const photoExt = photoPath.split('.').pop() || 'jpg';
+
+        photoAttachment = {
+          filename: `spread-photo.${photoExt}`,
+          content: photoBuffer,
+          cid: 'spread-photo',
+        };
+
+        photoEmbedHtml = `
+          <div style="margin: 30px 0; text-align: center;">
+            <h3 style="color: #D8B4FE; font-family: serif; font-size: 18px; margin-bottom: 15px;">
+              ${t.photoTitle}
+            </h3>
+            <img src="cid:spread-photo" alt="Your card spread" style="max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);" />
+          </div>
+        `;
+      }
     } catch (error) {
       console.error('Failed to load photo for email:', error);
-      console.error('Photo path:', photoPath);
     }
   }
 
@@ -609,6 +622,89 @@ export async function sendPaymentConfirmationEmail({
     return true;
   } catch (error) {
     console.error('❌ Error sending payment confirmation email:', error);
+    return false;
+  }
+}
+
+/**
+ * Send internal notification to Abigail when a new order is paid.
+ */
+interface SendAdminNotificationParams {
+  customerName: string;
+  customerEmail: string;
+  language: string;
+  amountPaid: number;
+  currency: string;
+  submissionId: number;
+}
+
+export async function sendAdminNotificationEmail({
+  customerName,
+  customerEmail,
+  language,
+  amountPaid,
+  currency,
+  submissionId,
+}: SendAdminNotificationParams): Promise<boolean> {
+  const adminEmail = process.env.ADMIN_EMAIL;
+  if (!adminEmail) {
+    console.warn('⚠️  ADMIN_EMAIL not set — skipping admin notification');
+    return false;
+  }
+
+  if (!resend) {
+    console.log(`\n📧 [EMAIL DEV MODE] Would notify admin at: ${adminEmail}`);
+    return false;
+  }
+
+  const dashboardUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'https://abigail.dbcdatastudio.com'}/admin`;
+  const formattedAmount = (amountPaid / 100).toFixed(2);
+  const langFlag: Record<string, string> = { en: '🇬🇧', de: '🇩🇪', pt: '🇧🇷', hu: '🇭🇺' };
+  const flag = langFlag[language] || '🌍';
+
+  const html = `
+    <!DOCTYPE html>
+    <html>
+    <head><meta charset="utf-8"></head>
+    <body style="margin:0;padding:0;background:#f4f4f4;font-family:Arial,sans-serif;">
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+        <tr><td align="center" style="padding:40px 20px;">
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width:500px;background:#fff;border-radius:8px;overflow:hidden;border:2px solid #674BA9;">
+            <tr><td style="padding:24px 28px;background:#674BA9;">
+              <h2 style="margin:0;color:#fff;font-size:18px;">💸 New Order Received!</h2>
+            </td></tr>
+            <tr><td style="padding:28px;">
+              <table width="100%" cellspacing="0" cellpadding="0">
+                <tr><td style="padding:6px 0;color:#555;font-size:14px;"><strong>Customer:</strong></td><td style="padding:6px 0;font-size:14px;">${customerName}</td></tr>
+                <tr><td style="padding:6px 0;color:#555;font-size:14px;"><strong>Email:</strong></td><td style="padding:6px 0;font-size:14px;">${customerEmail}</td></tr>
+                <tr><td style="padding:6px 0;color:#555;font-size:14px;"><strong>Language:</strong></td><td style="padding:6px 0;font-size:14px;">${flag} ${language.toUpperCase()}</td></tr>
+                <tr><td style="padding:6px 0;color:#555;font-size:14px;"><strong>Amount:</strong></td><td style="padding:6px 0;font-size:14px;font-weight:bold;color:#674BA9;">${formattedAmount} ${currency}</td></tr>
+                <tr><td style="padding:6px 0;color:#555;font-size:14px;"><strong>Order ID:</strong></td><td style="padding:6px 0;font-size:14px;">#${submissionId}</td></tr>
+              </table>
+              <div style="margin-top:24px;text-align:center;">
+                <a href="${dashboardUrl}" style="display:inline-block;background:#674BA9;color:#fff;text-decoration:none;padding:12px 28px;border-radius:6px;font-size:15px;font-weight:bold;">
+                  Open Admin Dashboard →
+                </a>
+              </div>
+            </td></tr>
+          </table>
+        </td></tr>
+      </table>
+    </body>
+    </html>
+  `;
+
+  try {
+    await resend.emails.send({
+      from: EMAIL_FROM,
+      to: adminEmail,
+      subject: `💸 New order: ${customerName} (${language.toUpperCase()}) — ${formattedAmount} ${currency}`,
+      html,
+    });
+    console.log(`✅ Admin notification sent to ${adminEmail}`);
+    return true;
+  } catch (error) {
+    console.error('❌ Failed to send admin notification:', error);
     return false;
   }
 }

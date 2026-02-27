@@ -3,8 +3,7 @@ import { db } from '@/lib/db';
 import { submissions } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { sendPremiumReadingEmail } from '@/lib/email';
-import { writeFile } from 'fs/promises';
-import { join } from 'path';
+import { put } from '@vercel/blob';
 import { requireAdmin } from '@/lib/admin-auth';
 
 const ALLOWED_PHOTO_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
@@ -58,18 +57,19 @@ export async function POST(request: NextRequest) {
     }
 
     let photoPath: string | null = null;
-    let photoBuffer: Buffer | null = null;
 
     if (photoFile) {
       const bytes = await photoFile.arrayBuffer();
-      photoBuffer = Buffer.from(bytes);
-      const ext = photoFile.name.split('.').pop();
-      const fileName = `spread-${submissionId}-${Date.now()}.${ext}`;
-      const filePath = join('/tmp', fileName);
-      await writeFile(filePath, photoBuffer);
-      photoPath = filePath;
-      console.log(`✅ Photo saved to temp: ${photoPath}`);
-      console.log(`💡 For production persistence, migrate to Vercel Blob or S3`);
+      const photoBuffer = Buffer.from(bytes);
+      const ext = photoFile.name.split('.').pop() || 'jpg';
+      const fileName = `spreads/spread-${submissionId}-${Date.now()}.${ext}`;
+
+      const blob = await put(fileName, photoBuffer, {
+        access: 'public',
+        contentType: photoFile.type,
+      });
+      photoPath = blob.url;
+      console.log(`✅ Photo uploaded to Vercel Blob: ${photoPath}`);
     }
 
     // Send email FIRST — only mark fulfilled if email succeeds

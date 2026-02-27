@@ -70,24 +70,32 @@ async function generateWithAnthropic(
     try {
         const systemPrompt = buildSystemPrompt(userName, question, cards, language);
 
-        const message = await anthropic!.messages.create({
-            model: 'claude-3-5-sonnet-20241022',
-            max_tokens: AI_CONFIG.maxOutputTokens,
-            temperature: AI_CONFIG.temperature,
-            system: systemPrompt,
-            messages: [
-                {
-                    role: 'user',
-                    content: `Write the reading for ${userName.split(' ')[0]}.
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 30000);
+
+        let message;
+        try {
+            message = await anthropic!.messages.create({
+                model: 'claude-3-5-sonnet-20241022',
+                max_tokens: AI_CONFIG.maxOutputTokens,
+                temperature: AI_CONFIG.temperature,
+                system: systemPrompt,
+                messages: [
+                    {
+                        role: 'user',
+                        content: `Write the reading for ${userName.split(' ')[0]}.
 
 Stay within the 200-230 word limit.
 End naturally and completely — do not truncate or cut off mid-sentence.
 
 Provide COMPLETE interpretations for all 3 cards.
 Then add the "Master's Observation" revealing the Shadow Connection that requires Abigail's physical 36-card ritual.`
-                }
-            ]
-        });
+                    }
+                ],
+            } as any, { signal: controller.signal });
+        } finally {
+            clearTimeout(timeoutId);
+        }
 
         const content = message.content[0];
         if (content.type !== 'text') {
@@ -149,7 +157,13 @@ End naturally and completely — do not truncate or cut off mid-sentence.
 Provide COMPLETE interpretations for all 3 cards.
 Then add the "Master's Observation" revealing the Shadow Connection that requires Abigail's physical 36-card ritual.`;
 
-                const result = await model.generateContent(`${systemPrompt}\n\n${userPrompt}`);
+                const timeoutPromise = new Promise<never>((_, reject) =>
+                    setTimeout(() => reject(new Error('Gemini request timed out after 30s')), 30000)
+                );
+                const result = await Promise.race([
+                    model.generateContent(`${systemPrompt}\n\n${userPrompt}`),
+                    timeoutPromise,
+                ]);
                 const response = result.response;
                 const text = response.text();
 
