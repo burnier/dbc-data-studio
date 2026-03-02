@@ -65,9 +65,9 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  verification: {
-    google: 'seu-codigo-google-search-console',
-  },
+  // verification: {
+  //   google: 'your-google-search-console-code',  // Add when you verify in Google Search Console
+  // },
   alternates: {
     canonical: 'https://calculadora.dbcdatastudio.com',
   },

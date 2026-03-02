@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Calculator, TrendingUp, DollarSign, Package, Truck, Copy, Check } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Calculator, TrendingUp, DollarSign, Package, Truck, Copy, Check, ThumbsUp, ThumbsDown } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { NumberInputField } from '@/components/ui/number-input-field';
@@ -16,30 +16,45 @@ import {
 } from '@/lib/calculator';
 import { formatCurrency, formatPercent } from '@/lib/utils';
 
-const marketplaceOptions: { value: MarketplaceType; label: string; description: string; ariaLabel: string }[] = [
-  { 
-    value: 'shopee', 
-    label: 'Shopee', 
+// ─── GA4 helper ──────────────────────────────────────────────────────────────
+
+function trackEvent(name: string, params?: Record<string, string | number | boolean>) {
+  if (typeof window !== 'undefined' && (window as any).gtag) {
+    (window as any).gtag('event', name, { ...params });
+  }
+}
+
+// ─── Constants ───────────────────────────────────────────────────────────────
+
+const marketplaceOptions: {
+  value: MarketplaceType;
+  label: string;
+  description: string;
+  ariaLabel: string;
+}[] = [
+  {
+    value: 'shopee',
+    label: 'Shopee',
     description: '20% (14% + 6% frete) + R$ 4,00',
-    ariaLabel: 'Shopee - Taxa de 20% mais R$ 4 reais fixo por venda'
+    ariaLabel: 'Shopee - Taxa de 20% mais R$ 4 reais fixo por venda',
   },
-  { 
-    value: 'mercadolivre-classico', 
-    label: 'Mercado Livre Clássico', 
+  {
+    value: 'mercadolivre-classico',
+    label: 'Mercado Livre Clássico',
     description: '~12.5% + taxa variável',
-    ariaLabel: 'Mercado Livre Clássico - Taxa de 12,5% mais taxa variável'
+    ariaLabel: 'Mercado Livre Clássico - Taxa de 12,5% mais taxa variável',
   },
-  { 
-    value: 'mercadolivre-premium', 
-    label: 'Mercado Livre Premium', 
+  {
+    value: 'mercadolivre-premium',
+    label: 'Mercado Livre Premium',
     description: '~17.5% + taxa variável',
-    ariaLabel: 'Mercado Livre Premium - Taxa de 17,5% mais taxa variável'
+    ariaLabel: 'Mercado Livre Premium - Taxa de 17,5% mais taxa variável',
   },
-  { 
-    value: 'pix', 
-    label: 'Pix / Direto', 
+  {
+    value: 'pix',
+    label: 'Pix / Direto',
     description: '0-1% intermediador',
-    ariaLabel: 'Venda direta por Pix - Taxa de 0 a 1% de intermediador'
+    ariaLabel: 'Venda direta por Pix - Taxa de 0 a 1% de intermediador',
   },
 ];
 
@@ -51,6 +66,8 @@ const DEFAULT_VALUES = {
   aliquotaImposto: '0',
   pixGatewayFee: '0.5',
 };
+
+// ─── Component ───────────────────────────────────────────────────────────────
 
 export default function ProfitCalculator() {
   const [inputStrings, setInputStrings] = useState(DEFAULT_VALUES);
@@ -68,18 +85,56 @@ export default function ProfitCalculator() {
   const [result, setResult] = useState<CalculatorResult | null>(null);
   const [copied, setCopied] = useState(false);
 
+  // Feedback state
+  const [feedback, setFeedback] = useState<'positive' | 'negative' | null>(null);
+  const [feedbackText, setFeedbackText] = useState('');
+  const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
+
+  // Track whether the user has edited anything (to distinguish example vs real usage)
+  const hasEdited = useRef(false);
+
+  // Debounce timer for GA4 calculation event
+  const calcEventTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   useEffect(() => {
     const calculated = calculateProfit(inputs);
     setResult(calculated);
+
+    // Fire debounced GA4 event after 2s of no changes (means user has a stable result)
+    if (hasEdited.current) {
+      if (calcEventTimer.current) clearTimeout(calcEventTimer.current);
+      calcEventTimer.current = setTimeout(() => {
+        trackEvent('calculation_performed', {
+          marketplace: inputs.marketplace,
+          is_mei: inputs.isMEI,
+          preco_venda: inputs.precoVenda,
+          lucro_positivo: calculated.lucroLiquido > 0,
+          margem: Math.round(calculated.margemLucro * 10) / 10,
+        });
+      }, 2000);
+    }
   }, [inputs]);
 
   const handleInputChange = (field: keyof CalculatorInputs, value: string | number | boolean) => {
+    hasEdited.current = true;
     setInputs((prev) => ({ ...prev, [field]: value }));
+    // Reset feedback when inputs change significantly
+    if (feedbackSubmitted) {
+      setFeedback(null);
+      setFeedbackText('');
+      setFeedbackSubmitted(false);
+    }
+  };
+
+  const handleMarketplaceChange = (value: MarketplaceType) => {
+    hasEdited.current = true;
+    trackEvent('marketplace_selected', { marketplace: value });
+    handleInputChange('marketplace', value);
   };
 
   const handleNumberInput = (field: keyof CalculatorInputs, inputValue: string) => {
+    hasEdited.current = true;
     setInputStrings((prev) => ({ ...prev, [field]: inputValue }));
-
     if (inputValue === '' || inputValue === '-') {
       setInputs((prev) => ({ ...prev, [field]: 0 }));
     } else {
@@ -96,8 +151,29 @@ export default function ProfitCalculator() {
       navigator.clipboard.writeText(summary).then(() => {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
+        trackEvent('whatsapp_share', {
+          marketplace: inputs.marketplace,
+          lucro_positivo: result.lucroLiquido > 0,
+        });
       });
     }
+  };
+
+  const handleFeedback = (type: 'positive' | 'negative') => {
+    setFeedback(type);
+    if (type === 'positive') {
+      trackEvent('feedback_submitted', { type: 'positive', marketplace: inputs.marketplace });
+      setFeedbackSubmitted(true);
+    }
+  };
+
+  const handleFeedbackSubmit = () => {
+    trackEvent('feedback_submitted', {
+      type: 'negative',
+      marketplace: inputs.marketplace,
+      comment: feedbackText.trim().substring(0, 150),
+    });
+    setFeedbackSubmitted(true);
   };
 
   const lucroPositivo = result && result.lucroLiquido > 0;
@@ -107,13 +183,21 @@ export default function ProfitCalculator() {
       {/* Calculadora */}
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Calculator className="h-6 w-6 text-green-600" aria-hidden="true" />
-            Calculadora de Lucro
-          </CardTitle>
-          <CardDescription>
-            Informe os dados da sua venda para calcular seu lucro líquido real
-          </CardDescription>
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <CardTitle className="flex items-center gap-2">
+                <Calculator className="h-6 w-6 text-green-600" aria-hidden="true" />
+                Calculadora de Lucro
+              </CardTitle>
+              <CardDescription>
+                Informe os dados da sua venda para calcular seu lucro líquido real
+              </CardDescription>
+            </div>
+            {/* Example badge */}
+            <span className="shrink-0 text-xs bg-amber-50 text-amber-700 border border-amber-200 rounded-full px-3 py-1 font-medium">
+              📝 Exemplo pré-preenchido
+            </span>
+          </div>
         </CardHeader>
         <CardContent className="space-y-6">
           {/* Marketplace Selection */}
@@ -121,11 +205,15 @@ export default function ProfitCalculator() {
             <label className="block text-sm font-medium text-gray-700 mb-3">
               Marketplace / Canal de Venda
             </label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3" role="group" aria-label="Selecione o marketplace">
+            <div
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3"
+              role="group"
+              aria-label="Selecione o marketplace"
+            >
               {marketplaceOptions.map((option) => (
                 <button
                   key={option.value}
-                  onClick={() => handleInputChange('marketplace', option.value)}
+                  onClick={() => handleMarketplaceChange(option.value)}
                   aria-label={option.ariaLabel}
                   aria-pressed={inputs.marketplace === option.value}
                   className={`p-4 rounded-lg border-2 transition-all text-left ${
@@ -152,7 +240,6 @@ export default function ProfitCalculator() {
               description="Digite o preço de venda do produto em reais"
               icon={<DollarSign className="h-4 w-4" />}
             />
-
             <NumberInputField
               id="custo-produto"
               label="Custo do Produto (R$)"
@@ -162,7 +249,6 @@ export default function ProfitCalculator() {
               description="Digite o custo de aquisição do produto"
               icon={<Package className="h-4 w-4" />}
             />
-
             <NumberInputField
               id="custo-embalagem"
               label="Custo de Embalagem (R$)"
@@ -172,7 +258,6 @@ export default function ProfitCalculator() {
               description="Digite o custo da embalagem do produto"
               icon={<Package className="h-4 w-4" />}
             />
-
             <NumberInputField
               id="custo-frete"
               label="Custo de Frete/Envio (R$)"
@@ -229,7 +314,10 @@ export default function ProfitCalculator() {
         <Card className={lucroPositivo ? 'border-green-500' : 'border-red-500'}>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <TrendingUp className={`h-6 w-6 ${lucroPositivo ? 'text-green-600' : 'text-red-600'}`} aria-hidden="true" />
+              <TrendingUp
+                className={`h-6 w-6 ${lucroPositivo ? 'text-green-600' : 'text-red-600'}`}
+                aria-hidden="true"
+              />
               Resultado da Venda
             </CardTitle>
           </CardHeader>
@@ -243,7 +331,6 @@ export default function ProfitCalculator() {
                 borderColorClass={lucroPositivo ? 'border-green-200' : 'border-red-200'}
                 textColorClass={lucroPositivo ? 'text-green-700' : 'text-red-700'}
               />
-
               <MetricCard
                 label="Margem de Lucro"
                 value={formatPercent(result.margemLucro)}
@@ -251,7 +338,6 @@ export default function ProfitCalculator() {
                 borderColorClass="border-blue-200"
                 textColorClass="text-blue-700"
               />
-
               <MetricCard
                 label="Ponto de Equilíbrio"
                 value={formatCurrency(result.pontoEquilibrio)}
@@ -267,48 +353,21 @@ export default function ProfitCalculator() {
             <div className="border-t pt-4">
               <h4 className="font-semibold text-gray-900 mb-3">Composição do Lucro</h4>
               <div className="space-y-2 text-sm">
-                <BreakdownLine 
-                  label="Preço de Venda" 
-                  value={formatCurrency(result.precoVenda)} 
-                />
-                <BreakdownLine 
-                  label="- Custo do Produto" 
-                  value={formatCurrency(result.breakdown.custoProduto)} 
-                  isNegative 
-                />
-                <BreakdownLine 
-                  label="- Custo de Embalagem" 
-                  value={formatCurrency(result.breakdown.custoEmbalagem)} 
-                  isNegative 
-                />
-                <BreakdownLine 
-                  label="- Custo de Frete" 
-                  value={formatCurrency(result.breakdown.custoFrete)} 
-                  isNegative 
-                />
-                <BreakdownLine 
-                  label="- Comissão Marketplace" 
-                  value={formatCurrency(result.breakdown.comissaoMarketplace)} 
-                  isNegative 
-                />
+                <BreakdownLine label="Preço de Venda" value={formatCurrency(result.precoVenda)} />
+                <BreakdownLine label="- Custo do Produto" value={formatCurrency(result.breakdown.custoProduto)} isNegative />
+                <BreakdownLine label="- Custo de Embalagem" value={formatCurrency(result.breakdown.custoEmbalagem)} isNegative />
+                <BreakdownLine label="- Custo de Frete" value={formatCurrency(result.breakdown.custoFrete)} isNegative />
+                <BreakdownLine label="- Comissão Marketplace" value={formatCurrency(result.breakdown.comissaoMarketplace)} isNegative />
                 {result.breakdown.taxaFixaMarketplace > 0 && (
-                  <BreakdownLine 
-                    label="- Taxa Fixa Marketplace" 
-                    value={formatCurrency(result.breakdown.taxaFixaMarketplace)} 
-                    isNegative 
-                  />
+                  <BreakdownLine label="- Taxa Fixa Marketplace" value={formatCurrency(result.breakdown.taxaFixaMarketplace)} isNegative />
                 )}
                 {result.breakdown.impostos > 0 && (
-                  <BreakdownLine 
-                    label="- Impostos" 
-                    value={formatCurrency(result.breakdown.impostos)} 
-                    isNegative 
-                  />
+                  <BreakdownLine label="- Impostos" value={formatCurrency(result.breakdown.impostos)} isNegative />
                 )}
-                <BreakdownLine 
-                  label="= Lucro Líquido" 
-                  value={formatCurrency(result.lucroLiquido)} 
-                  isTotal 
+                <BreakdownLine
+                  label="= Lucro Líquido"
+                  value={formatCurrency(result.lucroLiquido)}
+                  isTotal
                   textColor={lucroPositivo ? 'text-green-700' : 'text-red-700'}
                 />
               </div>
@@ -328,6 +387,70 @@ export default function ProfitCalculator() {
                 </>
               )}
             </Button>
+
+            {/* ─── Feedback Widget ─────────────────────────────────────── */}
+            <div className="border-t pt-4">
+              {!feedbackSubmitted ? (
+                <div className="space-y-3">
+                  <p className="text-sm text-gray-600 text-center font-medium">
+                    Esta calculadora foi útil para você?
+                  </p>
+                  <div className="flex justify-center gap-4">
+                    <button
+                      onClick={() => handleFeedback('positive')}
+                      className={`flex items-center gap-2 px-5 py-2 rounded-full border-2 text-sm font-medium transition-all ${
+                        feedback === 'positive'
+                          ? 'border-green-500 bg-green-50 text-green-700'
+                          : 'border-gray-200 hover:border-green-400 hover:bg-green-50 text-gray-600'
+                      }`}
+                      aria-pressed={feedback === 'positive'}
+                    >
+                      <ThumbsUp className="h-4 w-4" />
+                      Sim, foi útil!
+                    </button>
+                    <button
+                      onClick={() => handleFeedback('negative')}
+                      className={`flex items-center gap-2 px-5 py-2 rounded-full border-2 text-sm font-medium transition-all ${
+                        feedback === 'negative'
+                          ? 'border-orange-400 bg-orange-50 text-orange-700'
+                          : 'border-gray-200 hover:border-orange-300 hover:bg-orange-50 text-gray-600'
+                      }`}
+                      aria-pressed={feedback === 'negative'}
+                    >
+                      <ThumbsDown className="h-4 w-4" />
+                      Pode melhorar
+                    </button>
+                  </div>
+
+                  {/* Optional comment for negative feedback */}
+                  {feedback === 'negative' && (
+                    <div className="space-y-2 mt-2">
+                      <textarea
+                        value={feedbackText}
+                        onChange={(e) => setFeedbackText(e.target.value)}
+                        placeholder="O que podemos melhorar? (opcional)"
+                        maxLength={300}
+                        rows={3}
+                        className="w-full text-sm border border-gray-200 rounded-lg p-3 resize-none focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      />
+                      <Button
+                        onClick={handleFeedbackSubmit}
+                        variant="outline"
+                        className="w-full text-sm"
+                      >
+                        Enviar sugestão
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <p className="text-sm text-center text-gray-500">
+                  {feedback === 'positive'
+                    ? '🙏 Obrigado pelo feedback! Fico feliz que foi útil.'
+                    : '🙏 Obrigado! Vamos usar seu feedback para melhorar.'}
+                </p>
+              )}
+            </div>
           </CardContent>
         </Card>
       )}
