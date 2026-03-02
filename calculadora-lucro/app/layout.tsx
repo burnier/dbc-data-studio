@@ -90,13 +90,8 @@ export default function RootLayout({
       price: '0',
       priceCurrency: 'BRL',
     },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.9',
-      ratingCount: '127',
-    },
     description: 'Calculadora gratuita de lucro para vendedores brasileiros de marketplaces. Calcula taxas do Shopee, Mercado Livre e Pix com as regras atualizadas de 2026.',
-    screenshot: 'https://calculadora.dbcdatastudio.com/og-image.png',
+    screenshot: 'https://calculadora.dbcdatastudio.com/dbc-calculadora.png',
     featureList: [
       'Cálculo de taxas Shopee 2026',
       'Taxas Mercado Livre Clássico e Premium',

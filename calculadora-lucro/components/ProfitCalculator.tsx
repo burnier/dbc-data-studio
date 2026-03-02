@@ -113,6 +113,10 @@ export default function ProfitCalculator() {
         });
       }, 2000);
     }
+
+    return () => {
+      if (calcEventTimer.current) clearTimeout(calcEventTimer.current);
+    };
   }, [inputs]);
 
   const handleInputChange = (field: keyof CalculatorInputs, value: string | number | boolean) => {
@@ -183,21 +187,13 @@ export default function ProfitCalculator() {
       {/* Calculadora */}
       <Card>
         <CardHeader>
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <CardTitle className="flex items-center gap-2">
-                <Calculator className="h-6 w-6 text-green-600" aria-hidden="true" />
-                Calculadora de Lucro
-              </CardTitle>
-              <CardDescription>
-                Informe os dados da sua venda para calcular seu lucro líquido real
-              </CardDescription>
-            </div>
-            {/* Example badge */}
-            <span className="shrink-0 text-xs bg-amber-50 text-amber-700 border border-amber-200 rounded-full px-3 py-1 font-medium">
-              📝 Exemplo pré-preenchido
-            </span>
-          </div>
+          <CardTitle className="flex items-center gap-2">
+            <Calculator className="h-6 w-6 text-green-600" aria-hidden="true" />
+            Calculadora de Lucro
+          </CardTitle>
+          <CardDescription>
+            Informe os dados da sua venda para calcular seu lucro líquido real
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           {/* Marketplace Selection */}
