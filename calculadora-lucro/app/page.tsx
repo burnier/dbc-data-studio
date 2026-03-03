@@ -65,7 +65,7 @@ export default function Home() {
           <div className="flex items-center justify-center gap-3 mb-4">
             <Calculator className="h-10 w-10" aria-hidden="true" />
             <h1 className="text-3xl md:text-4xl font-bold text-center">
-              Calculadora de Lucro Shopee e Mercado Livre 2026
+              Calculadora e Simulador de Lucro — Shopee e Mercado Livre 2026
             </h1>
           </div>
           <p className="text-center text-green-100 text-lg max-w-3xl mx-auto mb-3">
@@ -132,10 +132,10 @@ export default function Home() {
               </p>
 
               <h3 id="taxas-mercadolivre" className="text-xl font-semibold text-gray-900 mt-6 mb-3">
-                Taxas do Mercado Livre em 2026 (Atualizadas Março 2026)
+                Simulador de Custos do Mercado Livre em 2026 (Atualizado Março 2026)
               </h3>
               <p className="text-gray-700 leading-relaxed mb-2">
-                O Mercado Livre oferece dois tipos de anúncio com taxas diferenciadas:
+                Use nosso simulador de custos do Mercado Livre para calcular exatamente quanto você paga em taxas. O Mercado Livre oferece dois tipos de anúncio com taxas diferenciadas:
               </p>
               <div className="space-y-4 mb-4">
                 <div className="border-l-4 border-blue-400 pl-4 py-2 bg-blue-50">
