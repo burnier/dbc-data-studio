@@ -79,6 +79,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   // JSON-LD Structured Data for SEO
+  const websiteData = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Calculadora de Lucro',
+    url: 'https://calculadora.dbcdatastudio.com',
+  };
+
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
@@ -127,6 +134,11 @@ export default function RootLayout({
         </Script>
 
         {/* Structured Data for SEO */}
+        <Script
+          id="website-data"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteData) }}
+        />
         <Script
           id="structured-data"
           type="application/ld+json"
