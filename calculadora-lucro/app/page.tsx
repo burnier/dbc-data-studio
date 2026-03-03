@@ -1,9 +1,63 @@
 import ProfitCalculator from '@/components/ProfitCalculator';
 import { Calculator, TrendingUp, DollarSign, Shield, HelpCircle, BookOpen } from 'lucide-react';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
+import Script from 'next/script';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Como calcular o lucro da Shopee em 2026?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Para calcular o lucro real na Shopee em 2026, use a fórmula: Lucro Líquido = Preço de Venda - Custo do Produto - Custo de Embalagem - Custo de Frete - (Preço × 20%) - R$ 4,00 - Impostos. O Shopee cobra 14% de comissão base + 6% de Frete Grátis + R$ 4,00 de taxa fixa por item, totalizando aproximadamente 20% + R$ 4,00 por venda.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Quais são as novas taxas do Mercado Livre em 2026?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'O Mercado Livre em 2026 oferece dois modelos: Anúncio Clássico com comissão de 11% a 14% (média 12,5%) e Anúncio Premium com comissão de 16% a 19% (média 17,5%). Ambos cobram R$ 6,50 de taxa fixa para produtos abaixo de R$ 79,00. O Premium permite parcelamento em até 12x sem juros.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Vender por Pix vale a pena para MEI?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Sim, vender por Pix é a opção mais lucrativa para MEI em 2026. As plataformas de pagamento Pix cobram entre 0% a 1% por transação, comparado aos 20%+ do Shopee e 17%+ do Mercado Livre Premium. Numa venda de R$ 100, você economiza até R$ 23,50 em taxas vendendo por Pix.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Qual a diferença entre MEI e Simples Nacional para e-commerce?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'MEI paga um valor fixo de R$ 81,05/mês independente do faturamento, com limite de R$ 81.000/ano. Simples Nacional (Anexo I) cobra entre 4% a 11,35% sobre cada venda, com limite de até R$ 4,8 milhões/ano. O MEI é ideal para iniciantes; o Simples Nacional para vendedores em crescimento que ultrapassaram o limite do MEI.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'O que é Ponto de Equilíbrio na calculadora?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'O ponto de equilíbrio é o preço mínimo que você precisa cobrar para não ter prejuízo — quando seu lucro é exatamente R$ 0,00. Ele cobre todos os seus custos (produto + embalagem + frete + taxas + impostos). Conhecer seu ponto de equilíbrio é essencial para definir preços mínimos em promoções e liquidações sem perder dinheiro.',
+      },
+    },
+  ],
+};
 
 export default function Home() {
   return (
+    <>
+      <Script
+        id="faq-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
     <main className="min-h-screen bg-gradient-to-b from-green-50 to-white">
       {/* Hero Section */}
       <div className="bg-green-600 text-white py-12 px-4">
@@ -442,5 +496,6 @@ export default function Home() {
         </div>
       </footer>
     </main>
+    </>
   );
 }
