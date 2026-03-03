@@ -7,7 +7,7 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Calculadora e Simulador de Lucro — Shopee e Mercado Livre 2026',
+  title: 'Calculadora e Simulador de Lucro - Shopee e Mercado Livre 2026',
   description: 'Calculadora e simulador de lucro gratuito para vendedores brasileiros. Calcule taxas Shopee 2026 (20%), simule custos do Mercado Livre Clássico/Premium e Pix. Taxas atualizadas de Março 2026. Ideal para MEI e Simples Nacional.',
   icons: {
     icon: '/dbc-calculadora.png',
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   creator: 'DBC Data Studio',
   publisher: 'DBC Data Studio',
   openGraph: {
-    title: 'Calculadora e Simulador de Lucro — Shopee e Mercado Livre 2026',
+    title: 'Calculadora e Simulador de Lucro - Shopee e Mercado Livre 2026',
     description: 'Calcule e simule seu lucro real em vendas online com taxas atualizadas de Março 2026. Shopee, Mercado Livre e Pix.',
     type: 'website',
     locale: 'pt_BR',
@@ -91,7 +91,7 @@ export default function RootLayout({
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name: 'Calculadora e Simulador de Lucro — Shopee e Mercado Livre 2026',
+    name: 'Calculadora e Simulador de Lucro - Shopee e Mercado Livre 2026',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Windows, macOS, Android, iOS',
     offers: {
