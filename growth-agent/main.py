@@ -203,12 +203,22 @@ def run_daily_report(days: int):
         verbose=True,
     )
     result   = crew.kickoff()
-    out_path = config.OUTPUT_DIR / f"daily_report_{date.today().isoformat()}.md"
+    today    = date.today().isoformat()
+    out_path = config.OUTPUT_DIR / f"daily_report_{today}.md"
+
+    # CrewAI's output_file is unreliable in CI — write manually as fallback.
+    content = out_path.read_text() if out_path.exists() else ""
+    if not content:
+        tasks_output = getattr(result, "tasks_output", [])
+        content = tasks_output[0].raw if tasks_output else getattr(result, "raw", "")
+        if content:
+            out_path.write_text(content)
+
     print(f"\n✅ Daily report saved to: {out_path}")
-    if out_path.exists():
+    if content:
         _send_email(
-            subject=f"📊 Calculadora — Daily Report {date.today().isoformat()}",
-            body_md=out_path.read_text(),
+            subject=f"📊 Calculadora — Daily Report {today}",
+            body_md=content,
         )
     return result
 
@@ -229,19 +239,37 @@ def run_outreach(days: int):
         process=Process.sequential,
         verbose=True,
     )
-    result = crew.kickoff()
-    today  = date.today().isoformat()
-    print(f"\n✅ Report saved to:   {config.OUTPUT_DIR}/daily_report_{today}.md")
-    print(f"✅ Outreach saved to: {config.OUTPUT_DIR}/outreach_{today}.md")
+    result        = crew.kickoff()
+    today         = date.today().isoformat()
+    report_path   = config.OUTPUT_DIR / f"daily_report_{today}.md"
+    outreach_path = config.OUTPUT_DIR / f"outreach_{today}.md"
 
-    report_path  = config.OUTPUT_DIR / f"daily_report_{today}.md"
-    outreach_path= config.OUTPUT_DIR / f"outreach_{today}.md"
+    # CrewAI's output_file is unreliable in CI — write manually as fallback.
+    tasks_output  = getattr(result, "tasks_output", [])
+
+    report_content = report_path.read_text() if report_path.exists() else ""
+    if not report_content and len(tasks_output) >= 1:
+        report_content = tasks_output[0].raw or ""
+        if report_content:
+            report_path.write_text(report_content)
+
+    outreach_content = outreach_path.read_text() if outreach_path.exists() else ""
+    if not outreach_content:
+        if len(tasks_output) >= 2:
+            outreach_content = tasks_output[1].raw or ""
+        elif not outreach_content:
+            outreach_content = getattr(result, "raw", "") or ""
+        if outreach_content:
+            outreach_path.write_text(outreach_content)
+
+    print(f"\n✅ Report saved to:   {report_path}")
+    print(f"✅ Outreach saved to: {outreach_path}")
 
     combined = ""
-    if report_path.exists():
-        combined += report_path.read_text()
-    if outreach_path.exists():
-        combined += "\n\n---\n\n" + outreach_path.read_text()
+    if report_content:
+        combined += report_content
+    if outreach_content:
+        combined += "\n\n---\n\n" + outreach_content
     if combined:
         _send_email(
             subject=f"🚀 Calculadora — Growth Digest {today}",
