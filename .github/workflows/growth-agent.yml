@@ -1,0 +1,94 @@
+name: Growth Agent — Daily Run
+
+# ── Schedule ──────────────────────────────────────────────────────────────────
+# Runs at 09:00 BRT (UTC-3) = 12:00 UTC every day.
+# Also triggerable manually via the GitHub Actions UI (workflow_dispatch).
+on:
+  schedule:
+    - cron: '0 12 * * *'
+  workflow_dispatch:
+    inputs:
+      command:
+        description: 'Command to run'
+        required: false
+        default: 'outreach'
+        type: choice
+        options:
+          - outreach
+          - daily-report
+      days:
+        description: 'Analytics look-back window (days)'
+        required: false
+        default: '7'
+
+jobs:
+  run-agent:
+    name: Run Growth Agent
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+          cache-dependency-path: growth-agent/requirements.txt
+
+      - name: Install dependencies
+        working-directory: growth-agent
+        run: pip install -r requirements.txt
+
+      # ── Run agent ─────────────────────────────────────────────────────────
+      # On scheduled runs: always run full `outreach` (includes daily-report).
+      # On manual runs: honour the `command` input.
+      - name: Run agent — outreach (scheduled)
+        if: github.event_name == 'schedule'
+        working-directory: growth-agent
+        env:
+          ANTHROPIC_API_KEY:           ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY:              ${{ secrets.OPENAI_API_KEY }}
+          GOOGLE_API_KEY:              ${{ secrets.GOOGLE_API_KEY }}
+          ANALYTICS_SECRET:            ${{ secrets.ANALYTICS_SECRET }}
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          GA4_PROPERTY_ID:             ${{ secrets.GA4_PROPERTY_ID }}
+          YOUTUBE_API_KEY:             ${{ secrets.YOUTUBE_API_KEY }}
+          FACEBOOK_ACCESS_TOKEN:       ${{ secrets.FACEBOOK_ACCESS_TOKEN }}
+          FACEBOOK_GROUP_IDS:          ${{ secrets.FACEBOOK_GROUP_IDS }}
+          APP_BASE_URL:                https://calculadora.dbcdatastudio.com
+          RESEND_API_KEY:              ${{ secrets.RESEND_API_KEY }}
+          NOTIFY_EMAIL:                ${{ secrets.NOTIFY_EMAIL }}
+          DEFAULT_DAYS:                '7'
+        run: python main.py outreach --days 7
+
+      - name: Run agent — manual trigger
+        if: github.event_name == 'workflow_dispatch'
+        working-directory: growth-agent
+        env:
+          ANTHROPIC_API_KEY:           ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY:              ${{ secrets.OPENAI_API_KEY }}
+          GOOGLE_API_KEY:              ${{ secrets.GOOGLE_API_KEY }}
+          ANALYTICS_SECRET:            ${{ secrets.ANALYTICS_SECRET }}
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          GA4_PROPERTY_ID:             ${{ secrets.GA4_PROPERTY_ID }}
+          YOUTUBE_API_KEY:             ${{ secrets.YOUTUBE_API_KEY }}
+          FACEBOOK_ACCESS_TOKEN:       ${{ secrets.FACEBOOK_ACCESS_TOKEN }}
+          FACEBOOK_GROUP_IDS:          ${{ secrets.FACEBOOK_GROUP_IDS }}
+          APP_BASE_URL:                https://calculadora.dbcdatastudio.com
+          RESEND_API_KEY:              ${{ secrets.RESEND_API_KEY }}
+          NOTIFY_EMAIL:                ${{ secrets.NOTIFY_EMAIL }}
+          DEFAULT_DAYS:                ${{ github.event.inputs.days || '7' }}
+        run: python main.py ${{ github.event.inputs.command || 'outreach' }} --days ${{ github.event.inputs.days || '7' }}
+
+      # ── Upload reports as artifacts (backup, 30-day retention) ────────────
+      - name: Upload reports as artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: growth-reports-${{ github.run_id }}
+          path: growth-agent/output/
+          retention-days: 30
+          if-no-files-found: warn

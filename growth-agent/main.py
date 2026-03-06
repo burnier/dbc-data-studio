@@ -20,14 +20,73 @@ Usage:
 Output files are written to ./output/
 """
 import argparse
+import os
 import sys
 from datetime import date
 from pathlib import Path
 
+import httpx
 from crewai import Crew, Process, Task
 
 import config
 from agents import build_traffic_analyst, build_content_outreach_agent
+
+
+# ─── Email Delivery ───────────────────────────────────────────────────────────
+
+def _send_email(subject: str, body_md: str) -> None:
+    """Send a Markdown report via Resend. No-op if RESEND_API_KEY is not set."""
+    api_key  = os.getenv("RESEND_API_KEY", "")
+    to_email = os.getenv("NOTIFY_EMAIL", "")
+    if not api_key or not to_email:
+        return
+
+    # Convert basic Markdown to HTML (headings, bold, code, line breaks)
+    lines: list[str] = []
+    for line in body_md.splitlines():
+        if line.startswith("### "):
+            lines.append(f"<h3>{line[4:]}</h3>")
+        elif line.startswith("## "):
+            lines.append(f"<h2>{line[3:]}</h2>")
+        elif line.startswith("# "):
+            lines.append(f"<h1>{line[2:]}</h1>")
+        elif line.startswith("---"):
+            lines.append("<hr>")
+        elif line.startswith("> "):
+            lines.append(f"<blockquote>{line[2:]}</blockquote>")
+        else:
+            html_line = line.replace("**", "<strong>", 1)
+            while "**" in html_line:
+                html_line = html_line.replace("**", "</strong>", 1)
+            lines.append(html_line + "<br>")
+    html_body = (
+        "<html><body style='font-family:sans-serif;max-width:720px;margin:auto'>"
+        + "\n".join(lines)
+        + "</body></html>"
+    )
+
+    try:
+        resp = httpx.post(
+            "https://api.resend.com/emails",
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+            },
+            json={
+                "from":    os.getenv("NOTIFY_FROM", "Growth Agent <onboarding@resend.dev>"),
+                "to":      [to_email],
+                "subject": subject,
+                "html":    html_body,
+                "text":    body_md,
+            },
+            timeout=30,
+        )
+        if resp.status_code in (200, 201):
+            print(f"📧  Report emailed → {to_email}")
+        else:
+            print(f"⚠️  Resend error {resp.status_code}: {resp.text}")
+    except Exception as exc:  # noqa: BLE001
+        print(f"⚠️  Could not send email: {exc}")
 
 
 # ─── Task Definitions ─────────────────────────────────────────────────────────
@@ -143,9 +202,14 @@ def run_daily_report(days: int):
         process=Process.sequential,
         verbose=True,
     )
-    result = crew.kickoff()
+    result   = crew.kickoff()
     out_path = config.OUTPUT_DIR / f"daily_report_{date.today().isoformat()}.md"
     print(f"\n✅ Daily report saved to: {out_path}")
+    if out_path.exists():
+        _send_email(
+            subject=f"📊 Calculadora — Daily Report {date.today().isoformat()}",
+            body_md=out_path.read_text(),
+        )
     return result
 
 
@@ -166,9 +230,23 @@ def run_outreach(days: int):
         verbose=True,
     )
     result = crew.kickoff()
-    today = date.today().isoformat()
+    today  = date.today().isoformat()
     print(f"\n✅ Report saved to:   {config.OUTPUT_DIR}/daily_report_{today}.md")
     print(f"✅ Outreach saved to: {config.OUTPUT_DIR}/outreach_{today}.md")
+
+    report_path  = config.OUTPUT_DIR / f"daily_report_{today}.md"
+    outreach_path= config.OUTPUT_DIR / f"outreach_{today}.md"
+
+    combined = ""
+    if report_path.exists():
+        combined += report_path.read_text()
+    if outreach_path.exists():
+        combined += "\n\n---\n\n" + outreach_path.read_text()
+    if combined:
+        _send_email(
+            subject=f"🚀 Calculadora — Growth Digest {today}",
+            body_md=combined,
+        )
     return result
 
 

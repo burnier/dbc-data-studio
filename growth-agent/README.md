@@ -170,6 +170,46 @@ fly machine run . \
   --env AGENT_DAYS=30
 ```
 
+### Option A: GitHub Actions (recommended — free, zero infra)
+
+The repository already includes `.github/workflows/growth-agent.yml`.
+
+**Step 1 — Push the repo to GitHub** (if not done yet):
+```bash
+cd /Users/dburnier/Documents/my_repos/dbc-data-studio
+git add .
+git commit -m "add growth agent + GitHub Actions workflow"
+git push
+```
+
+**Step 2 — Add GitHub Secrets**  
+Go to your repo → **Settings → Secrets and variables → Actions → New repository secret** and add:
+
+| Secret | Where to get it |
+|---|---|
+| `ANTHROPIC_API_KEY` | console.anthropic.com → API Keys |
+| `ANALYTICS_SECRET` | same value as in Vercel env vars |
+| `GOOGLE_SERVICE_ACCOUNT_JSON` | the full JSON string (1 line) from your SA key file |
+| `GA4_PROPERTY_ID` | `properties/525217735` |
+| `YOUTUBE_API_KEY` | Google Cloud Console → YouTube Data API v3 |
+| `RESEND_API_KEY` | resend.com → API Keys (same account as Abigail) |
+| `NOTIFY_EMAIL` | your personal email address |
+
+Optionally (if configured):
+| `OPENAI_API_KEY` | platform.openai.com |
+| `FACEBOOK_ACCESS_TOKEN` | Meta Graph API Explorer |
+| `FACEBOOK_GROUP_IDS` | comma-separated numeric group IDs |
+
+**Step 3 — Verify the workflow**  
+Go to **Actions → Growth Agent — Daily Run → Run workflow** to trigger a manual test run.  
+Reports are:
+- **Emailed to you** (`NOTIFY_EMAIL`) as a formatted HTML digest
+- **Uploaded as GitHub Actions artifacts** (backup, 30-day retention, downloadable from the Actions UI)
+
+The scheduled run fires every day at **09:00 BRT** (12:00 UTC).
+
+---
+
 ### Option B: Render (cron job service)
 
 1. Connect this folder as a new **Cron Job** service on [render.com](https://render.com)
@@ -205,10 +245,9 @@ fly volumes create growth_output --size 1
 
 ## Recommended Schedule
 
-| Job | Cron | Command |
-|---|---|---|
-| Daily traffic report | `0 7 * * *` | `python main.py daily-report` |
-| Weekly outreach | `0 8 * * 1` | `python main.py outreach` |
+| Job | Cron | Command | Notes |
+|---|---|---|---|
+| Daily full digest | `0 12 * * *` | `python main.py outreach` | 09:00 BRT — runs both agents, emails the combined report |
 
 ---
 
@@ -216,8 +255,9 @@ fly volumes create growth_output --size 1
 
 The codebase is designed for easy extension:
 
-### Email/Telegram notifications
-Add a `notifiers.py` module and call it after `crew.kickoff()` in `main.py`:
+### Telegram notifications
+Email delivery via Resend is already implemented (set `RESEND_API_KEY` + `NOTIFY_EMAIL`).  
+For Telegram, add a `notifiers.py` module:
 ```python
 from notifiers import send_telegram
 send_telegram(result.raw, chat_id=config.TELEGRAM_CHAT_ID)
