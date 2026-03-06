@@ -61,6 +61,7 @@ jobs:
           APP_BASE_URL:                https://calculadora.dbcdatastudio.com
           RESEND_API_KEY:              ${{ secrets.RESEND_API_KEY }}
           NOTIFY_EMAIL:                ${{ secrets.NOTIFY_EMAIL }}
+          NOTIFY_FROM:                 ${{ secrets.NOTIFY_FROM }}
           DEFAULT_DAYS:                '7'
         run: python main.py outreach --days 7
 
@@ -80,6 +81,7 @@ jobs:
           APP_BASE_URL:                https://calculadora.dbcdatastudio.com
           RESEND_API_KEY:              ${{ secrets.RESEND_API_KEY }}
           NOTIFY_EMAIL:                ${{ secrets.NOTIFY_EMAIL }}
+          NOTIFY_FROM:                 ${{ secrets.NOTIFY_FROM }}
           DEFAULT_DAYS:                ${{ github.event.inputs.days || '7' }}
         run: python main.py ${{ github.event.inputs.command || 'outreach' }} --days ${{ github.event.inputs.days || '7' }}
 
