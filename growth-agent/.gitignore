@@ -3,8 +3,8 @@
 venv/
 env/
 
-# Output reports (generated at runtime)
-output/*.md
+# Output reports (generated at runtime — never commit)
+output/
 
 # Environment secrets
 .env

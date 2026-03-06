@@ -1,4 +1,14 @@
 #!/usr/bin/env python3
+# Fix SSL certificate verification for Homebrew Python on macOS.
+# truststore patches ssl.SSLContext to use the native macOS keychain,
+# which covers httpx, openai SDK, and any other SSL connection.
+# Must run before any network library is imported.
+try:
+    import truststore
+    truststore.inject_into_ssl()
+except ImportError:
+    pass  # not on macOS or truststore not installed — no-op
+
 """
 Growth Agent — Entrypoint
 
@@ -71,54 +81,49 @@ def make_outreach_task(agent, days: int) -> Task:
     today = date.today().isoformat()
     return Task(
         description=f"""
-Search for 5–10 relevant YouTube videos and Reddit threads where Brazilian 
-marketplace sellers (Shopee, Mercado Livre) are discussing:
-- How to calculate profit or fees
-- Pricing strategies for online products
-- Tax questions (MEI, Simples Nacional) for e-commerce
-- Comparisons between Shopee and Mercado Livre
+Produce a complete outreach draft digest for Brazilian marketplace seller communities.
+Follow this PRIORITY ORDER:
 
-For Reddit, search these queries in Portuguese:
-- "calculadora lucro shopee"
-- "taxa mercado livre"
-- "como calcular margem shopee"
-- "precificar produto mercado livre"
+## PRIORITY 1 — Facebook Groups (primary)
 
-For YouTube, search:
+Use the facebook_groups tool to get the curated list of Brazilian seller communities.
+For each group, draft ONE personalised post in Brazilian Portuguese that:
+- Leads with genuine value: a tip, a surprising fact, or a concrete example
+  (e.g., "A taxa real da Shopee é 20% + R$4 — muita gente não inclui os R$4 no cálculo...")
+- Mentions the free calculator (https://calculadora.dbcdatastudio.com) only as
+  a natural "ferramenta que pode ajudar", not as an advertisement
+- Is under 200 words
+- Ends with an open question to invite discussion
+
+## PRIORITY 2 — YouTube (secondary)
+
+Use the youtube_search tool with these queries:
 - "como calcular lucro shopee 2026"
 - "taxas mercado livre 2026"
 - "simulador de custos mercado livre"
 
-Selection criteria — prefer content where:
-1. The post/video is recent (last 6 months)
-2. There are comments/questions from other sellers
-3. The app (https://calculadora.dbcdatastudio.com) would be a genuinely 
-   useful resource to mention
+Select 3–5 videos where viewers are likely asking pricing/fee questions in the comments.
+Draft ONE helpful comment per video in pt-BR (under 120 words).
 
-For each selected link, draft ONE comment in Brazilian Portuguese (pt-BR) that:
-- Directly addresses the post/video topic with useful information
-- Mentions the app only if it is a natural and helpful addition
-- Is friendly, non-spammy, and under 150 words
-- Does NOT sound like an advertisement
+## OUTPUT FORMAT
 
-Format output as:
-
-### [Video/Thread Title]
+### [Group name / Video title]
+**Platform**: Facebook Group | YouTube
 **URL**: <url>
-**Platform**: YouTube | Reddit
-**Why it's relevant**: <one sentence>
-**Draft comment** (pt-BR):
-> <the draft comment>
+**Why relevant**: <one sentence>
+**Draft content** (pt-BR):
+> <the draft post or comment>
 
 ---
 
 Today's date: {today}
 """,
         expected_output=(
-            "A Markdown digest with 5–10 entries. "
-            "Each entry must have the URL, platform, relevance note, "
-            "and a draft comment in Brazilian Portuguese. "
-            "Comments must be genuinely helpful and not spammy."
+            "A Markdown digest with:\n"
+            "- 5–7 Facebook Group draft posts (personalised per group)\n"
+            "- 3–5 YouTube comment drafts\n"
+            "All content in Brazilian Portuguese, genuinely helpful, non-spammy. "
+            "Each entry must have platform, URL, relevance note, and draft content."
         ),
         agent=agent,
         output_file=str(config.OUTPUT_DIR / f"outreach_{today}.md"),

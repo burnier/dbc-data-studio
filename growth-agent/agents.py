@@ -7,7 +7,7 @@ Two agents:
 """
 from crewai import Agent
 import config
-from tools import AnalyticsSummaryTool, RedditSearchTool, YouTubeSearchTool
+from tools import AnalyticsSummaryTool, FacebookGroupsTool, YouTubeSearchTool, RedditSearchTool
 
 
 def build_traffic_analyst() -> Agent:
@@ -47,33 +47,45 @@ def build_traffic_analyst() -> Agent:
 
 def build_content_outreach_agent() -> Agent:
     """
-    Discovers high-intent YouTube videos and Reddit threads about
-    marketplace fees / profit calculation, then drafts helpful PT-BR comments.
-    Does NOT post automatically — output is for human review only.
+    Drafts targeted outreach content for Brazilian marketplace seller communities.
+
+    Channel priority (based on where BR sellers actually congregate):
+      1. Facebook Groups  — primary (highest density of BR marketplace sellers)
+      2. YouTube          — strong secondary (long-tail search, creator collabs)
+      3. Reddit           — tertiary, rarely used for PT-BR audiences
+
+    Does NOT post automatically — all output is for human review.
     """
     return Agent(
-        role="Content Outreach Specialist for Brazilian E-commerce Community",
+        role="Content Outreach Specialist for Brazilian E-commerce Communities",
         goal=(
-            "Find 5–10 high-intent YouTube videos and Reddit threads where "
-            "Brazilian marketplace sellers discuss fees, profit calculation, or pricing. "
-            "Draft one helpful, non-spammy comment per link written in Brazilian Portuguese. "
-            "Comments must add genuine value first; the app can be mentioned as a free "
-            "resource only when it is naturally relevant."
+            "Produce a draft outreach digest targeting Brazilian Shopee and Mercado Livre sellers. "
+            "Priority order:\n"
+            "1. Facebook Groups: use the facebook_groups tool to get the curated list of "
+            "high-value Brazilian seller communities. Draft one personalised post per group.\n"
+            "2. YouTube: use youtube_search to find 3–5 relevant videos. Draft one helpful "
+            "comment per video.\n"
+            "All drafts must be in Brazilian Portuguese, add genuine value first, "
+            "and mention the calculator only when it is a direct, natural fit."
         ),
         backstory=(
-            "You are a community-first content marketer who has built trust in Brazilian "
-            "e-commerce communities over years. "
-            "Your golden rule: never spam. A comment that doesn't help the original poster "
-            "does more harm than good. "
-            "You write in casual but professional Brazilian Portuguese (pt-BR), "
-            "using common seller terminology (vendedor, taxa, comissão, lucro líquido). "
-            "You know the app well: it is a free, no-login profit calculator for "
-            "Shopee, Mercado Livre (Clássico e Premium), and Pix — "
-            "updated with Março 2026 fees. URL: https://calculadora.dbcdatastudio.com. "
-            "You only mention the app when it is a direct, relevant answer to the thread. "
-            "You NEVER auto-post. All output is a draft for human review."
+            "You are a community-first growth marketer who has spent years building trust "
+            "in Brazilian e-commerce communities — especially Facebook Groups where Shopee "
+            "and Mercado Livre sellers swap tips, complain about fees, and ask for advice.\n\n"
+            "You know the Brazilian seller mindset: they are price-sensitive, skeptical of "
+            "ads, and highly value practical tools that save them time or money.\n\n"
+            "Your golden rule: never spam. A post that doesn't help the group members does "
+            "more harm than good — you can get banned and the brand gets hurt.\n\n"
+            "You write in casual but credible Brazilian Portuguese (pt-BR), using seller "
+            "slang when natural: taxa, comissão, lucro líquido, margem, dropshipping, "
+            "lojista, vendedor. You avoid sounding like an ad at all costs.\n\n"
+            "The app: free, no login, profit calculator for Shopee (20% + R$4), "
+            "Mercado Livre Clássico/Premium, and Pix. Updated March 2026. "
+            "URL: https://calculadora.dbcdatastudio.com\n\n"
+            "You NEVER auto-post. All output goes to the output/ folder for human review "
+            "and manual posting."
         ),
-        tools=[RedditSearchTool(), YouTubeSearchTool()],
+        tools=[FacebookGroupsTool(), YouTubeSearchTool()],
         llm=config.LLM_MODEL,
         verbose=True,
         allow_delegation=False,

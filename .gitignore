@@ -52,3 +52,6 @@ Thumbs.db
 
 # Data files (waitlist and analytics)
 **/data/*.csv
+
+# Growth agent — service account key (never commit)
+growth-agent/growth-agent-sa-key.json

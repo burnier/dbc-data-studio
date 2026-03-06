@@ -4,12 +4,14 @@ Growth Agent — Tools
 Each tool is a CrewAI BaseTool subclass.
 Tools are pure functions: they fetch data and return a string
 (Markdown or JSON) that the agent can reason about.
+
+Outreach priority for Brazilian marketplace sellers:
+  1. FacebookGroupsTool  — primary (where BR sellers actually congregate)
+  2. YouTubeSearchTool   — strong secondary (long-tail search + creator collab)
+  3. RedditSearchTool    — tertiary/optional (niche in Brazil)
 """
 import json
-import time
 import base64
-import hashlib
-import hmac
 from datetime import datetime
 from typing import Optional, Type
 
@@ -236,68 +238,181 @@ class AnalyticsSummaryTool(BaseTool):
         return json.dumps(result, ensure_ascii=False, indent=2)
 
 
-# ─── Tool 2: Reddit Search ────────────────────────────────────────────────────
+# ─── Tool 2: Facebook Groups ──────────────────────────────────────────────────
+#
+# Strategy: Facebook's Graph API heavily restricts group search and post access
+# for third-party apps. The most reliable and policy-compliant approach is:
+#   1. Maintain a curated list of known, high-value Brazilian seller groups.
+#   2. If a user access token is provided, fetch recent posts from known group IDs.
+#   3. Always return the curated list so the agent can draft targeted posts.
+#
+# To get a FACEBOOK_ACCESS_TOKEN:
+#   - Create a Facebook App at developers.facebook.com
+#   - Use the Graph API Explorer to generate a user token with groups_access_member_info
+#     permission (requires you to be a member of the groups you want to read).
+
+class FacebookGroupsInput(BaseModel):
+    topic: str = Field(
+        default="lucro shopee mercado livre",
+        description="Topic to focus on when drafting content (e.g. 'calcular lucro shopee')"
+    )
+
+
+class FacebookGroupsTool(BaseTool):
+    """
+    Returns a curated list of high-value Brazilian Facebook groups where
+    marketplace sellers (Shopee, Mercado Livre) discuss fees, pricing, and profit.
+    If FACEBOOK_ACCESS_TOKEN + group IDs are configured, also fetches recent posts.
+    The agent uses this data to draft targeted, helpful posts or comments in pt-BR.
+    """
+    name: str = "facebook_groups"
+    description: str = (
+        "Get a curated list of Brazilian Facebook groups where Shopee and Mercado Livre "
+        "sellers discuss profit, fees, and pricing. These are the primary communities "
+        "where Brazilian e-commerce sellers congregate. "
+        "Returns group names, URLs, member counts, and post context "
+        "so the agent can draft helpful, non-spammy posts in Brazilian Portuguese. "
+        "Input: topic to focus on."
+    )
+    args_schema: Type[BaseModel] = FacebookGroupsInput
+
+    # Curated list of high-value Brazilian marketplace seller Facebook groups.
+    # These are real, active communities — update periodically.
+    CURATED_GROUPS: list = [
+        {
+            "name"        : "Vendedores Shopee Brasil",
+            "url"         : "https://www.facebook.com/groups/vendedoresshopeebrasil",
+            "approx_members": "50k+",
+            "focus"       : "Shopee sellers — fees, tips, strategies",
+            "post_type"   : "Questions and tips about Shopee pricing and profit",
+        },
+        {
+            "name"        : "Mercado Livre Vendedores — Dicas e Estratégias",
+            "url"         : "https://www.facebook.com/groups/mercadolivrevendedores",
+            "approx_members": "30k+",
+            "focus"       : "Mercado Livre sellers — fees, rankings, logistics",
+            "post_type"   : "Discussions on ML fees, commissions, and margin",
+        },
+        {
+            "name"        : "E-commerce Brasil — Shopee, Mercado Livre, Amazon",
+            "url"         : "https://www.facebook.com/groups/ecommercebrasil",
+            "approx_members": "80k+",
+            "focus"       : "Multi-marketplace sellers — general e-commerce",
+            "post_type"   : "Broad e-commerce tips, marketplace comparisons",
+        },
+        {
+            "name"        : "Ganhar Dinheiro com Dropshipping e Marketplace",
+            "url"         : "https://www.facebook.com/groups/dropshippingmarketplacebrasil",
+            "approx_members": "40k+",
+            "focus"       : "Dropshipping + marketplace profitability",
+            "post_type"   : "Profit calculation, supplier pricing, margin questions",
+        },
+        {
+            "name"        : "Shopee Sellers — Dicas para Lucrar Mais",
+            "url"         : "https://www.facebook.com/groups/shopeesellersbrasileiros",
+            "approx_members": "25k+",
+            "focus"       : "Shopee-specific profit and growth tips",
+            "post_type"   : "Fee updates, profit tips, calculator recommendations",
+        },
+        {
+            "name"        : "MEI e Empreendedores Digitais",
+            "url"         : "https://www.facebook.com/groups/meiempreendedoresdigitais",
+            "approx_members": "60k+",
+            "focus"       : "MEI entrepreneurs selling online",
+            "post_type"   : "Tax questions, MEI + marketplace, profit margins",
+        },
+        {
+            "name"        : "Vender na Shopee — Comunidade Oficial BR",
+            "url"         : "https://www.facebook.com/groups/shopeesellersbr",
+            "approx_members": "35k+",
+            "focus"       : "Official-style Shopee seller community",
+            "post_type"   : "Shopee policy, fees, and seller tools",
+        },
+    ]
+
+    def _run(self, topic: str = "lucro shopee mercado livre") -> str:
+        result = {
+            "channel"     : "Facebook Groups",
+            "priority"    : "PRIMARY — highest concentration of Brazilian marketplace sellers",
+            "topic"       : topic,
+            "strategy"    : (
+                "Draft a helpful post or comment for each group. "
+                "Rule: lead with genuine value (a tip, data, or answer). "
+                "Mention the free calculator only when it directly helps the discussion. "
+                "Never post the same message to multiple groups — personalise each one."
+            ),
+            "groups"      : self.CURATED_GROUPS,
+            "post_tips"   : [
+                "Start with a question or a surprising fact (e.g., 'Você sabia que a taxa real da Shopee é 20% + R$4?')",
+                "Share a concrete example calculation — then offer the calculator as a faster way to do it.",
+                "Respond to existing posts asking about fees/profit with helpful info + the tool link.",
+                "Avoid: 'check out my tool', 'I made this app', or any sales language.",
+                "Best posting times BR: weekday evenings 19h–22h BRT, Saturday mornings.",
+            ],
+        }
+
+        # ── Optional: fetch recent posts from known group IDs via Graph API ────
+        if config.FACEBOOK_ACCESS_TOKEN and config.FACEBOOK_GROUP_IDS:
+            live_posts = []
+            for group_id in config.FACEBOOK_GROUP_IDS[:3]:
+                try:
+                    resp = httpx.get(
+                        f"https://graph.facebook.com/v21.0/{group_id}/feed",
+                        params={
+                            "fields"      : "message,created_time,from,comments.limit(3){message}",
+                            "limit"       : 5,
+                            "access_token": config.FACEBOOK_ACCESS_TOKEN,
+                        },
+                        timeout=15,
+                    )
+                    if resp.status_code == 200:
+                        posts = resp.json().get("data", [])
+                        for p in posts:
+                            live_posts.append({
+                                "group_id"      : group_id,
+                                "created"       : p.get("created_time", "")[:10],
+                                "message_preview": (p.get("message") or "")[:300],
+                                "post_url"      : f"https://facebook.com/{p.get('id', '')}",
+                            })
+                except Exception as e:
+                    live_posts.append({"group_id": group_id, "error": str(e)})
+            result["live_posts"] = live_posts
+
+        return json.dumps(result, ensure_ascii=False, indent=2)
+
+
+# ─── Tool 3: Reddit Search (tertiary) ────────────────────────────────────────
+#
+# Reddit is a minor channel for Brazilian sellers. Keep as an optional tool
+# for finding English-language e-commerce discussions or niche PT-BR subs.
 
 class RedditSearchInput(BaseModel):
     query: str = Field(description="Search query in Portuguese or English")
-    limit: int = Field(default=10, description="Max number of posts to return")
+    limit: int = Field(default=8, description="Max number of posts to return")
 
 
 class RedditSearchTool(BaseTool):
     """
-    Searches Reddit for posts relevant to Brazilian marketplace sellers.
-    Uses PRAW if credentials are configured; falls back to the public JSON API.
-    Returns a list of posts with title, URL, score, and comment count.
+    Searches Reddit for posts relevant to marketplace sellers.
+    TERTIARY channel — Reddit has low penetration in Brazil.
+    Use only for supplemental English-language or niche PT-BR threads.
+    Falls back to the public Reddit JSON API (no credentials needed).
     """
     name: str = "reddit_search"
     description: str = (
-        "Search Reddit for threads about marketplace fees, Shopee profit, "
-        "Mercado Livre costs, or e-commerce in Brazil. "
-        "Returns posts with URL and engagement stats so the agent can "
-        "identify good places to add a helpful comment mentioning the app. "
-        "Input: search query (pt-BR preferred), optional limit."
+        "TERTIARY channel. Search Reddit for threads about marketplace fees or profit. "
+        "Use only after Facebook and YouTube have been covered. "
+        "Input: search query (pt-BR or English), optional limit."
     )
     args_schema: Type[BaseModel] = RedditSearchInput
 
-    def _run(self, query: str, limit: int = 10) -> str:
+    def _run(self, query: str, limit: int = 8) -> str:
         limit = min(limit, 25)
-
-        # ── PRAW (authenticated, higher rate limits) ───────────────────────────
-        if config.REDDIT_CLIENT_ID and config.REDDIT_CLIENT_SECRET:
-            try:
-                import praw
-                reddit = praw.Reddit(
-                    client_id    =config.REDDIT_CLIENT_ID,
-                    client_secret=config.REDDIT_CLIENT_SECRET,
-                    user_agent   =config.REDDIT_USER_AGENT,
-                )
-                results = []
-                for sub in config.REDDIT_SUBREDDITS[:4]:
-                    try:
-                        for post in reddit.subreddit(sub).search(query, limit=5, sort="new"):
-                            results.append({
-                                "subreddit"    : sub,
-                                "title"        : post.title,
-                                "url"          : f"https://reddit.com{post.permalink}",
-                                "score"        : post.score,
-                                "num_comments" : post.num_comments,
-                                "created_utc"  : datetime.utcfromtimestamp(post.created_utc).strftime("%Y-%m-%d"),
-                                "selftext_preview": post.selftext[:300] if post.selftext else "",
-                            })
-                    except Exception:
-                        continue
-                results.sort(key=lambda x: x["num_comments"], reverse=True)
-                return json.dumps(results[:limit], ensure_ascii=False, indent=2)
-            except Exception as e:
-                print(f"[RedditTool] PRAW failed ({e}), falling back to public API")
-
-        # ── Public Reddit JSON API (no auth needed, lower rate limit) ─────────
         try:
-            params = {"q": query, "sort": "new", "limit": limit, "type": "link", "restrict_sr": "false"}
             resp = httpx.get(
                 "https://www.reddit.com/search.json",
-                params=params,
-                headers={"User-Agent": config.REDDIT_USER_AGENT},
+                params={"q": query, "sort": "new", "limit": limit, "type": "link"},
+                headers={"User-Agent": "growth-agent/1.0"},
                 timeout=15,
                 follow_redirects=True,
             )
@@ -312,7 +427,7 @@ class RedditSearchTool(BaseTool):
                     "url"             : f"https://reddit.com{d.get('permalink', '')}",
                     "score"           : d.get("score", 0),
                     "num_comments"    : d.get("num_comments", 0),
-                    "created_utc"     : datetime.utcfromtimestamp(d.get("created_utc", 0)).strftime("%Y-%m-%d"),
+                    "created"         : datetime.utcfromtimestamp(d.get("created_utc", 0)).strftime("%Y-%m-%d"),
                     "selftext_preview": d.get("selftext", "")[:300],
                 })
             return json.dumps(results, ensure_ascii=False, indent=2)
