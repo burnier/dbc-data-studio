@@ -32,22 +32,29 @@ Ferramenta profissional para calcular lucro real em vendas online, considerando:
 ```
 calculadora-lucro/
 ├── app/
-│   ├── layout.tsx          # Root layout + GA4 + SEO metadata
-│   ├── page.tsx            # Página principal + FAQ
-│   └── globals.css         # Estilos globais
+│   ├── api/
+│   │   └── analytics/
+│   │       └── summary/
+│   │           └── route.ts   # Internal analytics endpoint (server-side)
+│   ├── layout.tsx              # Root layout + GA4 + SEO metadata
+│   ├── page.tsx                # Página principal + FAQ
+│   ├── robots.ts               # robots.txt generation
+│   ├── sitemap.ts              # sitemap.xml generation
+│   └── globals.css             # Estilos globais
 ├── components/
-│   ├── ProfitCalculator.tsx  # Componente principal da calculadora
-│   └── ui/                   # Componentes Shadcn/UI
+│   ├── AdSlot.tsx              # Google Ads placeholder (future monetization)
+│   ├── ProfitCalculator.tsx    # Componente principal da calculadora
+│   └── ui/                     # Componentes Shadcn/UI
 │       ├── accordion.tsx
 │       ├── button.tsx
 │       ├── card.tsx
 │       └── input.tsx
 ├── lib/
-│   ├── calculator.ts       # Lógica de negócio (taxas, cálculos)
-│   └── utils.ts            # Utilitários (formatação, cn helper)
+│   ├── calculator.ts           # Lógica de negócio (taxas, cálculos)
+│   └── utils.ts                # Utilitários (formatação, cn helper)
 ├── public/
-│   └── dbc-calculadora.jpg # Logo/Favicon
-└── README.md               # Este arquivo
+│   └── dbc-calculadora.jpg     # Logo/Favicon
+└── README.md                   # Este arquivo
 ```
 
 ---
@@ -138,7 +145,37 @@ Acesse: http://localhost:3002
 - **Preview:** `calculadora-lucro-*.vercel.app`
 
 ### Variáveis de Ambiente
-Nenhuma necessária (GA4 ID está hardcoded).
+
+| Variável | Obrigatório | Descrição |
+|---|---|---|
+| `ANALYTICS_SECRET` | ✅ | Segredo compartilhado com o Growth Agent para autenticar o endpoint `/api/analytics/summary`. Gere com `openssl rand -hex 32`. |
+| `GOOGLE_SERVICE_ACCOUNT_JSON` | ✅ | JSON da Service Account Google com acesso de Viewer ao GA4. Usado pelo endpoint de analytics server-side. |
+| `NEXT_PUBLIC_ADSENSE_PUBLISHER_ID` | ☐ | Publisher ID do AdSense (`ca-pub-...`). Ativa automaticamente os blocos de anúncios no componente `<AdSlot />` quando definido. |
+
+---
+
+## 🤖 Growth Agent
+
+Este projeto tem um sub-serviço Python separado que usa **CrewAI + Claude claude-sonnet-4-5** para:
+
+- **Analisar tráfego automaticamente** — puxa dados do GA4 via o endpoint interno e gera um relatório Markdown diário com métricas e recomendações de crescimento.
+- **Rascunhar outreach** — encontra threads no Reddit e vídeos no YouTube relevantes para vendedores brasileiros e cria rascunhos de comentários em pt-BR para revisão manual.
+
+Localização: `../growth-agent/` (pasta irmã a este projeto)
+
+Documentação completa: [`../growth-agent/README.md`](../growth-agent/README.md)
+
+### Endpoint interno de analytics
+
+`GET /api/analytics/summary` — retorna um JSON compacto com:
+- Sessões, usuários, bounce rate, duração média
+- Top referrers e dispositivos
+- Eventos customizados (cálculos, shares, feedbacks)
+- Breakdown por marketplace
+- Funil de conversão
+- Tendência diária
+
+Auth: `Authorization: Bearer <ANALYTICS_SECRET>`
 
 ---
 
