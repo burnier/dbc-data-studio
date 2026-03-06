@@ -278,55 +278,22 @@ class FacebookGroupsTool(BaseTool):
 
     # Curated list of high-value Brazilian marketplace seller Facebook groups.
     # These are real, active communities — update periodically.
+    # Only verified groups — joined and confirmed by the account owner.
+    # Add more here as you join them.
     CURATED_GROUPS: list = [
         {
-            "name"        : "Vendedores Shopee Brasil",
-            "url"         : "https://www.facebook.com/groups/vendedoresshopeebrasil",
-            "approx_members": "50k+",
-            "focus"       : "Shopee sellers — fees, tips, strategies",
-            "post_type"   : "Questions and tips about Shopee pricing and profit",
+            "name"          : "Vendedores Shopee",
+            "url"           : "https://www.facebook.com/groups/Vendedores.Shopee/",
+            "approx_members": "unknown",
+            "focus"         : "Shopee sellers — fees, tips, strategies, pricing",
+            "post_type"     : "Questions and tips about Shopee fees, pricing, and profit",
         },
         {
-            "name"        : "Mercado Livre Vendedores — Dicas e Estratégias",
-            "url"         : "https://www.facebook.com/groups/mercadolivrevendedores",
-            "approx_members": "30k+",
-            "focus"       : "Mercado Livre sellers — fees, rankings, logistics",
-            "post_type"   : "Discussions on ML fees, commissions, and margin",
-        },
-        {
-            "name"        : "E-commerce Brasil — Shopee, Mercado Livre, Amazon",
-            "url"         : "https://www.facebook.com/groups/ecommercebrasil",
-            "approx_members": "80k+",
-            "focus"       : "Multi-marketplace sellers — general e-commerce",
-            "post_type"   : "Broad e-commerce tips, marketplace comparisons",
-        },
-        {
-            "name"        : "Ganhar Dinheiro com Dropshipping e Marketplace",
-            "url"         : "https://www.facebook.com/groups/dropshippingmarketplacebrasil",
-            "approx_members": "40k+",
-            "focus"       : "Dropshipping + marketplace profitability",
-            "post_type"   : "Profit calculation, supplier pricing, margin questions",
-        },
-        {
-            "name"        : "Shopee Sellers — Dicas para Lucrar Mais",
-            "url"         : "https://www.facebook.com/groups/shopeesellersbrasileiros",
-            "approx_members": "25k+",
-            "focus"       : "Shopee-specific profit and growth tips",
-            "post_type"   : "Fee updates, profit tips, calculator recommendations",
-        },
-        {
-            "name"        : "MEI e Empreendedores Digitais",
-            "url"         : "https://www.facebook.com/groups/meiempreendedoresdigitais",
-            "approx_members": "60k+",
-            "focus"       : "MEI entrepreneurs selling online",
-            "post_type"   : "Tax questions, MEI + marketplace, profit margins",
-        },
-        {
-            "name"        : "Vender na Shopee — Comunidade Oficial BR",
-            "url"         : "https://www.facebook.com/groups/shopeesellersbr",
-            "approx_members": "35k+",
-            "focus"       : "Official-style Shopee seller community",
-            "post_type"   : "Shopee policy, fees, and seller tools",
+            "name"          : "Vendedores Mercado Livre ML",
+            "url"           : "https://www.facebook.com/groups/Vendedores.Mercado.Livre.ML",
+            "approx_members": "unknown",
+            "focus"         : "Mercado Livre sellers — fees, rankings, logistics, commissions",
+            "post_type"     : "Discussions on ML fees, commissions, margin, and profit",
         },
     ]
 

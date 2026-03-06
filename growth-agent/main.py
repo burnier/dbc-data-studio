@@ -34,6 +34,14 @@ from agents import build_traffic_analyst, build_content_outreach_agent
 
 # ─── Email Delivery ───────────────────────────────────────────────────────────
 
+def _md_inline(text: str) -> str:
+    """Convert inline Markdown (bold, italic) to HTML."""
+    import re
+    text = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", text)
+    text = re.sub(r"\*(.+?)\*",     r"<em>\1</em>",         text)
+    return text
+
+
 def _send_email(subject: str, body_md: str) -> None:
     """Send a Markdown report via Resend. No-op if RESEND_API_KEY is not set."""
     api_key  = os.getenv("RESEND_API_KEY", "")
@@ -41,26 +49,52 @@ def _send_email(subject: str, body_md: str) -> None:
     if not api_key or not to_email:
         return
 
-    # Convert basic Markdown to HTML (headings, bold, code, line breaks)
+    # Convert Markdown to HTML.
     lines: list[str] = []
+    in_blockquote = False
     for line in body_md.splitlines():
         if line.startswith("### "):
-            lines.append(f"<h3>{line[4:]}</h3>")
+            if in_blockquote:
+                lines.append("</blockquote>")
+                in_blockquote = False
+            lines.append(f"<h3 style='margin-top:1.2em'>{line[4:]}</h3>")
         elif line.startswith("## "):
-            lines.append(f"<h2>{line[3:]}</h2>")
+            if in_blockquote:
+                lines.append("</blockquote>")
+                in_blockquote = False
+            lines.append(f"<h2 style='margin-top:1.4em'>{line[3:]}</h2>")
         elif line.startswith("# "):
+            if in_blockquote:
+                lines.append("</blockquote>")
+                in_blockquote = False
             lines.append(f"<h1>{line[2:]}</h1>")
-        elif line.startswith("---"):
-            lines.append("<hr>")
+        elif line.startswith("---") and line.strip("-") == "":
+            if in_blockquote:
+                lines.append("</blockquote>")
+                in_blockquote = False
+            lines.append("<hr style='border:none;border-top:1px solid #ddd;margin:1.5em 0'>")
         elif line.startswith("> "):
-            lines.append(f"<blockquote>{line[2:]}</blockquote>")
+            # Real blockquote line
+            content = _md_inline(line[2:])
+            if not in_blockquote:
+                lines.append("<blockquote style='border-left:3px solid #ccc;margin:0.5em 0;padding:0.3em 1em;color:#555'>")
+                in_blockquote = True
+            lines.append(content + "<br>")
+        elif line.strip() == ">":
+            # Bare ">" used as a paragraph break inside a blockquote — skip
+            pass
         else:
-            html_line = line.replace("**", "<strong>", 1)
-            while "**" in html_line:
-                html_line = html_line.replace("**", "</strong>", 1)
-            lines.append(html_line + "<br>")
+            if in_blockquote:
+                lines.append("</blockquote>")
+                in_blockquote = False
+            if line.strip() == "":
+                lines.append("<br>")
+            else:
+                lines.append(_md_inline(line) + "<br>")
+    if in_blockquote:
+        lines.append("</blockquote>")
     html_body = (
-        "<html><body style='font-family:sans-serif;max-width:720px;margin:auto'>"
+        "<html><body style='font-family:sans-serif;max-width:720px;margin:auto;padding:1em'>"
         + "\n".join(lines)
         + "</body></html>"
     )
